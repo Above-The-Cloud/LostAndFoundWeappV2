@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/initinfo/initinfo",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/edit/edit",
+    "pages/offline/offline",
+    "pages/index/msgdetail/msgdetail",
+    "pages/myinfo/myinfo",
+    "pages/test/index",
+    "pages/search/search",
+    "pages/userinfo/userinfo",
+    "pages/modifyinfo/modifyinfo"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Lost&Found平台",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tabbar/index.png",
+        "selectedIconPath": "images/tabbar/index_selected.png"
+      },
+      {
+        "pagePath": "pages/offline/offline",
+        "text": "线下根据点",
+        "iconPath": "images/tabbar/offline.png",
+        "selectedIconPath": "images/tabbar/offline_selected.png"
+      },
+      {
+        "pagePath": "pages/myinfo/myinfo",
+        "text": "我的",
+        "iconPath": "images/tabbar/myinfo.png",
+        "selectedIconPath": "images/tabbar/myinfo_selected.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置将用于记录失物或拾物的位置信息"
+    }
+  }
+}

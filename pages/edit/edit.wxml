@@ -1,0 +1,154 @@
+<!--pages/wyq/wyq.wxml-->
+  <view class="background">
+<!-- 导航条   -->
+<view class="navbar">  
+  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>  
+</view>  
+
+<!--lost-->  
+<view hidden="{{currentTab!==0}}">  
+<view class="back">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="contain">
+
+    <view class='text' style="white-space: pre-line">
+     <textarea placeholder="请输入信息..." focus="{{focus}}" name="input" style="width:100%" value="{{tvalue}}"/>
+    </view>
+
+      
+<view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__hd">
+                  <view class="weui-uploader__title"></view>
+                  <view class="weui-uploader__info">{{imageList.length}}/3</view>
+                </view>
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files">
+                    <block wx:for="{{imageList}}" wx:for-item="image">
+                      <view class="weui-uploader__file">
+                        <image mode="aspectFill"class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                      </view>
+                    </block>
+                  </view>
+
+                  <view class="weui-uploader__input-box">
+                    <image src='../../images/edit/plus.png' class='pic' name='pic'></image> 
+                    <view class="weui-uploader__input" bindtap="chooseImage">                       
+                    </view>
+                  </view>
+                </view>
+
+              </view>
+            </view>
+          </view>
+        </view>
+
+
+ <view class="cells cells_after-title">
+        <view class="cell cell_input">
+          <view class="cell__hd">
+            <view class="label">选择分类</view>
+          </view>
+          <view class="cell__bd">
+            <picker bindchange="bindPickerChange" value="{{category_index}}" range="{{array}}">
+              <view class="input">{{array[category_index]}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+ <view class="cells cells_after-title">
+        <view class="cell cell_input">
+          <view class="cell__hd">
+          <image class="location"src='../../images/edit/location.png'></image>
+          </view>
+          <view class="cell__bd">
+          <view bindtap="bindLocation"class="input">{{displayAddress}}</view>
+          
+          </view>
+        </view>
+      </view>
+<view class="button-sp-area">
+        <button type="primary" plain="true"  formType="submit"
+ bindtap="stateswitch" >发布</button></view>
+    
+  </view>
+
+</form>
+</view>
+</view>  
+  
+<!--found-->  
+<view hidden="{{currentTab!==1}}">  
+<!-- <view class ="swiper-tab-item {{activeIndex==1?'active':''}}" bindtap="stateswitch" data-index="1"></view> -->
+  <form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="contain">
+
+    <view class='text' style="white-space: pre-line">
+     <textarea placeholder="请输入信息..." focus="{{focus}}" name="input" value="{{tvalue}}" />
+    </view>
+
+   <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__hd">
+                  <view class="weui-uploader__title"></view>
+                  <view class="weui-uploader__info">{{imageList.length}}/3</view>
+                </view>
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files">
+                    <block wx:for="{{imageList}}" wx:for-item="image">
+                      <view class="weui-uploader__file">
+                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                      </view>
+                    </block>
+                  </view>
+
+                  <view class="weui-uploader__input-box">
+                    <image src='../../images/edit/plus.png' class='pic' name='pic'></image> 
+                    <view class="weui-uploader__input" bindtap="chooseImage">                       
+                    </view>
+                  </view>
+                </view>
+
+              </view>
+            </view>
+          </view>
+        </view>
+
+
+ <view class="cells cells_after-title">
+        <view class="cell cell_input">
+          <view class="cell__hd">
+            <view class="label">选择分类</view>
+          </view>
+          <view class="cell__bd">
+            <picker bindchange="bindPickerChange" value="{{category_index}}" range="{{array}}">
+              <view class="input">{{array[category_index]}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+ <view class="cells cells_after-title">
+        <view class="cell cell_input">
+          <view class="cell__hd">
+          <image class="location"src='../../images/edit/location.png'></image>
+          </view>
+          <view class="cell__bd">
+          <view bindtap="bindLocation"class="input">{{displayAddress}}</view>
+          
+          </view>
+        </view>
+      </view>
+<view class="button-sp-area">
+        <button type="primary" plain="true"  formType="submit"
+ bindtap="stateswitch" >发布</button></view>
+    
+  </view>
+
+</form> 
+</view> 
+
+</view> 
