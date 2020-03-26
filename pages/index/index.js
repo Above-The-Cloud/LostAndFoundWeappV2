@@ -193,20 +193,20 @@ Page({
       var user_icon = that.data.publish_data[i].user_info.avatar_url;
       var nick_name = that.data.publish_data[i].user_info.nick_name;
       var location = that.data.publish_data[i].location;
-      var type = that.data.publish_data[i].category;
+      var type = '#'+that.data.publish_data[i].category;
       var address = location.address;
       if(address)
-        address = "#"+ type + " #"+address;
+        address = address;
       else
-        address = "#" + type;
+        address = "";
       if (that.data.publish_data[i].images)
         imageurl =that.data.publish_data[i].images[0];
       if (that.data.publish_data[i].type == 'found')
         this.data.listfound.push({
-          userid:user_id,username: nick_name, text: Msg, imagelist:imageList,image: imageurl, usericon: user_icon, sub_time: Submission_time, address: address
+          userid:user_id,username: nick_name, text: Msg, imagelist:imageList,image: imageurl, usericon: user_icon, sub_time: Submission_time, address: address,type:type
         })
       else
-        this.data.listlost.push({ userid: user_id, username: nick_name, text: Msg, imagelist: imageList, image: imageurl, usericon: user_icon, sub_time: Submission_time, address: address });
+        this.data.listlost.push({ userid: user_id, username: nick_name, text: Msg, imagelist: imageList, image: imageurl, usericon: user_icon, sub_time: Submission_time, address: address, type: type });
     }
     if (this.data.activeIndex == 1)
       this.setData({
