@@ -9,11 +9,10 @@ var that = this;
 var serverName = app.globalData.serverName
 Page({
   data: {
-    check: true,//判断是否是测试账号
     type_t: 'found',
     swiper_url: [
       '../../images/index/swiper/1.jpg',
-      '../../images/index/swiper/2p.jpg',
+      '../../images/index/swiper/2.jpg',
       '../../images/index/swiper/3.jpeg',
       '../../images/index/swiper/4.jpg'
     ],
@@ -31,8 +30,6 @@ Page({
     plain: false,
     actionSheetHidden: true,
     actionSheetItems: ['所有']
-
-
   },
   search: function (event,userid) {
     wx.navigateTo({
