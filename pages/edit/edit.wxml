@@ -1,19 +1,20 @@
 <!--pages/wyq/wyq.wxml-->
-  <view class="background">
-<!-- 导航条   -->
-<view class="navbar">  
-  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>  
-</view>  
+<button bindtap="ocrRecog">识别学号</button>
+<view class="background">
+	<!-- 导航条   -->
+	<view class="navbar">
+		<text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
+	</view>
 
-<!--lost-->  
-<view hidden="{{currentTab!==0}}">  
-<view class="back">
-  <form bindsubmit="formSubmit" bindreset="formReset">
-  <view class="contain">
+	<!--lost-->
+	<view hidden="{{currentTab!==0}}">
+		<view class="back">
+			<form bindsubmit="formSubmit" bindreset="formReset">
+				<view class="contain">
 
-    <view class='text' style="white-space: pre-line">
-     <textarea placeholder="请输入信息..." focus="{{focus}}" name="input" style="width:100%" value="{{tvalue}}"/>
-    </view>
+					<view class='text' style="white-space: pre-line">
+						<textarea placeholder="请输入信息..." focus="{{focus}}" name="input" style="width:100%" value="{{tvalue}}" />
+						</view>
 
       
 <view class="weui-cells">
@@ -142,6 +143,7 @@
           </view>
         </view>
       </view>
+      
 <view class="button-sp-area">
         <button type="primary" plain="true"  formType="submit"
  bindtap="stateswitch" >发布</button></view>
