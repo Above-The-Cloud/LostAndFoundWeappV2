@@ -40,6 +40,7 @@
 }
 
 .swiper-tab {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -51,7 +52,7 @@
 .swiper-tab-item {
   position: relative;
   flex: 1;
-  top: 200px;
+  /* top: 200px; */
   text-align: center;
   align-items: center;
   font-size: 26rpx;
@@ -72,7 +73,7 @@
 
 .category {
   position: relative;
-  top: 200px;
+  /* top: 200px; */
   left: 10%;
   font-size: 25rpx;
   z-index: 1;
@@ -111,7 +112,10 @@
   width: 100%;
   height: 100%;
 }
-
+.category-spaceholder-image-cls{
+  width: 120rpx;
+  height: 112rpx;
+}
 .banner-title {
   color: #fff;
   position: absolute;
@@ -125,8 +129,6 @@
 
 .sub-title {
   color: #76787e;
-  height: 36px;
-  line-height: 36px;
   padding: 16px;
   width: 100%;
   font-size: 14px;
@@ -138,10 +140,37 @@
 .news-item-container {
   background-color: #f2f2f2;
   width: 100%;
-  position: absolute;
+  position: relative;
   top: 200px;
 }
-
+.category-list-cls{
+  position: relative;
+  margin: 10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.swiper-cls
+{
+  margin: 50rpx;
+  position: relative;
+}
+.category-list-item-cls{
+  margin: 25rpx;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.category-spaceholder-cls
+{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  color: #333;
+  font-size: 30rpx;
+  text-align: center;
+}
 .news-item {
   display: flex;
   flex-direction: column;
