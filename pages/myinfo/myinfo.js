@@ -155,9 +155,8 @@ Page({
     console.log(wx.getStorageSync('openid'));
     console.log(wx.getStorageSync('user_id'));
     wx.request({
-      url: serverName + '/service/user/logout',
+      url: serverName2 + '/service/user/logout',
       data: {
-        openid: wx.getStorageSync('openid'),
         user_id: wx.getStorageSync('user_id')
       },
       method: 'POST',
@@ -167,6 +166,7 @@ Page({
       success: function (res) {
         console.log("---------------")
         console.log(res.data)
+        wx.clearStorageSync()
         wx.redirectTo({
           url: '../login/login',
         })
@@ -179,10 +179,6 @@ Page({
     
     this.get_current_user_info(user_id);
     this.get_publish_of_mine(user_id);
-    wx.showToast({
-      title: '下拉可以刷新个人信息',
-      icon: 'none'
-    })
     console.log(this.data)
    // console.log(publish_data)
     while (this.data.listfound.length != 0)

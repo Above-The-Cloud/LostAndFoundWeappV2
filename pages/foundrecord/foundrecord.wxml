@@ -56,7 +56,7 @@
       <view class="news-card-cls">
         <view class='news-info-cls'>
           <view class='news-info-desc-cls'>
-            <text class="news-item-title-cls"> <text style="color:gray"> 拾取物件：</text>物件名字</text>
+            <text class="news-item-title-cls"> <text style="color:gray"> 拾取物件：</text>{{item.title}}</text>
           </view>
           <view class='news-info-desc-cls'>
             <text class="news-item-title-cls"><text style="color:gray"> 拾取地点：</text>{{item.address}}</text>
@@ -64,9 +64,12 @@
           <view class='news-info-desc-cls'>
             <text class='time-cls'>{{item.sub_time}}</text>
           </view>
+          					<view class='news-info-state-cls'>
+					<text class='state-cls'>{{item.state}}</text></view>
+				
         </view>
         <view class='new-image-container-cls'>
-          <image src="{{item.usericon}}" class='news-img-cls'></image>
+          <image src="{{item.image[0]}}" class='news-img-cls'></image>
           <view class='tag-cls'>
             <text>{{item.type}}</text>
           </view>

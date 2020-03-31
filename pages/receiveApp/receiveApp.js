@@ -19,8 +19,12 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     animationData: [],
     listofitem: [],
-    listfound: [{ header: ' ' }],
-    listlost: [{ header: ' ' },],
+    listfound: [{
+      header: ' '
+    }],
+    listlost: [{
+      header: ' '
+    }, ],
     activeIndex: 2,
     duration: 2000,
     indicatorDots: true,
@@ -32,7 +36,7 @@ Page({
     actionSheetHidden: true,
 
   },
-  onShow: function(){
+  onShow: function () {
     this.onLoad();
   },
 
@@ -57,24 +61,31 @@ Page({
     this.data.listlost = []
     console.log(this.data.listlost.length)
     for (i = 0; i < Data.length; i++) {
-      var user_icon = Data[i].belongs_info.avatar;
-      var userid = Data[i].belongs_info.name;
-      var id = Data[i].id;
+      var userid = Data[i].belongs_info.nick_name;
       var Msg = Data[i].desc;
       var Submission_time = Data[i].mtime;
+      var id = Data[i].id;
       var imageurl = '';
+      var user_icon = Data[i].belongs_info.avatar;
       var publish_id = Data[i].id;
       var imageList = Data[i].images;
-      var state = Data[i].state;
+      var address = Data[i].location.address
       // var nick_name = that.Data[i].nickName,
       // var avatarUrl = that.Data[i].avatarUrl,
-      console.log("name")
-      console.log(userid)
       if (Data[i].images)
-        imageurl =Data[i].images[0];
+        imageurl = Data[i].images;
       // if (that.Data[i].type == 1)
       this.data.listlost.push({
-        username: userid, text: Msg, image: imageurl, imagelist: imageList, usericon: user_icon, sub_time: Submission_time, publish_id: publish_id, state: state,id:id
+        username: userid,
+        text: Msg,
+        image: imageurl,
+        imagelist: imageList,
+        usericon: user_icon,
+        sub_time: Submission_time,
+        publish_id: publish_id,
+        title: Data[i].title,
+        address: address,
+        id:id
       });
 
       // console.log(that.data.listlost.length)
@@ -88,9 +99,9 @@ Page({
     console.log(this.data.listlost.length)
   },
 
-  photopreview: function (event) {//图片点击浏览
-    var src = event.currentTarget.dataset.src;//获取data-src
-    var imgList = event.currentTarget.dataset.list;//获取data-list
+  photopreview: function (event) { //图片点击浏览
+    var src = event.currentTarget.dataset.src; //获取data-src
+    var imgList = event.currentTarget.dataset.list; //获取data-list
     //console.log(imgList);
     //图片预览
     wx.previewImage({
@@ -102,7 +113,7 @@ Page({
   onLoad: function () {
     var user_id = wx.getStorageSync('user_id')
     console.log('userid is ' + user_id);
-    
+
     this.get_current_user_info(user_id);
     this.get_publish_of_mine(user_id);
     // wx.showToast({
@@ -110,7 +121,7 @@ Page({
     //   icon: 'none'
     // })
     console.log(this.data)
-   // console.log(publish_data)
+    // console.log(publish_data)
     while (this.data.listfound.length != 0)
       this.data.listfound.pop();
     while (this.data.listlost.length != 0)
@@ -120,10 +131,10 @@ Page({
     this.index = 1
     if (this.data.activeIndex == 1)
       this.setData({
-        listofitem: this.data.listfound ,
+        listofitem: this.data.listfound,
       })
     else this.setData({
-      listofitem: this.data.listlost ,
+      listofitem: this.data.listlost,
     })
     console.log("listofitem's size")
     console.log(this.data.listofitem.length)
@@ -131,60 +142,60 @@ Page({
 
 
 
-  show_publish_infos: function(type_t, user_id, obj){
-    console.log('type_t:'+ type_t);
+  show_publish_infos: function (type_t, user_id, obj) {
+    console.log('type_t:' + type_t);
     // console.log('category:' + category);
-      wx.request({
-        url: serverNamenew + '/service/dynamic/list',
-        data: {
-          user_id: user_id,  
-          type: type_t,
-        },
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' // 默认值
-        },
-        success: function (res) {
-          obj.setData({
-            publish_data: res.data.data.dynamics
-          })
-          // console.log('当前数据库返回的publish记录')
-          // console.log(res)
-          obj.Loadmsg()
-        }
-      })
-  },
-
-  confirm:function(e)
-  {
-    var that = this
-    var id = e.target.dataset.posid
-    var user_id = wx.getStorageSync('user_id')
-    console.log("confirm!")
-    console.log(id)
     wx.request({
-      url: serverNamenew + '/service/dynamic/confirm',
+      url: serverNamenew + '/service/dynamic/list',
       data: {
         user_id: user_id,
-        id:id
+        type: type_t,
       },
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
-      
       success: function (res) {
-        console.log(res)
-          wx.showToast({
-            title: '已同意，恭喜你找到失主！',
-            icon: 'none'
-           })
+        obj.setData({
+          publish_data: res.data.data.dynamics
+        })
+        // console.log('当前数据库返回的publish记录')
+        // console.log(res)
+        obj.Loadmsg()
       }
     })
   },
 
-  refuse:function(e)
-  {
+  confirm: function (e) {
+    var that = this
+    var id = e.target.dataset.posid
+    var user_id = wx.getStorageSync('user_id')
+    console.log("confirm!")
+    console.log(user_id)
+    console.log(id)
+    wx.request({
+      url: serverNamenew + '/service/dynamic/confirm',
+      data: {
+        user_id: user_id,
+        id: id
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+
+      success: function (res) {
+        console.log(res)
+        wx.showToast({
+          title: '已同意，恭喜你找到失主！',
+          icon: 'none'
+        })
+      }
+    })
+    this.onLoad()
+  },
+
+  refuse: function (e) {
     console.log("refuse!")
     var that = this
     var id = e.target.dataset.posid
@@ -194,21 +205,22 @@ Page({
       data: {
         user_id: user_id,
         // user_id:551, 
-        id:id
+        id: id
       },
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
-      
+
       success: function (res) {
-      
-           wx.showToast({
-             title: '拒绝成功！',
-             icon: 'none'
+
+        wx.showToast({
+          title: '拒绝成功！',
+          icon: 'none'
         })
       }
     })
+    this.onLoad()
   },
 
 
@@ -221,8 +233,7 @@ Page({
       itemList: ['确认删除'],
       success(res) {
         console.log(res.tapIndex)
-        if(res.tapIndex == 0)
-        {
+        if (res.tapIndex == 0) {
           console.log(e);
           console.log(e.target.dataset.publishId);
           var pubid = e.target.dataset.publishId;
@@ -238,7 +249,7 @@ Page({
 
   deleteSingleMassageById: function (publish_id) {
     var that = this;
-    console.log('待删除的消息id为'+publish_id)
+    console.log('待删除的消息id为' + publish_id)
     wx.request({
       url: serverName + '/service/dynamic/delete',
       data: {
@@ -258,26 +269,26 @@ Page({
     })
   },
 
-  get_current_user_info: function(user_id){
+  get_current_user_info: function (user_id) {
 
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
-      url: serverName + '/service/user/getById',
+      url: serverNamenew + '/service/user/get',
       data: {
-        user_id: user_id
+        id: user_id
       },
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
-      
+
       success: function (res) {
         that.setData({
           nickName: res.data.data['nick_name'],
-          avatarUrl: res.data.data['avatar_url'],
-          contact_type: res.data.data['contact_type'],
-          contact_value: res.data.data['contact_value']
+          avatarUrl: res.data.data['avatar'],
+          contact_type: '手机号',
+          contact_value: res.data.data['phone']
         })
       }
     })
@@ -285,14 +296,14 @@ Page({
     console.log(user_id)
   },
 
-  get_publish_of_mine: function(user_id){
+  get_publish_of_mine: function (user_id) {
 
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
       url: serverNamenew + '/service/dynamic/list',
       data: {
-        user_id: user_id,  //!记得最后要修改掉
+        user_id: user_id, //!记得最后要修改掉
         state: 2
       },
       method: 'POST',
@@ -306,7 +317,7 @@ Page({
         that.setData({
           publish_data: res.data.data.dynamics
         })
-        var publish_data=res.data.data.dynamics;
+        var publish_data = res.data.data.dynamics;
         that.Loadmsg(publish_data);
       }
     })

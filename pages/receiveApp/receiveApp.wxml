@@ -55,7 +55,7 @@
       <view class="news-card-cls">
         <view class='news-info-cls'>
           <view class='news-info-desc-cls'>
-            <text class="news-item-title-cls"> <text style="color:gray"> 拾取物件：</text>物件名字</text>
+            <text class="news-item-title-cls"> <text style="color:gray"> 拾取物件：</text>{{item.title}}</text>
           </view>
           <view class='news-info-desc-cls'>
             <text class="news-item-title-cls"><text style="color:gray"> 拾取地点：</text>{{item.address}}</text>

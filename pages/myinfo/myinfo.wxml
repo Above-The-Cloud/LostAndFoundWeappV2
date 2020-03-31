@@ -1,78 +1,78 @@
  <view class="contain" style="background-image:url(https://images.pexels.com/photos/267514/pexels-photo-267514.jpeg?w=940&h=650&auto=compress&cs=tinysrgb);background-repeat:repeat;opacity:0.9">
 
-<view class="mask"></view> 
-  <image src='../../images/myinfo/setting.png' class='_setting' data-publish-id="{{item.publish_id}}"bindtap="Setting"></image>
-    <view class='user_ID'> 
-        <!-- <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>  
+ 	<view class="mask"></view>
+ 	<image src='../../images/myinfo/setting.png' class='_setting' data-publish-id="{{item.publish_id}}" bindtap="Setting"></image>
+ 	<view class='user_ID'>
+ 		<!-- <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>  
       <block wx:else> -->
-      <block>
-         <image animation="{{animationData}}" bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" background-size="cover"></image>  
-  <view class='user_infomation'>
-                <view><text class="userinfo-nickname">{{nickName}}</text></view>
-                <view><text class="userinfo-wxnumber">{{contact_type}}:{{contact_value}}</text></view>
-            </view>
-      </block>
-    </view>
-</view>
+ 		<block>
+ 			<image animation="{{animationData}}" bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" background-size="cover"></image>
+ 			<view class='user_infomation'>
+ 				<view><text class="userinfo-nickname">{{nickName}}</text></view>
+ 				<view><text class="userinfo-wxnumber">{{contact_type}}:{{contact_value}}</text></view>
+ 			</view>
+ 		</block>
+ 	</view>
+ </view>
  <view>
-    <view class="kind-list">
-      <block wx:for-items="{{list}}" wx:key="{{item.id}}">
-        <view class="kind-list-item">
-          <view id="{{item.id}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" bindtap="kindToggle">
-            <view class="kind-list-text">{{item.name}}</view>
-            <image class="kind-list-img" src="resources/kind/{{item.id}}.png"></image>
-          </view>
-          <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
-            <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
-              <block wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
-                <navigator url="../userinfo/userinfo?userid={{page.url}}" class="navigator">
-                  <view class="navigator-text">{{page.zh}}</view>
-                  <view class="navigator-arrow"></view>
-                </navigator>
-              </block>
-            </view>
-          </view>
-        </view>
-      </block>
-    </view>
-  </view>
+ 	<view class="kind-list">
+ 		<block wx:for-items="{{list}}" wx:key="{{item.id}}">
+ 			<view class="kind-list-item">
+ 				<view id="{{item.id}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" bindtap="kindToggle">
+ 					<view class="kind-list-text">{{item.name}}</view>
+ 					<image class="kind-list-img" src="resources/kind/{{item.id}}.png"></image>
+ 				</view>
+ 				<view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
+ 					<view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
+ 						<block wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
+ 							<navigator url="../userinfo/userinfo?userid={{page.url}}" class="navigator">
+ 								<view class="navigator-text">{{page.zh}}</view>
+ 								<view class="navigator-arrow"></view>
+ 							</navigator>
+ 						</block>
+ 					</view>
+ 				</view>
+ 			</view>
+ 		</block>
+ 	</view>
+ </view>
 
-  <view class = "menu_bg">
-    <view bindtap = "lostRecord" class = "category_bg">
-        <image class="icon" src="../../images/myinfo/lostRecord.png"></image>
-        <text class = "category_text">失物记录  </text>
-        <image class="logo" src="../../images/myinfo/next_step.png"></image>
-    </view>
-    <view class = "line"></view>
-    <view bindtap = "foundRecord" class = "category_bg">
-      <image class="icon" src="../../images/myinfo/foundRecord.png"></image>
-      <text class = "category_text">拾取记录  </text>
-      <image class="logo" src="../../images/myinfo/next_step.png"></image>
-    </view>
-    <view class = "line"></view>
-    <view bindtap = "myApp" class = "category_bg">
-      <image class="icon" src="../../images/myinfo/myApp.png"></image>
-      <text class = "category_text">我的申请  </text>
-      <image class="logo" src="../../images/myinfo/next_step.png"></image>
-    </view>
-    <view class = "line"></view>
-    <view bindtap = "receiveApp" class = "category_bg">
-      <image class="icon" src="../../images/myinfo/receiveApp.png"></image>
-      <text class = "category_text">收到申请  </text>
-      <image class="logo" src="../../images/myinfo/next_step.png"></image>
-    </view>
-    <view class = "line"></view>
-    <view bindtap = "sysInform" class = "category_bg">
-      <image class="icon" src="../../images/myinfo/sysInform.png"></image>
-      <text class = "category_text">系统通知  </text>
-      <image class="logo" src="../../images/myinfo/next_step.png"></image>
-    </view>
-    <view bindtap = "Logout" class = "backoff">
-      <text class = "backoff_text">退出当前账号</text>
-    </view>
-  </view>
+ <view class="menu_bg">
+ 	<view bindtap="lostRecord" class="category_bg">
+ 		<image class="icon" src="../../images/myinfo/lostRecord.png"></image>
+ 		<text class = "category_text">失物记录  </text>
+ 		<image class="logo" src="../../images/myinfo/next_step.png"></image>
+ 	</view>
+ 	<view class="line"></view>
+ 	<view bindtap="foundRecord" class="category_bg">
+ 		<image class="icon" src="../../images/myinfo/foundRecord.png"></image>
+ 		<text class = "category_text">拾取记录  </text>
+ 		<image class="logo" src="../../images/myinfo/next_step.png"></image>
+ 	</view>
+ 	<view class="line"></view>
+ 	<view bindtap="myApp" class="category_bg">
+ 		<image class="icon" src="../../images/myinfo/myApp.png"></image>
+ 		<text class = "category_text">我的申请  </text>
+ 		<image class="logo" src="../../images/myinfo/next_step.png"></image>
+ 	</view>
+ 	<view class="line"></view>
+ 	<view bindtap="receiveApp" class="category_bg">
+ 		<image class="icon" src="../../images/myinfo/receiveApp.png"></image>
+ 		<text class = "category_text">收到申请  </text>
+ 		<image class="logo" src="../../images/myinfo/next_step.png"></image>
+ 	</view>
+ 	<view class="line"></view>
+ 	<view bindtap="sysInform" class="category_bg">
+ 		<image class="icon" src="../../images/myinfo/sysInform.png"></image>
+ 		<text class = "category_text">系统通知  </text>
+ 		<image class="logo" src="../../images/myinfo/next_step.png"></image>
+ 	</view>
+ 	<view bindtap="Logout" class="backoff">
+ 		<text class = "backoff_text">退出当前账号</text>
+ 	</view>
+ </view>
 
-   <!-- <view class="con">
+ <!-- <view class="con">
   <view class="news-item-container">
 
     <block wx:for="{{listofitem}}" wx:for-index="id">
@@ -97,4 +97,4 @@
       </view>
     </block>
   </view> -->
-  <!-- </view> -->
+ <!-- </view> -->

@@ -8,7 +8,18 @@
   width: 100vw;
   height: 170px; 
 }
-
+.news-info-state-cls{
+  font-size:25rpx;
+  bottom: 0;
+  margin-top: 20rpx;
+  color: #333333
+}
+.state-cls {
+  position: relative;
+  font-size: 30rpx;
+  color: #ffa1a1;
+  font-weight: bold;
+}
 .contain .mask{
   position: absolute;
   left: 0;
