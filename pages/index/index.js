@@ -17,7 +17,7 @@ Page({
       '../../images/index/swiper/3.jpeg',
       '../../images/index/swiper/4.jpg'
     ],
-    tagList:[],
+    tagList: [],
     listofitem: [],
     listfound: [{
       header: ' '
@@ -42,8 +42,7 @@ Page({
       url: "../search/search"
     })
   },
-  toApply: function(e)
-  {
+  toApply: function (e) {
     console.log(e.currentTarget.dataset)
     var applyId = e.currentTarget.dataset.applyid
     var user_id = wx.getStorageSync('user_id')
@@ -52,7 +51,7 @@ Page({
     wx.showToast({
       title: '联系方式为' + phone + '请前往个人页面查看申请记录',
       icon: 'none',
-      duration:2000
+      duration: 2000
     })
     wx.request({
       url: serverName2 + '/service/dynamic/apply',
@@ -60,19 +59,18 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
-      data:{
+      data: {
         id: applyId,
         user_id: user_id
       }
     })
     this.onLoad()
   },
-  oneKeyBack:function(e)
-  {
+  oneKeyBack: function (e) {
     console.log('一键找回')
     var that = this
     wx.chooseImage({
-      count: 2,
+      count: 1,
       success: function (res) {
         console.log('Recog......')
         console.log(res)
@@ -98,13 +96,16 @@ Page({
               success: function (res) {
                 var results = res.data.data.items
                 console.log(results)
-                console.log('是学号吗',results[5].text)
-                wx.setStorageSync('schoolCardId', results[5].text)
+                var idnumber = that.detectNumber(results)
+                console.log(idnumber)
+                console.log('是学号吧', idnumber)
+                wx.setStorageSync('schoolCardId', idnumber)
+
                 wx.switchTab({
                   url: '../edit/edit',
                 })
                 that.setData({
-                  schoolCardId: results[5].text
+                  schoolCardId: idnumber
                 })
               }
             })
@@ -119,6 +120,16 @@ Page({
         })
       }
     })
+  },
+  detectNumber: function (results) {
+    console.log('detect...')
+    for (var i = 0; i < results.length; i++) {
+      if (isNaN(results[i].text) == false)
+        return results[i].text
+
+    }
+
+
   },
   bind所有: function (e) {
     this.setData({
@@ -264,7 +275,7 @@ Page({
       this.data.listlost.pop();
     var i = 0;
     var fetchdata = that.data.publish_data
-    console.log('fetch',fetchdata)
+    console.log('fetch', fetchdata)
     for (i = 0; i < fetchdata.length; i++) {
       var Msg = fetchdata[i].content;
       var user_id = fetchdata[i].user_id;
@@ -295,7 +306,7 @@ Page({
           username: nick_name,
           state: state,
           text: Msg,
-          title:title,
+          title: title,
           imagelist: imageList,
           image: imageurl,
           usericon: user_icon,
@@ -311,7 +322,7 @@ Page({
           username: nick_name,
           state: state,
           text: Msg,
-          title:title,
+          title: title,
           imagelist: imageList,
           image: imageurl,
           usericon: user_icon,

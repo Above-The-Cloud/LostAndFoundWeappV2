@@ -1,7 +1,7 @@
 <!--pages/wyq/wyq.wxml-->
 <view class='release-page-cls'>
 	<!-- <button bindtap="ocrRecog">识别学号</button> -->
-	<view class="weui-cell"><text>学工号：{{id_number}}</text></view>
+	
 	<view class="radio-choose-cls">
 		<view>发布类型</view>
 		<radio-group class="radio-group" bindchange="radioTypeChange">
@@ -26,10 +26,11 @@
 	<view class="radio-choose-cls" bindtap="tagAction">
 		<!-- <input class="weui-input" maxlength="20" placeholder="添加标签" /> -->
 		<text wx:if="{{tagSelected}}">{{tagSheetItems[tagSelected - 1].text}}</text>
-    <text wx:else>请选择物品类别</text>
+		<text wx:else>请选择物品类别</text>
 		<mp-actionSheet bindactiontap="tagChoose" show="{{showTagSheet}}" actions="{{tagSheetItems}}" title="请选择物品类别">
 		</mp-actionSheet>
 	</view>
+  <view wx:if="{{tagSelected==1}}" class="weui-cell">学工号：<input class="weui-input" maxlength="15" value="{{id_number}}" bindinput="bind_id_number_input" placeholder="{{id_number}}" /></view>
 	<view class="radio-choose-cls" bindtap="bindLocation">
 		<view>{{displayAddress}}</view>
 	</view>

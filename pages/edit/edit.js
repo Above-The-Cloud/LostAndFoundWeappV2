@@ -116,7 +116,7 @@ Page({
               success: function (res) {
                 var results = res.data.data.items
                 console.log(results)
-                console.log(results[5].text)
+                console.log(that.detectNumber(results))
                 that.setData({
                   id_number: results[5].text,
                   schoolCardId: results[5].text
@@ -136,6 +136,7 @@ Page({
       }
     })
   },
+
   clearData: function()
   {
     this.setData({
@@ -158,7 +159,7 @@ Page({
     //   schoolCardId:number
     // })
     wx.request({
-      url: 'http://lostandfoundv2.yiwangchunyu.wang/service/dynamic/categories',
+      url: 'https://lostandfoundv2.yiwangchunyu.wang/service/dynamic/categories',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded' // 默认值
@@ -302,7 +303,7 @@ Page({
       title: title,
       location: upLocation
     }
-    if(this.data.schoolCardId != null)
+    if(this.data.schoolCardId != null && tagSelected == 1)
       uploadFormdata['meta'] = this.data.schoolCardId
     console.log(user_id)
     console.log(uploadFormdata)
@@ -589,7 +590,11 @@ Page({
   },
   onShow: function () {
     var number = wx.getStorageSync('schoolCardId')
-    wx.setStorageSync('schoolCardId', '')
+    wx.setStorageSync('schoolCardId', null)
+    if(number)
+      this.setData({
+        tagSelected:1
+      })
     console.log(number)
     this.setData({
       id_number:number,
