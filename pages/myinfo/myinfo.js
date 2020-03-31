@@ -2,6 +2,7 @@
 
 const app = getApp()
 var serverName = app.globalData.serverName
+var serverName2 = 'https://lostandfoundv2.yiwangchunyu.wang'
 var utils = require('../../utils/util.js')
 var flag = true;
 var type_t = 'lost'
@@ -251,13 +252,13 @@ Page({
   },
 
   get_current_user_info: function(user_id){
-
+    
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
-      url: serverName + '/service/user/getById',
+      url: serverName2 + '/service/user/get',
       data: {
-        user_id: user_id
+        id: user_id
       },
       method: 'POST',
       header: {
@@ -265,11 +266,12 @@ Page({
       },
       
       success: function (res) {
+        console.log('get',res)
         that.setData({
           nickName: res.data.data['nick_name'],
-          avatarUrl: res.data.data['avatar_url'],
-          contact_type: res.data.data['contact_type'],
-          contact_value: res.data.data['contact_value']
+          avatarUrl: res.data.data['avatar'],
+          contact_type: '手机号',
+          contact_value: res.data.data['phone']
         })
       }
     })
