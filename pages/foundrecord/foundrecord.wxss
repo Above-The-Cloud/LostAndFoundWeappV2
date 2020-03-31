@@ -1,4 +1,4 @@
-/*pages/myinfo/myinfo.wxss */
+/* pages/foundrecord/foundrecord.wxss */
 .contain{
   position: relative;
   flex-direction: column;  /*主轴方向*/
@@ -7,7 +7,18 @@
   width: 100vw;
   height: 170px; 
 }
-
+.news-info-state-cls{
+  font-size:25rpx;
+  bottom: 0;
+  margin-top: 20rpx;
+  color: #333333
+}
+.state-cls {
+  position: relative;
+  font-size: 30rpx;
+  color: #ffa1a1;
+  font-weight: bold;
+}
 .contain .mask{
   position: absolute;
   left: 0;
@@ -209,70 +220,188 @@
   background-color: #f2f2f2;
 }
 
-.category_text
-{
-  position:relative; 
-  left:5%;
-  font-size: 30rpx;   
-  color: rgb(15,15,15);   
-}
 
-.category_bg
-{
-  position:relative;
-  top:20rpx;
-  background-color:#fff;
-  height:40px;
-  border-radius: 20rpx;
-  align-items: center;
-}
-
-.logo
-{
-  position:relative;
-  left:65%;
-  top:15%;
-  width: 25px;
-  height: 25px;
-  z-index: 2;
-}
-
-.icon
-{
-   position:relative;
-   left:2%;
-   top:15%;
-   width:25px;
-   height:25px;
-   z-index:2;
-}
-
-
-.line
-{
+.news-item-container {
   background-color: #f2f2f2;
-  height:5px;
+  width: 100%;
+  position: absolute;
+  top: 200px;
 }
 
-.backoff
-{
-   position: relative;
-   top:20px;
-   left:17%;
-   width: 250px;
-   height:30px;
-   background-color: rgb(182, 206, 97);
-   background-position: center;
-   border-radius: 60rpx;
-   align-items: center;
-   text-align: center;
+.news-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-top: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  border-bottom: 1px solid #d0d0d0;
+  border-radius: 5px;
 }
 
-.backoff_text
-{
-  position:relative; 
-  top:10%;
-  font-size: 30rpx;   
-  color: rgb(15,15,15);   
+.news-item-cls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 8px;
+  padding-top: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  margin-top: 5px;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  border-bottom: 1px solid #d0d0d0;
+  border-radius: 5px;
+}
+.news-info-desc-cls{
+  font-size:25rpx;
+  margin-top: 10rpx;
+  color: #333333
+}
+.news-info-cls {
+  flex-direction: column;
+  padding: 20rpx;
+  display: flex;
+  width: 300rpx;
 }
 
+.new-image-container-cls {
+  padding: 20rpx;
+  display: flex;
+  width: 140rpx;
+  flex-direction: column;
+}
+
+.userinfo {
+  
+  display: flex;
+  flex-direction: row;
+}
+
+.userinfo-cls {
+  
+  margin: 20rpx;
+  width: 150rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.username-cls {
+  position: relative;
+  text-align: center;
+  /* width: 150px; *//* left: 10px; *//* top: 10px; */
+  font-size: 25rpx;
+  color: rgb(92, 107, 171);
+  font-weight: bold;
+}
+
+.apply-btn-cls {
+  position: relative;
+  text-align: center;
+  margin-top: 20rpx;
+}
+
+.username {
+  position: relative;
+  width: 150px;
+  /* left: 10px; */
+  top: 10px;
+  font-size: 15px;
+  color: rgb(92, 107, 171);
+  font-weight: bold;
+}
+
+.msginfo {
+  display: flex;
+}
+
+.address {
+  position: absolute;
+  right: 10px;
+  color: rgb(92, 107, 171);
+  font-size: 12px;
+}
+
+.time {
+  position: relative;
+  font-size: 12px;
+  color: grey;
+}
+
+.time-cls {
+  position: relative;
+  font-size: 25rpx;
+  color: grey;
+}
+.tag-cls {
+  position: relative;
+  font-size: 25rpx;
+  color: grey;
+  text-align: right;
+}
+.hover {
+  color: blue;
+}
+
+.detail {
+  position: relative;
+  left: 37%;
+  font-size: 18px;
+}
+
+.news-card-cls {
+  display: flex;
+  margin-top: 20rpx;
+  border: 2px solid gray ;
+  border-radius: 10px;
+  width: 750rpx;
+  height: 260rpx;
+  flex-direction: row;
+}
+
+.news-item-right {
+  display: flex;
+  flex-direction: row;
+  width: 280px;
+  height: 180px;
+}
+
+.news-image {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+}
+
+.icon-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+}
+
+.news-img-cls {
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.icon-image-cls {
+  text-align: center;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 40px;
+}
+
+.news-item-title {
+  text-indent: 50px;
+  font-size: 16px;
+}
+
+.load-btn {
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}

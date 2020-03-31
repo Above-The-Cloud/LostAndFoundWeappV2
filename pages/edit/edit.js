@@ -152,6 +152,20 @@ Page({
   onLoad: function (options) {
     var that = this
     that.clearData()
+    var number = wx.getStorageSync('schoolCardId')
+    var tmpPath = wx.getStorageSync('tmpPath')
+    wx.setStorageSync('schoolCardId', null)
+    if(number)
+      this.setData({
+        tagSelected:1,
+        imageList: tmpPath,
+        filep: tmpPath
+      })
+    console.log(number)
+    this.setData({
+      id_number:number,
+      schoolCardId:number
+    })
     // var number = wx.getStorageSync('schoolCardId')
     // console.log(number)
     // this.setData({
@@ -303,7 +317,7 @@ Page({
       title: title,
       location: upLocation
     }
-    if(this.data.schoolCardId != null && tagSelected == 1)
+    if(this.data.schoolCardId != null && this.data.tagSelected == 1)
       uploadFormdata['meta'] = this.data.schoolCardId
     console.log(user_id)
     console.log(uploadFormdata)
@@ -589,16 +603,6 @@ Page({
     })
   },
   onShow: function () {
-    var number = wx.getStorageSync('schoolCardId')
-    wx.setStorageSync('schoolCardId', null)
-    if(number)
-      this.setData({
-        tagSelected:1
-      })
-    console.log(number)
-    this.setData({
-      id_number:number,
-      schoolCardId:number
-    })
+
   },
 })

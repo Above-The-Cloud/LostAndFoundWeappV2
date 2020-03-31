@@ -100,7 +100,7 @@ Page({
                 console.log(idnumber)
                 console.log('是学号吧', idnumber)
                 wx.setStorageSync('schoolCardId', idnumber)
-
+                wx.setStorageSync('tmpPath', tmpfile)
                 wx.switchTab({
                   url: '../edit/edit',
                 })
