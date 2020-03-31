@@ -1,22 +1,23 @@
 // pages/login/login.js
 const app = getApp()
 var serverName = app.globalData.serverName
-
+var serverName2 = 'https://lostandfoundv2.yiwangchunyu.wang'
 Page({
   data: {
-    items: [{
-        name: 'stu',
-        value: '用户'
-      },
-      {
-        name: 'admin',
-        value: '管理员',
-        checked: 'true'
-      },
-    ],
+    // items: [{
+    //     name: 'stu',
+    //     value: '用户'
+    //   },
+    //   {
+    //     name: 'admin',
+    //     value: '管理员',
+    //     checked: 'true'
+    //   },
+    // ],
     focus: false,
     inputValue: '',
     userInfo: null,
+    phonenumber: '',
     openid: '',
     user_type: 'stu',
     code: ' '
@@ -28,17 +29,22 @@ Page({
     })
     console.log(this.data.user_type);
   },
-  bindKeyInput: function(e) {
+  bindKeyInput: function (e) {
     this.setData({
       inputValue: e.detail.value
     })
   },
-  bindPwdInput: function(e) {
+  bindPwdInput: function (e) {
     this.setData({
       pwd: e.detail.value
     })
   },
-  bindGetUserInfo: function(e) {
+  bindPhoneInput: function (e) {
+    this.setData({
+      phonenumber: e.detail.value
+    })
+  },
+  bindGetUserInfo: function (e) {
     var that = this;
     console.log('bindgetuserinfo 调用')
     // console.log(e);
@@ -51,15 +57,17 @@ Page({
               // 可以将 res 发送给后台解码出 unionId
               app.globalData.userInfo = res.userInfo
               console.log(res.userInfo)
-              if(that.data.inputValue == '' || that.data.pwd == '')
-              {
-                wx.showToast({
-                  title: '请输入用户名和密码',
-                  icon: 'none',
-                  duration: 2000
-                })
-                return
-              }
+              that.setData({
+                userInfo: res.userInfo
+              })
+              // if (that.data.inputValue == '' || that.data.pwd == '') {
+              //   wx.showToast({
+              //     title: '请输入用户名和密码',
+              //     icon: 'none',
+              //     duration: 2000
+              //   })
+              //   return
+              // }
               this.wxLogin();
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
@@ -72,15 +80,15 @@ Page({
       }
     })
   },
-  wxLogin: function(e) {
+  wxLogin: function (e) {
     var that = this;
     // console.log(app.globalData.userInfo);
     //获得用户的openid
     wx.login({
-      success: function(res) {
+      success: function (res) {
         console.log(res); //获取code
         wx.request({
-          url: 'https://lostandfound.yiwangchunyu.wang/service/user/getOpenid',
+          url: 'https://lostandfoundv2.yiwangchunyu.wang/service/user/getOpenid',
           data: {
             js_code: res.code, //获取openid和session_key
           },
@@ -88,60 +96,84 @@ Page({
             'content-type': 'application/x-www-form-urlencoded' // 默认值
           },
           method: 'POST',
-          success: function(res) {
-            console.log(res);
+          success: function (res) {
+            console.log(res.data);
             // console.log(res.data.data.openid);
             wx.setStorageSync('openid', res.data.data.openid);
+            var openid = wx.getStorageSync('openid');
+            that.setData({
+              openid: openid
+            })
+            console.log(openid)
+            wx.request({
+              url: 'https://lostandfoundv2.yiwangchunyu.wang/service/user/loginByOpenid',
+              data: {
+                openid: openid
+              },
+              header: {
+                'content-type': 'application/x-www-form-urlencoded' // 默认值
+              },
+              method: 'POST',
+              success: function (res) {
+                console.log('loginByOpenid', res)
+
+                wx.setStorageSync('user_id', res.data.data.id)
+                console.log(that.data)
+                var pageds = that.data
+                that.statelessLogin(pageds.inputValue, pageds.userInfo.gender, pageds.pwd, pageds.openid, pageds.phonenumber, pageds.userInfo.nickName, pageds.userInfo.avatarUrl)
+              }
+
+            })
           }
         })
       }
     })
 
-    var openid = wx.getStorageSync('openid');
-    wx.request({
-      url: 'https://lostandfound.yiwangchunyu.wang/service/user/loginByUid',
-      data: {
-        openid: openid,
-        user_id: that.data.inputValue,
-        password: that.data.pwd,
-        avatar_url: app.globalData.userInfo.avatarUrl
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      success: function(e) {
-        console.log(e)
-        if (e.data.code == 0) {
-          wx.setStorageSync('user_id', e.data.data.user_id);
-          console.log(e.data.data)
-          if (e.data.data.contact_type) {
-            wx.showToast({
-              title: '登录成功',
-              icon: 'success',
-              duration: 3000,
-              success: function(e) {
-                wx.switchTab({
-                  url: '../index/index'
-                })
-              }
-            })
-          } else {
-            wx.redirectTo({
-              url: '../initinfo/initinfo'
-            })
-          }
-        } else {
-          wx.showToast({
-            title: e.data.msg,
-            icon: 'none',
-          })
-          that.onLoad()
-        }
-      }
-    })
+
+    // wx.request({
+    //   url: 'https://lostandfound.yiwangchunyu.wang/service/user/loginByUid',
+    //   data: {
+    //     openid: openid,
+    //     user_id: that.data.inputValue,
+    //     password: that.data.pwd,
+    //     avatar_url: app.globalData.userInfo.avatarUrl
+    //   },
+    //   method: 'POST',
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded' // 默认值
+    //   },
+    //   success: function (e) {
+    //     console.log(e)
+    //     if (e.data.code == 0) {
+    //       wx.setStorageSync('user_id', e.data.data.user_id);
+    //       console.log(e.data.data)
+    //       if (e.data.data.contact_type) {
+    //         wx.showToast({
+    //           title: '登录成功',
+    //           icon: 'success',
+    //           duration: 3000,
+    //           success: function (e) {
+    //             wx.switchTab({
+    //               url: '../index/index'
+    //             })
+    //           }
+    //         })
+    //       } else {
+    //         wx.redirectTo({
+    //           url: '../initinfo/initinfo'
+    //         })
+    //       }
+    //     } else {
+    //       wx.showToast({
+    //         title: e.data.msg,
+    //         icon: 'none',
+    //       })
+    //       that.onLoad()
+    //     }
+    //   }
+    // })
   },
-  formSubmit: function(e) {
+  formSubmit: function (e) {
     //TODO:表单检查
     console.log(this.data);
     //DONE:表单检查
@@ -150,42 +182,117 @@ Page({
 
   },
 
-  onLoad: function() {
+  onLoad: function () {
     console.log("login onLoad...")
-
     var that = this
     that.setData({
       userInfo: app.globalData.userInfo
     })
     var openid = wx.getStorageSync('openid');
-
     if (openid) {
-      console.log(openid);
+      console.log('ifopenid',openid);
       wx.request({
-        url: 'https://lostandfound.yiwangchunyu.wang/service/user/loginByOpenid',
+        url: serverName2 + '/service/user/loginByOpenid',
         method: 'POST',
-        data: {
+        data:{
           openid: openid
         },
         header: {
           'content-type': 'application/x-www-form-urlencoded' // 默认值
         },
-        success: function(e) {
-          if (e.data.code == 0) {
-            wx.setStorageSync('user_id', e.data.data.user_id);
-            wx.switchTab({
-              url: '../index/index'
-            })
-          }
+        success:function(res){
+          console.log(res.data)
+          wx.setStorageSync('user_id', res.data.data.id)
+          wx.switchTab({
+            url: '../index/index',
+          })
         }
-
       })
+      // wx.switchTab({
+      //   url: '../index/index',
+      // })
+      // wx.request({
+      //   url: 'https://lostandfound.yiwangchunyu.wang/service/user/loginByOpenid',
+      //   method: 'POST',
+      //   data: {
+      //     openid: openid
+      //   },
+      //   header: {
+      //     'content-type': 'application/x-www-form-urlencoded' // 默认值
+      //   },
+      //   success: function (e) {
+      //     if (e.data.code == 0) {
+      //       wx.setStorageSync('user_id', e.data.data.user_id);
+      //       wx.switchTab({
+      //         url: '../index/index'
+      //       })
+      //     }
+      //   }
+
+      // })
     }
-
   },
-
-
-  register: function(user_id, user_password, openid, nickName, avatarUrl) {
+  statelessLogin: function (stu_id, gender, password, openid, phone, nickName, avatarUrl) {
+    console.log(stu_id, gender, password, openid, phone, nickName, avatarUrl)
+    wx.request({
+      url: serverName2 + '/service/user/login',
+      data: {
+        stu_id: stu_id,
+        password: password,
+        openid: openid,
+        nick_name: nickName,
+        avatar: avatarUrl,
+        phone: phone,
+        gender: gender
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success: function (res) {
+        console.log("statelessLogin");
+        console.log(res);
+        if (res.data.code != 0) {
+          wx.showToast({
+            title: res.data.msg,
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          wx.setStorageSync('user_id', res.data.data.id)
+          wx.showToast({
+            title: '登录成功',
+            icon: 'success',
+            duration: 3000,
+            success: function (e) {
+              wx.switchTab({
+                url: '../index/index'
+              })
+            }
+          })
+        }
+        // if (res.data.data.tag == 'unregistered') {
+        //   wx.setStorageSync('user_id', user_id);
+        //   wx.redirectTo({
+        //     url: '../initinfo/initinfo'
+        //   })
+        // } else if (res.data.data.tag == 'registered') {
+        //   wx.setStorageSync('user_id', user_id);
+        //   wx.showToast({
+        //     title: '登录成功',
+        //     icon: 'success',
+        //     duration: 3000,
+        //     success: function (e) {
+        //       wx.switchTab({
+        //         url: '../index/index'
+        //       })
+        //     }
+        //   })
+        // }
+      }
+    })
+  },
+  register: function (user_id, user_password, openid, nickName, avatarUrl) {
     wx.request({
       url: serverName + '/login/register.php',
       data: {
@@ -200,7 +307,7 @@ Page({
       header: {
         'content-type': 'application/json' // 默认值
       },
-      success: function(res) {
+      success: function (res) {
         console.log("register");
         console.log(res);
         if (res.data.code != 0) {
@@ -221,7 +328,7 @@ Page({
             title: '登录成功',
             icon: 'success',
             duration: 3000,
-            success: function(e) {
+            success: function (e) {
               wx.switchTab({
                 url: '../index/index'
               })

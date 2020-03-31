@@ -2,5 +2,8 @@
   "window": {
     "enablePullDownRefresh": true
   },
-    "navigationBarTitleText": "Lost&Found平台"
+  "navigationBarTitleText": "Lost&Found平台",
+  "usingComponents": {
+    "mp-icon": "../../components/icon/icon"
+  }
 }
