@@ -11,7 +11,12 @@
     "pages/test/index",
     "pages/search/search",
     "pages/userinfo/userinfo",
-    "pages/modifyinfo/modifyinfo"
+    "pages/modifyinfo/modifyinfo",
+    "pages/lostrecord/lostrecord",
+    "pages/foundrecord/foundrecord",
+    "pages/myApp/myAPP",
+    "pages/myApp/myApp",
+    "pages/receiveApp/receiveApp"
   ],
   "window": {
     "backgroundTextStyle": "light",

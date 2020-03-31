@@ -1,7 +1,8 @@
-// pages/myinfo/myinfo.js
+// pages/lostrecord/lostrecord.js
 
 const app = getApp()
-var serverName = app.globalData.serverName
+var serverName = "https://lostandfound.yiwangchunyu.wang"
+var serverNamenew = "https://lostandfoundv2.yiwangchunyu.wang"
 var utils = require('../../utils/util.js')
 var flag = true;
 var type_t = 'lost'
@@ -13,14 +14,14 @@ Page({
    */
   data: {
     userInfo: {},
+    type: 1, //lost
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     animationData: [],
-    // list: [],
     listofitem: [],
     listfound: [{ header: ' ' }],
     listlost: [{ header: ' ' },],
-    activeIndex: 1,
+    activeIndex: 2,
     duration: 2000,
     indicatorDots: true,
     autoplay: true,
@@ -51,29 +52,38 @@ Page({
     var i = 0;
     console.log('Data!!!')
     console.log(Data)
+    console.log(Data.length)
+    this.data.listlost = []
+    this.data.listfound = []
+    console.log(this.data.listlost.length)
     for (i = 0; i < Data.length; i++) {
       var userid = Data[i].user_info.nick_name;
-      var Msg = Data[i].content;
+      var Msg = Data[i].desc;
       var Submission_time = Data[i].mtime;
       var imageurl = '';
-      var user_icon = Data[i].user_info.avatar_url;
-      var publish_id = Data[i].dynamic_id;
-      var imageList = that.data.publish_data[i].images;
+      var user_icon = Data[i].user_info.avatar;
+      var publish_id = Data[i].id;
+      var imageList = Data[i].images;
       // var nick_name = that.Data[i].nickName,
       // var avatarUrl = that.Data[i].avatarUrl,
       if (Data[i].images)
         imageurl =Data[i].images[0];
-      //   if (that.Data[i].type == 'lost')
-      this.data.listfound.push({
+      // if (that.Data[i].type == 1)
+      this.data.listlost.push({
         username: userid, text: Msg, image: imageurl, imagelist: imageList, usericon: user_icon, sub_time: Submission_time, publish_id: publish_id
       });
+
+      console.log(that.data.listlost.length)
       //   else
       //   this.data.listlost.push({ username: userid, text: Msg, image: imageurl, usericon: user_icon, sub_time: Submission_time });
     }
     this.setData({
-      listofitem: this.data.listfound
+      listofitem: this.data.listlost
     })
+    console.log("this data‘s size")
+    console.log(this.data.listlost.length)
   },
+
   photopreview: function (event) {//图片点击浏览
     var src = event.currentTarget.dataset.src;//获取data-src
     var imgList = event.currentTarget.dataset.list;//获取data-list
@@ -84,104 +94,17 @@ Page({
       urls: imgList // 需要预览的图片http链接列表
     })
   },
-  Setting:function(){
-    var that = this;
-    wx.showActionSheet({
-      itemList: ['联系方式修改', '退出登录'],
-      success(res) {
-        console.log(res.tapIndex)
-        if (res.tapIndex == 0) {
-          console.log('联系方式修改')
-          wx.navigateTo({
-            url: '../modifyinfo/modifyinfo',
-          })
-        }
-        else
-        {
-          that.Logout();
-        }
-      },
-      fail(res) {
-        console.log(res.errMsg)
-      }
-    })
-  },
 
-  lostRecord:function()
-  {
-      console.log("失物记录")
-      wx.navigateTo({
-        url: '../lostrecord/lostrecord',
-      })
-  },
-
-  foundRecord:function()
-  {
-    console.log("拾取记录")
-    wx.navigateTo({
-      url: '../foundrecord/foundrecord',
-    })
-  },
-
-  myApp:function()
-  {
-    console.log("我的申请")
-    wx.navigateTo({
-      url: '../myApp/myApp',
-    })
-  },
-
-  receiveApp:function()
-  {
-    console.log("收到申请")
-    wx.navigateTo({
-      url: '../receiveApp/receiveApp',
-    })
-  },
-
-  // sysInform:function()
-  // {
-  //   console.log("系统通知")
-  //   wx.navigateTo({
-  //     url: '../sysInform/sysInform',
-  //   })
-  // },
-
-  Logout:function()//logout注销函数，待写
-  {
-    
-    console.log("logout---------------")
-    console.log(wx.getStorageSync('openid'));
-    console.log(wx.getStorageSync('user_id'));
-    wx.request({
-      url: serverName + '/service/user/logout',
-      data: {
-        openid: wx.getStorageSync('openid'),
-        user_id: wx.getStorageSync('user_id')
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      success: function (res) {
-        console.log("---------------")
-        console.log(res.data)
-        wx.redirectTo({
-          url: '../login/login',
-        })
-      }
-    })
-  },
   onLoad: function () {
     var user_id = wx.getStorageSync('user_id')
     console.log('userid is ' + user_id);
     
     this.get_current_user_info(user_id);
-    this.get_publish_of_mine(user_id);
-    wx.showToast({
-      title: '下拉可以刷新个人信息',
-      icon: 'none'
-    })
+    this.get_publish_of_mine(1,user_id);
+    // wx.showToast({
+    //   title: '下拉可以刷新个人信息',
+    //   icon: 'none'
+    // })
     console.log(this.data)
    // console.log(publish_data)
     while (this.data.listfound.length != 0)
@@ -193,14 +116,38 @@ Page({
     this.index = 1
     if (this.data.activeIndex == 1)
       this.setData({
-        listofitem: this.data.listlost + this.data.listlost,
+        listofitem: this.data.listfound ,
       })
     else this.setData({
-      listofitem: this.data.listlost + this.data.listlost,
+      listofitem: this.data.listlost ,
     })
+    console.log("listofitem's size")
+    console.log(this.data.listofitem.length)
+  },
 
 
-    // console.log(this.data)
+  show_publish_infos: function(type_t, user_id, obj){
+    console.log('type_t:'+ type_t);
+    // console.log('category:' + category);
+      wx.request({
+        url: serverNamenew + '/service/dynamic/list',
+        data: {
+          user_id: user_id,  
+          type: type_t,
+        },
+        method: 'POST',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' // 默认值
+        },
+        success: function (res) {
+          obj.setData({
+            publish_data: res.data.data.dynamics
+          })
+          // console.log('当前数据库返回的publish记录')
+          // console.log(res)
+          obj.Loadmsg()
+        }
+      })
   },
 
 
@@ -277,14 +224,15 @@ Page({
     console.log(user_id)
   },
 
-  get_publish_of_mine: function(user_id){
+  get_publish_of_mine: function(type_t, user_id){
 
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
-      url: serverName + '/service/dynamic/show',
+      url: serverNamenew + '/service/dynamic/list',
       data: {
-        user_id: user_id
+        user_id: user_id,  //!记得最后要修改掉
+        type: type_t
       },
       method: 'POST',
       header: {
@@ -293,6 +241,7 @@ Page({
       success: function (res) {
         console.log(' get_publish_of_mine......')
         console.log(res)
+        console.log(user_id)
         that.setData({
           publish_data: res.data.data.dynamics
         })
