@@ -34,10 +34,10 @@
         "selectedIconPath": "images/tabbar/index_selected.png"
       },
       {
-        "pagePath": "pages/offline/offline",
-        "text": "线下根据点",
-        "iconPath": "images/tabbar/offline.png",
-        "selectedIconPath": "images/tabbar/offline_selected.png"
+        "pagePath": "pages/edit/edit",
+        "iconPath": "images/tabbar/release.png",
+        "text":"发布",
+        "selectedIconPath": "images/tabbar/release.png"
       },
       {
         "pagePath": "pages/myinfo/myinfo",

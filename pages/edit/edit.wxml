@@ -1,19 +1,90 @@
 <!--pages/wyq/wyq.wxml-->
-  <view class="background">
-<!-- 导航条   -->
-<view class="navbar">  
-  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>  
-</view>  
+<view class='release-page-cls'>
+	<!-- <button bindtap="ocrRecog">识别学号</button> -->
+	
+	<view class="radio-choose-cls">
+		<view>发布类型</view>
+		<radio-group class="radio-group" bindchange="radioTypeChange">
+			<radio class="radio" wx:for-items="{{typeItems}}" wx:key="name" value="{{item.value}}" checked="{{item.checked}}">
+				<text>{{item.name}}</text>
+			</radio>
+		</radio-group>
+		<!-- <view>拾物/失物</view> -->
+	</view>
+	<view class="radio-choose-cls">
+		<view>校区</view>
+		<radio-group class="radio-group" bindchange="radioCampusChange">
+			<radio class="radio" wx:for-items="{{campusItems}}" wx:key="name" value="{{item.value}}" checked="{{item.checked}}">
+				<text>{{item.name}}</text>
+			</radio>
+		</radio-group>
+		<!-- <view>中北/闵行</view> -->
+	</view>
+	<view class="radio-choose-cls">
+		<input class="weui-input" maxlength="20" value="{{post_desc}}" bindinput="bind_desc_input" placeholder="请输入物品描述" />
+	</view>
+	<view class="radio-choose-cls" bindtap="tagAction">
+		<!-- <input class="weui-input" maxlength="20" placeholder="添加标签" /> -->
+		<text wx:if="{{tagSelected}}">{{tagSheetItems[tagSelected - 1].text}}</text>
+		<text wx:else>请选择物品类别</text>
+		<mp-actionSheet bindactiontap="tagChoose" show="{{showTagSheet}}" actions="{{tagSheetItems}}" title="请选择物品类别">
+		</mp-actionSheet>
+	</view>
+  <view wx:if="{{tagSelected==1}}" class="weui-cell">学工号：<input class="weui-input" maxlength="15" value="{{id_number}}" bindinput="bind_id_number_input" placeholder="{{id_number}}" /></view>
+	<view class="radio-choose-cls" bindtap="bindLocation">
+		<view>{{displayAddress}}</view>
+	</view>
+	<view class="radio-choose-cls">
+		<view>是否加急</view>
+		<view>
+			<switch checked="{{switch1Checked}}" bindchange="switch1Change" />
+		</view>
+	</view>
+	<view class="weui-cells">
+		<view class="weui-cell">
+			<view class="weui-cell__bd">
+				<view class="weui-uploader">
+					<view class="weui-uploader__hd">
+						<view class="weui-uploader__title"></view>
+						<view class="weui-uploader__info">{{imageList.length}}/3</view>
+					</view>
+					<view class="weui-uploader__bd">
+						<view class="weui-uploader__files">
+							<block wx:for="{{imageList}}" wx:for-item="image">
+								<view class="weui-uploader__file">
+									<image mode="aspectFill" class="pic-cls" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+								</view>
+							</block>
+						</view>
+						<view class="weui-uploader__input-box">
+							<image src='../../images/edit/plus.png' class='pic-cls' name='pic'></image>
+							<view class="weui-uploader__input" bindtap="chooseImage">
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<button bindtap="toRelease" class='release-btn-cls' lang="zh_CN" size="mini" type="primary">确认发布</button>
+</view>
 
-<!--lost-->  
-<view hidden="{{currentTab!==0}}">  
-<view class="back">
-  <form bindsubmit="formSubmit" bindreset="formReset">
-  <view class="contain">
 
-    <view class='text' style="white-space: pre-line">
-     <textarea placeholder="请输入信息..." focus="{{focus}}" name="input" style="width:100%" value="{{tvalue}}"/>
-    </view>
+<!-- <view class="background">
+	<view class="navbar">
+		<text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
+	</view>
+  
+
+
+	<view hidden="{{currentTab!==0}}">
+		<view class="back">
+			<form bindsubmit="formSubmit" bindreset="formReset">
+				<view class="contain">
+
+					<view class='text' style="white-space: pre-line">
+						<textarea placeholder="请输入信息..." focus="{{focus}}" name="input" style="width:100%" value="{{tvalue}}" />
+						</view>
 
       
 <view class="weui-cells">
@@ -79,9 +150,7 @@
 </view>
 </view>  
   
-<!--found-->  
 <view hidden="{{currentTab!==1}}">  
-<!-- <view class ="swiper-tab-item {{activeIndex==1?'active':''}}" bindtap="stateswitch" data-index="1"></view> -->
   <form bindsubmit="formSubmit" bindreset="formReset">
   <view class="contain">
 
@@ -142,6 +211,7 @@
           </view>
         </view>
       </view>
+      
 <view class="button-sp-area">
         <button type="primary" plain="true"  formType="submit"
  bindtap="stateswitch" >发布</button></view>
@@ -151,4 +221,4 @@
 </form> 
 </view> 
 
-</view> 
+</view>  -->

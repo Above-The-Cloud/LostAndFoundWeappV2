@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "图片"
+  "navigationBarTitleText": "图片",
+  "usingComponents": {
+    "mp-actionSheet": "../../components/actionsheet/actionsheet"
+  }
 }

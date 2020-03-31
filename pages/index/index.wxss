@@ -18,8 +18,8 @@
 
 .banners {
   width: 100%;
-  height: 200px;
-  position: absolute;
+  height: 400rpx;
+  position: relative;
   top: 0;
 }
 
@@ -40,6 +40,7 @@
 }
 
 .swiper-tab {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -51,7 +52,7 @@
 .swiper-tab-item {
   position: relative;
   flex: 1;
-  top: 200px;
+  /* top: 200px; */
   text-align: center;
   align-items: center;
   font-size: 26rpx;
@@ -72,13 +73,21 @@
 
 .category {
   position: relative;
-  top: 200px;
+  /* top: 200px; */
   left: 10%;
   font-size: 25rpx;
   z-index: 1;
   color: grey;
 }
-
+.schoolcard-cls {
+  position: absolute;
+  right: 5%;
+  top:20rpx;
+  font-size: 12px;
+  width: 5%;
+  height: 4%;
+  z-index: 2;
+}
 .active {
   color: green;
   border-bottom: 1px solid green;
@@ -96,7 +105,7 @@
 .refresh {
   position: absolute;
   right: 5%;
-  top: 210px;
+  top: 0px;
   font-size: 12px;
   width: 5%;
   height: 4%;
@@ -111,7 +120,10 @@
   width: 100%;
   height: 100%;
 }
-
+.category-spaceholder-image-cls{
+  width: 120rpx;
+  height: 112rpx;
+}
 .banner-title {
   color: #fff;
   position: absolute;
@@ -125,8 +137,6 @@
 
 .sub-title {
   color: #76787e;
-  height: 36px;
-  line-height: 36px;
   padding: 16px;
   width: 100%;
   font-size: 14px;
@@ -138,10 +148,36 @@
 .news-item-container {
   background-color: #f2f2f2;
   width: 100%;
-  position: absolute;
-  top: 200px;
 }
-
+.category-list-cls{
+  position: relative;
+  margin: 10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.swiper-cls
+{
+  
+  /* margin: 50rpx; */
+  position: relative;
+}
+.category-list-item-cls{
+  margin: 25rpx;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.category-spaceholder-cls
+{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  color: #333;
+  font-size: 30rpx;
+  text-align: center;
+}
 .news-item {
   display: flex;
   flex-direction: column;
@@ -174,6 +210,18 @@
 .news-info-desc-cls{
   font-size:25rpx;
   margin-top: 10rpx;
+  color: #333333
+}
+.news-info-time-cls{
+  font-size:25rpx;
+  bottom: 0;
+  margin-top: 10rpx;
+  color: #333333
+}
+.news-info-state-cls{
+  font-size:25rpx;
+  bottom: 0;
+  margin-top: 20rpx;
   color: #333333
 }
 .news-info-cls {
@@ -250,6 +298,12 @@
   position: relative;
   font-size: 25rpx;
   color: grey;
+}
+.state-cls {
+  position: relative;
+  font-size: 30rpx;
+  color: #ffa1a1;
+  font-weight: bold;
 }
 .tag-cls {
   position: relative;
