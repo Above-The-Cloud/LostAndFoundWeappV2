@@ -34,7 +34,15 @@
           </view>
         </view>
       </view>
-
+<view class="page-section">
+      <view class="cells__title">手机号：{{phonenumber}}</view>
+      <view class="cells cells_after-title">
+        <view class="cell cell_input">
+        <image class="nameImage" src = "../../images/source/name.png"></image>
+          <input class="input"  name='userid' maxlength="15" bindinput="bindPhoneInput" placeholder="请输入手机号"/>
+        </view>
+      </view>
+    </view>
       <!-- <view class="btn-area">
       <radio-group class="radio-group" bindchange="radioChange">
   <label class="radio" wx:for="{{items}}">

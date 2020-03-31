@@ -9,7 +9,10 @@
 	</action-sheet>
 	<view class="swiper-tab-item {{activeIndex==0?'active':''}}" bindtap="stateswitch" data-index="0">LOST</view>
 	<view class="swiper-tab-item {{activeIndex==1?'active':''}}" bindtap="stateswitch" data-index="1">FOUND</view>
+
 </view>
+	<view class='schoolcard-cls'><mp-icon bindtap="oneKeyBack" icon="album" color="black" size="{{20}}"></mp-icon></view>
+	<!-- <icon type='search' bindtap='search' class="refresh"></icon> -->
 <view class='swiper-cls'>
 	<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" class="banners" interval="{{interval}}" duration="{{duration}}">
 		<block wx:for="{{swiper_url}}">
@@ -98,27 +101,29 @@
 		<text wx:if="{{item.header}}"></text>
 		<view wx:else class="news-item-cls">
 			<view class='userinfo-cls'>
-				<navigator url="../userinfo/userinfo?userid={{item.userid}}">
+				<!-- <navigator url="../userinfo/userinfo?userid={{item.userid}}"> -->
 					<image src="{{item.usericon}}" class='icon-image-cls'></image>
-				</navigator>
+				<!-- </navigator> -->
 				<view class='username-cls'>
-					<navigator url="../userinfo/userinfo?userid={{item.userid}}">
+					<!-- <navigator url="../userinfo/userinfo?userid={{item.userid}}"> -->
 						<text selectable='true'>{{item.username}}</text>
-					</navigator>
+					<!-- </navigator> -->
 				</view>
-				<view class='apply-view-cls'>申请</view>
+				<view bindtap='toApply' data-phone="{{item.userphone}}" data-applyId="{{item.postid}}" class='apply-view-cls'>申领</view>
 			</view>
 			<view class="news-card-cls">
 				<view class='news-info-cls'>
 					<view class='news-info-desc-cls'>
-						<text class="news-item-title-cls"> <text style="color:gray"> 拾取物件：</text>物件名字</text>
+						<text class="news-item-title-cls"> <text style="color:gray"> 拾取物件：</text>{{item.title}}</text>
 					</view>
 					<view class='news-info-desc-cls'>
 						<text class="news-item-title-cls"><text style="color:gray"> 拾取地点：</text>{{item.address}}</text>
 					</view>
-					<view class='news-info-desc-cls'>
+					<view class='news-info-time-cls'>
 						<text class='time-cls'>{{item.sub_time}}</text>
 					</view>
+					<view class='news-info-state-cls'>
+					<text class='state-cls'>{{item.state}}</text></view>
 				</view>
 				<view class='new-image-container-cls'>
 					<image bindtap="photopreview" data-list="{{item.imagelist}}" data-src="{{item.imagelist[0]}}" mode="aspectFill" src="{{item.imagelist[0]}}" class='news-img-cls'></image>

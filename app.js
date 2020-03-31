@@ -4,7 +4,8 @@ App({
     userInfo: null,
     serverName: "https://lostandfound.yiwangchunyu.wang",
     categories: ['所有', '校园卡', '雨伞', '钱包'],
-    openid: null
+    openid: null,
+    
   },
 
   onLaunch: function () {
