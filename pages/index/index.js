@@ -76,7 +76,7 @@ Page({
         console.log(res)
         var tmpfile = res.tempFilePaths;
         wx.uploadFile({
-          url: serverName + '/service/upload/uploadImg',
+          url: serverName2 + '/service/upload/dynamicImg',
           filePath: tmpfile[0],
           name: "images",
           success: function (res) {
