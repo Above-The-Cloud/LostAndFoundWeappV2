@@ -64,6 +64,8 @@
           <view class='news-info-desc-cls'>
             <text class='time-cls'>{{item.sub_time}}</text>
           </view>
+                    					<view class='news-info-phone-cls'>
+					<text class='phone-cls'>{{item.phone}}</text></view>
         </view>
         <view class='new-image-container-cls'>
           <image src="{{item.image[0]}}" class='news-img-cls'></image>

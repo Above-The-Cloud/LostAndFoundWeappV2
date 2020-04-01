@@ -139,6 +139,7 @@ Page({
 
   clearData: function()
   {
+    // wx.setStorageSync('schoolCardId', null)
     this.setData({
       imageList:[],
       displayAddress: "添加定位",
@@ -302,6 +303,7 @@ Page({
     console.log(this.data.filep)
     console.log(user_id)
     this.createPost(user_id, this.data.typeSelected, this.data.tagSelected, this.data.post_desc, '描述', this.data.filep)
+    this.onLoad()
   },
 
   createPost: function (user_id, type_t, category, title, msg, imagesPaths) {

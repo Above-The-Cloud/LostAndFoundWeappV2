@@ -70,6 +70,7 @@ Page({
       var imageList = Data[i].images;
       var state = Data[i].state;
       var address = Data[i].location.address
+      var phone = Data[i].user_info.phone
       // var nick_name = that.Data[i].nickName,
       // var avatarUrl = that.Data[i].avatarUrl,
       if (Data[i].images)
@@ -85,7 +86,8 @@ Page({
         publish_id: publish_id,
         title: Data[i].title,
         address: address,
-        state:state
+        state:state,
+        phone:'联系方式：' + phone
       });
 
       // console.log(that.data.listlost.length)
