@@ -16,21 +16,22 @@ Page({
     campusItems: [{
         name: '中北',
         value: '中北',
-        checked: 'true'
+        checked: true
       },
       {
         name: '闵行',
         value: '闵行',
-
+        checked: false
       },
     ],
     typeItems: [{
       name: '拾物',
       value: '2',
-      checked: 'true'
+      checked: true
     }, {
       name: '失物',
-      value: '1'
+      value: '1',
+      checked: false
     }],
     longitude: "",
     latitude: "",
@@ -73,12 +74,28 @@ Page({
   },
   radioCampusChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
+    var items = this.data.campusItems;
+    for (var i = 0; i < items.length; ++i) {
+      items[i].checked = items[i].value == e.detail.value
+    }
+    console.log(items)
+    this.setData({
+      campusItems: items
+    });
     this.setData({
       campusSelected: e.detail.value
     })
   },
   radioTypeChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
+    var items = this.data.typeItems;
+    for (var i = 0; i < items.length; ++i) {
+      items[i].checked = items[i].value == e.detail.value
+    }
+    console.log(items)
+    this.setData({
+      typeItems: items
+    });
     this.setData({
       typeSelected: parseInt(e.detail.value)
     })
