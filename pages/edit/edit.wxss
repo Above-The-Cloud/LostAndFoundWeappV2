@@ -1,7 +1,7 @@
 /* pages/wyq/wyq.wxss */
 /* flex布局：http://www.jianshu.com/p/f82262002f8a*/
 .release-page-cls {
-  background-color: #f7f7f7;
+  background-color: #fff;
   /* position: fixed; */
   height: 100%;
   width: 100%;
@@ -11,12 +11,62 @@
   /* justify-content: center; */
 }
 
+.ui-radio radio,.ui-radio checkbox {
+  display: none;
+}
+
+.ui-radio .text{
+  line-height:70rpx;
+  color: #D9D9D9;
+}
+
+.ui-radio.active .text{
+  color:#BE4B4B;
+  line-height:70rpx;
+  font-size: 14px;
+}
+
+.label{
+  margin-left: 10rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+}
+
+.ui-radio{
+  border: 1px solid #D9D9D9;
+  
+  border-radius: 20px;
+  width: 160rpx;
+  height: 70rpx;
+  text-align: center;
+  margin: 10rpx 10rpx;
+  white-space:nowrap;
+  font-size: 14px;
+}
+
+.ui-radio.active{
+  background-color: #fff;
+  color: #BE4B4B;
+  border-radius: 20px;
+  border: 1px solid #BE4B4B;
+  width: 160rpx;
+  height: 70rpx;
+  text-align: center;
+  margin: 10rpx 10rpx;
+  white-space:nowrap;
+}
+
 .release-btn-cls {
-  border-radius: 80rpx;
+  border-radius: 20rpx;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
+  background-color: #c5cf65;
+  line-height: 80rpx;
+  text-align: center;
   margin-left: 150rpx;
   margin-right: 150rpx;
+  color: #333;
 }
 
 .radio-choose-cls {
@@ -322,14 +372,6 @@
 .location {
   width: 30px;
   height: 30px;
-}
-
-.label {
-  /* position: relative;
-  left: 10%; */
-  width: 150px;
-  word-wrap: break-word;
-  word-break: break-all;
 }
 
 .input {

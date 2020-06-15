@@ -1,24 +1,27 @@
 <!--pages/wyq/wyq.wxml-->
 <view class='release-page-cls'>
 	<!-- <button bindtap="ocrRecog">识别学号</button> -->
-	
 	<view class="radio-choose-cls">
 		<view>发布类型</view>
 		<radio-group class="radio-group" bindchange="radioTypeChange">
-			<radio class="radio" wx:for-items="{{typeItems}}" wx:key="name" value="{{item.value}}" checked="{{item.checked}}">
-				<text>{{item.name}}</text>
-			</radio>
+			<view class='label'>
+				<label class="ui-radio {{item.checked==true?'active':''}}" wx:for="{{typeItems}}">
+					<radio value="{{item.value}}" checked="{{item.checked}}" />
+					<text class="text">{{item.name}}</text>
+				</label>
+			</view>
 		</radio-group>
-		<!-- <view>拾物/失物</view> -->
 	</view>
 	<view class="radio-choose-cls">
 		<view>校区</view>
 		<radio-group class="radio-group" bindchange="radioCampusChange">
-			<radio class="radio" wx:for-items="{{campusItems}}" wx:key="name" value="{{item.value}}" checked="{{item.checked}}">
-				<text>{{item.name}}</text>
-			</radio>
+			<view class='label'>
+				<label class="ui-radio {{item.checked==true?'active':''}}" wx:for="{{campusItems}}">
+					<radio value="{{item.value}}" checked="{{item.checked}}" />
+					<text class="text">{{item.name}}</text>
+				</label>
+			</view>
 		</radio-group>
-		<!-- <view>中北/闵行</view> -->
 	</view>
 	<view class="radio-choose-cls">
 		<input class="weui-input" maxlength="20" value="{{post_desc}}" bindinput="bind_desc_input" placeholder="请输入物品描述" />
@@ -30,7 +33,7 @@
 		<mp-actionSheet bindactiontap="tagChoose" show="{{showTagSheet}}" actions="{{tagSheetItems}}" title="请选择物品类别">
 		</mp-actionSheet>
 	</view>
-  <view wx:if="{{tagSelected==1}}" class="weui-cell">学工号：<input class="weui-input" maxlength="15" value="{{id_number}}" bindinput="bind_id_number_input" placeholder="{{id_number}}" /></view>
+	<view wx:if="{{tagSelected==1}}" class="weui-cell">学工号：<input class="weui-input" maxlength="15" value="{{id_number}}" bindinput="bind_id_number_input" placeholder="{{id_number}}" /></view>
 	<view class="radio-choose-cls" bindtap="bindLocation">
 		<view>{{displayAddress}}</view>
 	</view>
@@ -66,159 +69,5 @@
 			</view>
 		</view>
 	</view>
-	<button bindtap="toRelease" class='release-btn-cls' lang="zh_CN" size="mini" type="primary">确认发布</button>
+	<view bindtap='toApply' class='release-btn-cls'>确认发布</view>
 </view>
-
-
-<!-- <view class="background">
-	<view class="navbar">
-		<text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
-	</view>
-  
-
-
-	<view hidden="{{currentTab!==0}}">
-		<view class="back">
-			<form bindsubmit="formSubmit" bindreset="formReset">
-				<view class="contain">
-
-					<view class='text' style="white-space: pre-line">
-						<textarea placeholder="请输入信息..." focus="{{focus}}" name="input" style="width:100%" value="{{tvalue}}" />
-						</view>
-
-      
-<view class="weui-cells">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__hd">
-                  <view class="weui-uploader__title"></view>
-                  <view class="weui-uploader__info">{{imageList.length}}/3</view>
-                </view>
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imageList}}" wx:for-item="image">
-                      <view class="weui-uploader__file">
-                        <image mode="aspectFill"class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
-                      </view>
-                    </block>
-                  </view>
-
-                  <view class="weui-uploader__input-box">
-                    <image src='../../images/edit/plus.png' class='pic' name='pic'></image> 
-                    <view class="weui-uploader__input" bindtap="chooseImage">                       
-                    </view>
-                  </view>
-                </view>
-
-              </view>
-            </view>
-          </view>
-        </view>
-
-
- <view class="cells cells_after-title">
-        <view class="cell cell_input">
-          <view class="cell__hd">
-            <view class="label">选择分类</view>
-          </view>
-          <view class="cell__bd">
-            <picker bindchange="bindPickerChange" value="{{category_index}}" range="{{array}}">
-              <view class="input">{{array[category_index]}}</view>
-            </picker>
-          </view>
-        </view>
-      </view>
- <view class="cells cells_after-title">
-        <view class="cell cell_input">
-          <view class="cell__hd">
-          <image class="location"src='../../images/edit/location.png'></image>
-          </view>
-          <view class="cell__bd">
-          <view bindtap="bindLocation"class="input">{{displayAddress}}</view>
-          
-          </view>
-        </view>
-      </view>
-<view class="button-sp-area">
-        <button type="primary" plain="true"  formType="submit"
- bindtap="stateswitch" >发布</button></view>
-    
-  </view>
-
-</form>
-</view>
-</view>  
-  
-<view hidden="{{currentTab!==1}}">  
-  <form bindsubmit="formSubmit" bindreset="formReset">
-  <view class="contain">
-
-    <view class='text' style="white-space: pre-line">
-     <textarea placeholder="请输入信息..." focus="{{focus}}" name="input" value="{{tvalue}}" />
-    </view>
-
-   <view class="weui-cells">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__hd">
-                  <view class="weui-uploader__title"></view>
-                  <view class="weui-uploader__info">{{imageList.length}}/3</view>
-                </view>
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imageList}}" wx:for-item="image">
-                      <view class="weui-uploader__file">
-                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
-                      </view>
-                    </block>
-                  </view>
-
-                  <view class="weui-uploader__input-box">
-                    <image src='../../images/edit/plus.png' class='pic' name='pic'></image> 
-                    <view class="weui-uploader__input" bindtap="chooseImage">                       
-                    </view>
-                  </view>
-                </view>
-
-              </view>
-            </view>
-          </view>
-        </view>
-
-
- <view class="cells cells_after-title">
-        <view class="cell cell_input">
-          <view class="cell__hd">
-            <view class="label">选择分类</view>
-          </view>
-          <view class="cell__bd">
-            <picker bindchange="bindPickerChange" value="{{category_index}}" range="{{array}}">
-              <view class="input">{{array[category_index]}}</view>
-            </picker>
-          </view>
-        </view>
-      </view>
- <view class="cells cells_after-title">
-        <view class="cell cell_input">
-          <view class="cell__hd">
-          <image class="location"src='../../images/edit/location.png'></image>
-          </view>
-          <view class="cell__bd">
-          <view bindtap="bindLocation"class="input">{{displayAddress}}</view>
-          
-          </view>
-        </view>
-      </view>
-      
-<view class="button-sp-area">
-        <button type="primary" plain="true"  formType="submit"
- bindtap="stateswitch" >发布</button></view>
-    
-  </view>
-
-</form> 
-</view> 
-
-</view>  -->
