@@ -1,7 +1,7 @@
 /* pages/wyq/wyq.wxss */
 /* flex布局：http://www.jianshu.com/p/f82262002f8a*/
 .release-page-cls {
-  background-color: #f7f7f7;
+  background-color: #fff;
   /* position: fixed; */
   height: 100%;
   width: 100%;
