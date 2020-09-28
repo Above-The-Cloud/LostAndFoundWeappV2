@@ -5,7 +5,7 @@
   justify-content: center; /*主轴上的对齐方式*/
   vertical-align: bottom;
   width: 100vw;
-  height: 170px; 
+  height: 200px; 
 }
 
 .contain .mask{
