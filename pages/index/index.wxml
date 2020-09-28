@@ -11,10 +11,13 @@
 	<view class="swiper-tab-item {{activeIndex==1?'active':''}}" bindtap="stateswitch" data-index="1">FOUND</view>
 
 </view>
-	<view class='schoolcard-cls'><mp-icon bindtap="oneKeyBack" icon="album" color="black" size="{{20}}"></mp-icon></view>
-	<!-- <icon type='search' bindtap='search' class="refresh"></icon> -->
+<view class='schoolcard-cls'>
+	<mp-icon bindtap="oneKeyBack" icon="album" color="black" size="{{20}}"></mp-icon>
+</view>
+<!-- <icon type='search' bindtap='search' class="refresh"></icon> -->
 <view class='swiper-cls'>
-	<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" class="banners" interval="{{interval}}" duration="{{duration}}">
+	<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" class="banners" interval="{{interval}}"
+		duration="{{duration}}">
 		<block wx:for="{{swiper_url}}">
 			<swiper-item class="banner">
 				<image src="{{item}}" bindtap="bindViewTap" class="banner-image" width="100%" height="100%" />
@@ -102,14 +105,15 @@
 		<view wx:else class="news-item-cls">
 			<view class='userinfo-cls'>
 				<!-- <navigator url="../userinfo/userinfo?userid={{item.userid}}"> -->
-					<image src="{{item.usericon}}" class='icon-image-cls'></image>
+				<image src="{{item.usericon}}" class='icon-image-cls'></image>
 				<!-- </navigator> -->
 				<view class='username-cls'>
 					<!-- <navigator url="../userinfo/userinfo?userid={{item.userid}}"> -->
-						<text selectable='true'>{{item.username}}</text>
+					<text selectable='true'>{{item.username}}</text>
 					<!-- </navigator> -->
 				</view>
-				<view bindtap='toApply' data-phone="{{item.userphone}}" data-applyId="{{item.postid}}" class='apply-view-cls'>申领</view>
+				<view bindtap='toApply' data-phone="{{item.userphone}}" data-applyId="{{item.postid}}" class='apply-view-cls'>申领
+				</view>
 			</view>
 			<view class="news-card-cls">
 				<view class='news-info-cls'>
@@ -123,10 +127,11 @@
 						<text class='time-cls'>{{item.sub_time}}</text>
 					</view>
 					<view class='news-info-state-cls'>
-					<text class='state-cls'>{{item.state}}</text></view>
+						<text class='state-cls'>{{item.state}}</text></view>
 				</view>
 				<view class='new-image-container-cls'>
-					<image bindtap="photopreview" data-list="{{item.imagelist}}" data-src="{{item.imagelist[0]}}" mode="aspectFill" src="{{item.imagelist[0]}}" class='news-img-cls'></image>
+					<image bindtap="photopreview" data-list="{{item.imagelist}}" data-src="{{item.imagelist[0]}}"
+						mode="aspectFill" src="{{item.imagelist[0]}}" class='news-img-cls'></image>
 					<view class='tag-cls'>
 						<text>{{item.type}}</text>
 					</view>

@@ -1,5 +1,17 @@
 /**index.wxss**/
-
+.release-btn-cls {
+  border-radius: 20px;
+  border:2px solid #BE4B4B;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  line-height: 80rpx;
+  text-align: center;
+  margin-left: 150rpx;
+  margin-right: 150rpx;
+  color: #BE4B4B;
+  font-weight: bold;
+}
 .apply-view-cls {
   margin-top: 20rpx;
   background-color: #c5cf65;

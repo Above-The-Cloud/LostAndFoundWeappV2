@@ -154,13 +154,12 @@ Page({
     })
   },
 
-  clearData: function()
-  {
+  clearData: function () {
     // wx.setStorageSync('schoolCardId', null)
     this.setData({
-      imageList:[],
+      imageList: [],
       displayAddress: "添加定位",
-      address:"",
+      address: "",
       post_desc: "",
       schoolCardId: null,
       id_number: null,
@@ -173,16 +172,16 @@ Page({
     var number = wx.getStorageSync('schoolCardId')
     var tmpPath = wx.getStorageSync('tmpPath')
     wx.setStorageSync('schoolCardId', null)
-    if(number)
+    if (number)
       this.setData({
-        tagSelected:1,
+        tagSelected: 1,
         imageList: tmpPath,
         filep: tmpPath
       })
     console.log(number)
     this.setData({
-      id_number:number,
-      schoolCardId:number
+      id_number: number,
+      schoolCardId: number
     })
     // var number = wx.getStorageSync('schoolCardId')
     // console.log(number)
@@ -307,11 +306,20 @@ Page({
   bind_desc_input: function (e) {
     this.setData({
       post_desc: e.detail.value
+
     })
   },
   toRelease: function (e) {
     var user_id = wx.getStorageSync('user_id')
     console.log('toRelease')
+    if (this.data.post_desc == "") {
+      wx.showToast({
+        title: '请输入要发布的内容',
+        icon: 'none',
+        duration: 2000
+      })
+      return;
+    }
     console.log(this.data.post_desc)
     console.log(this.data.campusSelected)
     console.log(this.data.typeSelected)
@@ -332,11 +340,11 @@ Page({
       user_id: user_id,
       type: type_t,
       category: category,
-      desc:msg,
+      desc: msg,
       title: title,
       location: upLocation
     }
-    if(this.data.schoolCardId != null && this.data.tagSelected == 1)
+    if (this.data.schoolCardId != null && this.data.tagSelected == 1)
       uploadFormdata['meta'] = this.data.schoolCardId
     console.log(user_id)
     console.log(uploadFormdata)
@@ -367,8 +375,8 @@ Page({
                 temp.push(fdata[0])
                 console.log(temp);
                 if (temp.length == imagesPaths.length)
-                    thatInstance.updatePostImg(dynamic_id, temp)
-                  // thatInstance.updatePhoto(dynamic_id, temp);
+                  thatInstance.updatePostImg(dynamic_id, temp)
+                // thatInstance.updatePhoto(dynamic_id, temp);
               },
               fail: function (err) {
                 console.log(err)
@@ -381,7 +389,7 @@ Page({
             duration: 3000
           })
           // 跳转到主页
-          
+
           // var page = getCurrentPages().pop();
           thatInstance.onLoad()
           wx.switchTab({
@@ -438,6 +446,7 @@ Page({
     })
   },
   formSubmit: function (e) {
+    console.log(e)
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
     if (e.detail.value.input == "") {
       wx.showToast({
@@ -459,7 +468,7 @@ Page({
     console.log("imageList..........")
     console.log(imagesPaths)
     //在此调用uploadAll接口
-    this.uploadAll(user_id, type_t, category, title, msg, imagesPaths, [])
+    // this.uploadAll(user_id, type_t, category, title, msg, imagesPaths, [])
   },
 
   //imagesPaths图片路径数组

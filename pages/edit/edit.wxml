@@ -33,7 +33,8 @@
 		<mp-actionSheet bindactiontap="tagChoose" show="{{showTagSheet}}" actions="{{tagSheetItems}}" title="请选择物品类别">
 		</mp-actionSheet>
 	</view>
-	<view wx:if="{{tagSelected==1}}" class="weui-cell">学工号：<input class="weui-input" maxlength="15" value="{{id_number}}" bindinput="bind_id_number_input" placeholder="{{id_number}}" /></view>
+	<view wx:if="{{tagSelected==1}}" class="weui-cell">学工号：<input class="weui-input" maxlength="15" value="{{id_number}}"
+			bindinput="bind_id_number_input" placeholder="{{id_number}}" /></view>
 	<view class="radio-choose-cls" bindtap="bindLocation">
 		<view>{{displayAddress}}</view>
 	</view>
@@ -55,7 +56,8 @@
 						<view class="weui-uploader__files">
 							<block wx:for="{{imageList}}" wx:for-item="image">
 								<view class="weui-uploader__file">
-									<image mode="aspectFill" class="pic-cls" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+									<image mode="aspectFill" class="pic-cls" src="{{image}}" data-src="{{image}}" bindtap="previewImage">
+									</image>
 								</view>
 							</block>
 						</view>
@@ -69,5 +71,6 @@
 			</view>
 		</view>
 	</view>
-	<view bindtap='toApply' class='release-btn-cls'>确认发布</view>
+	<view bindtap='toRelease' class='release-btn-cls'>确认发布</view>
+
 </view>
