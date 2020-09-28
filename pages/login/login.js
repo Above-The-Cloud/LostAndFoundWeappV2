@@ -183,14 +183,14 @@ Page({
   },
 
   onLoad: function () {
-    console.log("login onLoad...")
+    // console.log("login onLoad...")
     var that = this
     that.setData({
       userInfo: app.globalData.userInfo
     })
     var openid = wx.getStorageSync('openid');
     if (openid) {
-      console.log('ifopenid',openid);
+      // console.log('ifopenid',openid);
       wx.request({
         url: serverName2 + '/service/user/loginByOpenid',
         method: 'POST',
