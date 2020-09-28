@@ -43,23 +43,6 @@ App({
         }
       }
     })
-    // wx.request({
-    //   url: 'https://yiwangchunyu.wang/withUserInfo.php',
-    //   data:{
-    //     name: '壹汪春雨'
-    //   },
-    //   method: 'GET',
-    //   header: {
-    //     'content-type': 'application/json' // 默认值
-    //   },
-    //   success: function (res) {
-    //     console.log('sucess-----------------')
-    //     console.log(res)
-    //     console.log('-----------------------')
-    //     console.log(res.data.user_id)
-    //     console.log('sucess-----------------')
-    //   }
-    // })
 
 
   },

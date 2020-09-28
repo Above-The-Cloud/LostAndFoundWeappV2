@@ -81,6 +81,7 @@ Page({
           name: "images",
           success: function (res) {
             console.log('校园卡图片上传！')
+            // console.log(res)
             var fdata = JSON.parse(res.data).data;
             fdata = JSON.parse(fdata)
             console.log(fdata[0]);
@@ -94,6 +95,7 @@ Page({
                 img_url: fdata[0]
               },
               success: function (res) {
+                console.log(res)
                 var results = res.data.data.items
                 console.log(results)
                 var idnumber = that.detectNumber(results)
@@ -107,6 +109,9 @@ Page({
                 that.setData({
                   schoolCardId: idnumber
                 })
+              },
+              fail: function (e) {
+                console.log(e)
               }
             })
           },
