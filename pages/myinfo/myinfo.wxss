@@ -126,6 +126,14 @@
   /* border-radius: 50rpx; */
 }
 
+.menu_item_hover{
+
+  position: relative;
+  background-color: gainsboro;
+  align-items: center;
+  z-index: 2;
+}
+
 .category_bg {
   position: relative;
   background-color: #fff;
@@ -139,7 +147,7 @@
   text-align: center;
   width: 30rpx;
   line-height: 100rpx;
-  top: 5%;
+  /* top: 5%; */
   align-items: center;
   height: 30rpx;
   z-index: 2;
@@ -152,7 +160,7 @@
   line-height: 100rpx;
   align-items: center;
   padding-left: 15rpx;
-  top: 10%;
+  top: 5%;
   width: 40rpx;
   height: 40rpx;
   z-index: 2;

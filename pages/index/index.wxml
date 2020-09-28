@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="swiper-tab">
-	<button class="category" bindtap="actionSheetTap">{{cur_type}}▾</button>
+	<view class="category" bindtap="actionSheetTap">{{cur_type}}</view>
 	<action-sheet hidden="{{actionSheetHidden}}" bindchange="actionSheetChange">
 		<block wx:for-items="{{actionSheetItems}}">
 			<action-sheet-item class="item" bindtap="bind{{item}}">{{item}}</action-sheet-item>
@@ -72,34 +72,6 @@
 </view> -->
 
 <view class="news-item-container">
-	<!-- <block wx:for="{{listofitem}}" wx:for-index="id">
-    <text wx:if="{{item.header}}" class="sub-title">{{item.header}}</text>
-    <view wx:else class="news-item">
-      <view class='userinfo'>
-        <navigator url="../userinfo/userinfo?userid={{item.userid}}">
-          <image src="{{item.usericon}}" class='icon-image'></image>
-        </navigator>
-        <view class='username'>
-          <navigator url="../userinfo/userinfo?userid={{item.userid}}">
-            <text selectable='true'>{{item.username}}</text>
-          </navigator>
-        </view>
-      </view>
-      <view class="news-item-left">
-        <text selectable='true' class="news-item-title">{{item.text}}</text>
-      </view>
-      <view wx:if="{{item.image != ''}}" class="image-container">
-        <block wx:for="{{item.imagelist}}" wx:for-item="specific_url">
-          <image bindtap="photopreview" data-list="{{item.imagelist}}" src="{{specific_url}}" data-src="{{specific_url}}" class="news-image" mode="aspectFill">
-          </image>
-        </block>
-      </view>
-      <view class="msginfo">
-        <text class='time'>{{item.sub_time}}</text>
-        <view class="address">{{item.address}}</view>
-      </view>
-    </view>
-  </block> -->
 	<block wx:for="{{listofitem}}" wx:for-index="id">
 		<text wx:if="{{item.header}}"></text>
 		<view wx:else class="news-item-cls">
@@ -136,18 +108,7 @@
 						<text>{{item.type}}</text>
 					</view>
 				</view>
-				<!-- </navigator> -->
 			</view>
-			<!-- <view wx:if="{{item.image != ''}}" class="image-container">
-        <block wx:for="{{item.imagelist}}" wx:for-item="specific_url">
-          <image bindtap="photopreview" data-list="{{item.imagelist}}" src="{{specific_url}}" data-src="{{specific_url}}" class="news-image" mode="aspectFill">
-          </image>
-        </block>
-      </view> -->
-			<!-- <view class="msginfo">
-        <text class='time'>{{item.sub_time}}item.sub_time</text>
-        <view class="address">{{item.address}}item.address</view>
-      </view> -->
 		</view>
 	</block>
 </view>

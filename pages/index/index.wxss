@@ -1,17 +1,5 @@
 /**index.wxss**/
-.release-btn-cls {
-  border-radius: 20px;
-  border:2px solid #BE4B4B;
-  margin-top: 20rpx;
-  margin-bottom: 20rpx;
-  background-color: #fff;
-  line-height: 80rpx;
-  text-align: center;
-  margin-left: 150rpx;
-  margin-right: 150rpx;
-  color: #BE4B4B;
-  font-weight: bold;
-}
+
 .apply-view-cls {
   margin-top: 20rpx;
   background-color: #c5cf65;
@@ -85,11 +73,16 @@
 
 .category {
   position: relative;
-  /* top: 200px; */
+  border-radius: 20rpx;
+  line-height: 60rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
   left: 10%;
   font-size: 25rpx;
+  border:2px solid #c5cf65;
+  color: #c5cf65;
+  font-weight: bold;
   z-index: 1;
-  color: grey;
 }
 .schoolcard-cls {
   position: absolute;
@@ -101,8 +94,8 @@
   z-index: 2;
 }
 .active {
-  color: green;
-  border-bottom: 1px solid green;
+  color: #c5cf65;
+  border-bottom: 2px solid #c5cf65;
   font-weight: bold;
 }
 
@@ -170,8 +163,6 @@
 }
 .swiper-cls
 {
-  
-  /* margin: 50rpx; */
   position: relative;
 }
 .category-list-item-cls{
