@@ -15,7 +15,8 @@ Page({
       '../../images/index/swiper/1.jpg',
       '../../images/index/swiper/2.jpg',
       '../../images/index/swiper/3.jpeg',
-      '../../images/index/swiper/4.jpg'
+      '../../images/index/swiper/4.jpg',
+      // '../../images/index/swiper/5.png'
     ],
     tagList: [],
     listofitem: [],

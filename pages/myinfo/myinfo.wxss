@@ -129,7 +129,7 @@
 .menu_item_hover{
 
   position: relative;
-  background-color: gainsboro;
+  background-color: #d0d0d0;
   align-items: center;
   z-index: 2;
 }
