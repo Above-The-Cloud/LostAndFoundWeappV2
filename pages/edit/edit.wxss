@@ -21,7 +21,7 @@
 }
 
 .ui-radio.active .text{
-  color:#BE4B4B;
+  color:#006a71;
   line-height:70rpx;
   font-size: 14px;
 }
@@ -47,9 +47,9 @@
 
 .ui-radio.active{
   background-color: #fff;
-  color: #BE4B4B;
+  color: #006a71;
   border-radius: 20px;
-  border: 1px solid #BE4B4B;
+  border: 1px solid #006a71;
   width: 160rpx;
   height: 70rpx;
   text-align: center;
@@ -59,7 +59,7 @@
 
 .release-btn-cls {
   border-radius: 20px;
-  border:2px solid #BE4B4B;
+  border:2px solid #006a71;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
   background-color: #fff;
@@ -67,7 +67,7 @@
   text-align: center;
   margin-left: 150rpx;
   margin-right: 150rpx;
-  color: #BE4B4B;
+  color: #006a71;
   font-weight: bold;
 }
 

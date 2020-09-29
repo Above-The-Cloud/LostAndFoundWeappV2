@@ -2,17 +2,18 @@
 
 .apply-view-cls {
   margin-top: 20rpx;
-  background-color: #c5cf65;
-  color: #333;
+  background-color: #006a71;
+  color: #ecf4f3;
   text-align: center;
   display: flex;
   position: relative;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  font-size: 25rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
   letter-spacing: 2px;
+  padding: 5rpx;
   font-weight: bold;
 }
 
@@ -79,8 +80,8 @@
   padding-right: 30rpx;
   left: 10%;
   font-size: 25rpx;
-  border:2px solid #c5cf65;
-  color: #c5cf65;
+  border:2px solid #006a71;
+  color: #006a71;
   font-weight: bold;
   z-index: 1;
 }
@@ -94,8 +95,8 @@
   z-index: 2;
 }
 .active {
-  color: #c5cf65;
-  border-bottom: 2px solid #c5cf65;
+  color: #006a71;
+  border-bottom: 2px solid #006a71;
   font-weight: bold;
 }
 

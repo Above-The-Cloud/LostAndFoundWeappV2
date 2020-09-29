@@ -3,7 +3,7 @@
   position: absolute;
   /* background-image: url(https://images.pexels.com/photos/267514/pexels-photo-267514.jpeg?w=940&h=650&auto=compress&cs=tinysrgb); */
   background-image: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1601286614537&di=e4c4f94987a026e104a2fdf96cd8329e&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fbackgd%2Fcover%2F00%2F13%2F96%2F5b7fe0cc01f40.jpg%2521%2Ffw%2F780%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue);
-  background-repeat: repeat;
+  background-size: 100% 100%;
   opacity: 0.9;
   width: 100vw;
   height: 100vh;
