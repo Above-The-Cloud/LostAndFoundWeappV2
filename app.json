@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/login/login",
-    "pages/initinfo/initinfo",
+    "pages/accessNumber/accessNumber",
     "pages/index/index",
     "pages/logs/logs",
     "pages/edit/edit",

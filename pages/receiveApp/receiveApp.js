@@ -2,7 +2,7 @@
 
 const app = getApp()
 var serverName = "https://lostandfound.yiwangchunyu.wang"
-var serverNamenew = "https://lostandfoundv2.yiwangchunyu.wang"
+var serverName2 = "https://lostandfoundv2.yiwangchunyu.wang"
 var utils = require('../../utils/util.js')
 var flag = true;
 var type_t = 'lost'
@@ -61,7 +61,8 @@ Page({
     this.data.listlost = []
     console.log(this.data.listlost.length)
     for (i = 0; i < Data.length; i++) {
-      var userid = Data[i].belongs_info.nick_name;
+      var nickName = Data[i].belongs_info.nick_name;
+      var realName = Data[i].belongs_info.name;
       var Msg = Data[i].desc;
       var Submission_time = Data[i].mtime;
       var id = Data[i].id;
@@ -76,7 +77,8 @@ Page({
         imageurl = Data[i].images;
       // if (that.Data[i].type == 1)
       this.data.listlost.push({
-        username: userid,
+        userName: nickName,
+        realName: realName,
         text: Msg,
         image: imageurl,
         imagelist: imageList,
@@ -146,7 +148,7 @@ Page({
     console.log('type_t:' + type_t);
     // console.log('category:' + category);
     wx.request({
-      url: serverNamenew + '/service/dynamic/list',
+      url: serverName2 + '/service/dynamic/list',
       data: {
         user_id: user_id,
         type: type_t,
@@ -174,7 +176,7 @@ Page({
     console.log(user_id)
     console.log(id)
     wx.request({
-      url: serverNamenew + '/service/dynamic/confirm',
+      url: serverName2 + '/service/dynamic/confirm',
       data: {
         user_id: user_id,
         id: id
@@ -201,7 +203,7 @@ Page({
     var id = e.target.dataset.posid
     var user_id = wx.getStorageSync('user_id')
     wx.request({
-      url: serverNamenew + '/service/dynamic/reject',
+      url: serverName2 + '/service/dynamic/reject',
       data: {
         user_id: user_id,
         // user_id:551, 
@@ -274,7 +276,7 @@ Page({
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
-      url: serverNamenew + '/service/user/get',
+      url: serverName2 + '/service/user/get',
       data: {
         id: user_id
       },
@@ -301,7 +303,7 @@ Page({
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
-      url: serverNamenew + '/service/dynamic/list',
+      url: serverName2 + '/service/dynamic/list',
       data: {
         user_id: user_id, //!记得最后要修改掉
         state: 2

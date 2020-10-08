@@ -59,11 +59,11 @@
   /* align-items: center; */
   /*交叉轴对齐方式*/
   z-index: 2;
-}
+} 
 
 .userinfo-nickname {
-  margin-top: 4.1%;
-  font-size: 40rpx;
+  margin-top: 4%;
+  font-size: 35rpx;
   text-align: left;
 }
 
@@ -87,8 +87,8 @@
   position: absolute;
   right: 5%;
   top: 120rpx;
-  width: 100rpx;
-  height: 100rpx;
+  width: 80rpx;
+  height: 80rpx;
   z-index: 2;
 }
 
@@ -111,7 +111,7 @@
 .category_text {
   line-height: 100rpx;
   position: relative;
-  left: 50rpx;
+  left: 30rpx;
   font-size: 30rpx;
   color: rgb(15, 15, 15);
 }
@@ -122,12 +122,12 @@
   display: flex;
   line-height: 100rpx;
   flex-direction: row;
-  padding: 20rpx;
+  padding: 10rpx;
+  margin: 10rpx;
   /* border-radius: 50rpx; */
 }
 
 .menu_item_hover{
-
   position: relative;
   background-color: #d0d0d0;
   align-items: center;
@@ -159,8 +159,10 @@
   text-align: center;
   line-height: 100rpx;
   align-items: center;
-  padding-left: 15rpx;
-  top: 5%;
+  /* padding-left: 15rpx; */
+  /* top: 5%; */
+  margin-left: 20rpx;
+  padding-top: 20rpx;
   width: 40rpx;
   height: 40rpx;
   z-index: 2;

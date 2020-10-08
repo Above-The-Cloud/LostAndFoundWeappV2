@@ -56,9 +56,9 @@
   /* top: 200px; */
   text-align: center;
   align-items: center;
-  font-size: 26rpx;
+  font-size: 25rpx;
   color: grey;
-  line-height: 80rpx;
+  line-height: 50rpx;
   left: 40%;
   z-index: 1;
 }
@@ -111,6 +111,7 @@
   z-index: 2;
 }
 .active {
+  /* margin-bottom: 10rpx; */
   color: #006a71;
   border-bottom: 2px solid #006a71;
   font-weight: bold;
@@ -232,6 +233,14 @@
   margin-top: 10rpx;
   color: #333333
 }
+.news-info-msg-cls{
+  font-size:25rpx;
+  border-radius: 20rpx;
+  /* border: 1px solid gray; */
+  margin-top: 10rpx;
+  height: 80rpx;
+  color: #333333
+}
 .news-info-time-cls{
   font-size:25rpx;
   bottom: 0;
@@ -241,7 +250,7 @@
 .news-info-state-cls{
   font-size:25rpx;
   bottom: 0;
-  margin-top: 20rpx;
+  /* margin-top: 20rpx; */
   color: #333333
 }
 .news-info-cls {
@@ -327,8 +336,10 @@
 }
 .tag-cls {
   position: relative;
+  margin-top: 50rpx;
   font-size: 25rpx;
-  color: grey;
+  margin-right: 0;
+  color: black;
   text-align: right;
 }
 .hover {
@@ -346,8 +357,8 @@
   margin-top: 20rpx;
   border: 2px solid gray ;
   border-radius: 10px;
-  width: 750rpx;
-  height: 260rpx;
+  width: 800rpx;
+  height: 320rpx;
   flex-direction: row;
 }
 
@@ -371,8 +382,9 @@
 }
 
 .news-img-cls {
-  width: 140rpx;
-  height: 140rpx;
+  padding-top: 20rpx;
+  width: 180rpx;
+  height: 180rpx;
 }
 
 .icon-image-cls {

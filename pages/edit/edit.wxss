@@ -70,6 +70,29 @@
   color: #006a71;
   font-weight: bold;
 }
+textarea {
+  width: 600rpx;
+  padding: 25rpx 0;
+  margin-right: 60rpx;
+}
+
+.textarea-wrp {
+  padding: 0 25rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  background-color: #fff;
+  border: 1px solid gainsboro;
+  border-radius: 10rpx;
+}
+
+.page-section{
+  width: 100%;
+  margin-bottom: 60rpx;
+}
+
+.page-section:last-child{
+  margin-bottom: 0;
+}
 
 .radio-choose-cls {
   display: flex;
@@ -93,6 +116,7 @@
 }
 
 .weui-cell {
+  font-weight: bold;
   background-color: white;
   border-radius: 20rpx;
 }
@@ -413,10 +437,10 @@
 }
 
 .page-section-title {
-  font-size: 28rpx;
+  font-size: 15px;
   color: #999999;
   margin-bottom: 10rpx;
-  padding-left: 30rpx;
+  padding-left: 60rpx;
   padding-right: 30rpx;
 }
 

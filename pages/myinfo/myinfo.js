@@ -19,8 +19,12 @@ Page({
     animationData: [],
     // list: [],
     listofitem: [],
-    listfound: [{ header: ' ' }],
-    listlost: [{ header: ' ' },],
+    listfound: [{
+      header: ' '
+    }],
+    listlost: [{
+      header: ' '
+    }, ],
     activeIndex: 1,
     duration: 2000,
     indicatorDots: true,
@@ -32,7 +36,7 @@ Page({
     actionSheetHidden: true,
 
   },
-  onShow: function(){
+  onShow: function () {
     this.onLoad();
   },
 
@@ -50,8 +54,6 @@ Page({
   Loadmsg: function (Data) {
     var that = this;
     var i = 0;
-    console.log('Data!!!')
-    console.log(Data)
     for (i = 0; i < Data.length; i++) {
       var userid = Data[i].user_info.nick_name;
       var Msg = Data[i].content;
@@ -63,10 +65,16 @@ Page({
       // var nick_name = that.Data[i].nickName,
       // var avatarUrl = that.Data[i].avatarUrl,
       if (Data[i].images)
-        imageurl =Data[i].images[0];
+        imageurl = Data[i].images[0];
       //   if (that.Data[i].type == 'lost')
       this.data.listfound.push({
-        username: userid, text: Msg, image: imageurl, imagelist: imageList, usericon: user_icon, sub_time: Submission_time, publish_id: publish_id
+        username: userid,
+        text: Msg,
+        image: imageurl,
+        imagelist: imageList,
+        usericon: user_icon,
+        sub_time: Submission_time,
+        publish_id: publish_id
       });
       //   else
       //   this.data.listlost.push({ username: userid, text: Msg, image: imageurl, usericon: user_icon, sub_time: Submission_time });
@@ -75,9 +83,9 @@ Page({
       listofitem: this.data.listfound
     })
   },
-  photopreview: function (event) {//图片点击浏览
-    var src = event.currentTarget.dataset.src;//获取data-src
-    var imgList = event.currentTarget.dataset.list;//获取data-list
+  photopreview: function (event) { //图片点击浏览
+    var src = event.currentTarget.dataset.src; //获取data-src
+    var imgList = event.currentTarget.dataset.list; //获取data-list
     //console.log(imgList);
     //图片预览
     wx.previewImage({
@@ -85,20 +93,19 @@ Page({
       urls: imgList // 需要预览的图片http链接列表
     })
   },
-  Setting:function(){
+  Setting: function () {
     var that = this;
+    var userid = wx.getStorageSync('user_id');
     wx.showActionSheet({
-      itemList: ['联系方式修改', '退出登录'],
+      itemList: ['联系方式获取', '退出登录'],
       success(res) {
         console.log(res.tapIndex)
         if (res.tapIndex == 0) {
           console.log('联系方式修改')
-          wx.navigateTo({
-            url: '../modifyinfo/modifyinfo',
+          wx.redirectTo({
+            url: '../accessNumber/accessNumber?id=' + userid,
           })
-        }
-        else
-        {
+        } else {
           that.Logout();
         }
       },
@@ -108,38 +115,33 @@ Page({
     })
   },
 
-  lostRecord:function()
-  {
-      console.log("失物记录")
-      wx.navigateTo({
-        url: '../lostrecord/lostrecord',
-      })
+  lostRecord: function () {
+    console.log("lostRecord")
+    wx.navigateTo({
+      url: '../lostrecord/lostrecord',
+    })
   },
 
-  foundRecord:function()
-  {
-    console.log("拾取记录")
+  foundRecord: function () {
+    console.log("foundRecord")
     wx.navigateTo({
       url: '../foundrecord/foundrecord',
     })
   },
 
-  myApp:function()
-  {
+  myApp: function () {
     console.log("我的申请")
     wx.navigateTo({
       url: '../myApp/myApp',
     })
   },
 
-  receiveApp:function()
-  {
+  receiveApp: function () {
     console.log("收到申请")
     wx.navigateTo({
       url: '../receiveApp/receiveApp',
     })
   },
-
   // sysInform:function()
   // {
   //   console.log("系统通知")
@@ -148,9 +150,9 @@ Page({
   //   })
   // },
 
-  Logout:function()//logout注销函数，待写
+  Logout: function () //logout注销函数，待写
   {
-    
+
     console.log("logout---------------")
     console.log(wx.getStorageSync('openid'));
     console.log(wx.getStorageSync('user_id'));
@@ -176,17 +178,15 @@ Page({
   onLoad: function () {
     var user_id = wx.getStorageSync('user_id')
     console.log('userid is ' + user_id);
-    
     this.get_current_user_info(user_id);
     this.get_publish_of_mine(user_id);
-    console.log(this.data)
-   // console.log(publish_data)
+    // console.log(this.data)
+    // console.log(publish_data)
     while (this.data.listfound.length != 0)
       this.data.listfound.pop();
     while (this.data.listlost.length != 0)
       this.data.listlost.pop();
     var that = this;
-
     this.index = 1
     if (this.data.activeIndex == 1)
       this.setData({
@@ -195,8 +195,6 @@ Page({
     else this.setData({
       listofitem: this.data.listlost + this.data.listlost,
     })
-
-
     // console.log(this.data)
   },
 
@@ -210,8 +208,7 @@ Page({
       itemList: ['确认删除'],
       success(res) {
         console.log(res.tapIndex)
-        if(res.tapIndex == 0)
-        {
+        if (res.tapIndex == 0) {
           console.log(e);
           console.log(e.target.dataset.publishId);
           var pubid = e.target.dataset.publishId;
@@ -227,7 +224,7 @@ Page({
 
   deleteSingleMassageById: function (publish_id) {
     var that = this;
-    console.log('待删除的消息id为'+publish_id)
+    console.log('待删除的消息id为' + publish_id)
     wx.request({
       url: serverName + '/service/dynamic/delete',
       data: {
@@ -247,8 +244,7 @@ Page({
     })
   },
 
-  get_current_user_info: function(user_id){
-    
+  get_current_user_info: function (user_id) {
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
@@ -260,22 +256,22 @@ Page({
       header: {
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
-      
       success: function (res) {
         console.log('get',res)
         that.setData({
           nickName: res.data.data['nick_name'],
+          realName: res.data.data['name'],
           avatarUrl: res.data.data['avatar'],
           contact_type: '手机号',
           contact_value: res.data.data['phone']
         })
       }
     })
-    console.log('get_current_user_id....')
-    console.log(user_id)
+    // console.log('get_current_user_id....')
+    // console.log(user_id)
   },
 
-  get_publish_of_mine: function(user_id){
+  get_publish_of_mine: function (user_id) {
 
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
@@ -289,12 +285,12 @@ Page({
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       success: function (res) {
-        console.log(' get_publish_of_mine......')
-        console.log(res)
+        // console.log(' get_publish_of_mine......')
+        // console.log(res)
         that.setData({
           publish_data: res.data.data.dynamics
         })
-        var publish_data=res.data.data.dynamics;
+        var publish_data = res.data.data.dynamics;
         that.Loadmsg(publish_data);
       }
     })

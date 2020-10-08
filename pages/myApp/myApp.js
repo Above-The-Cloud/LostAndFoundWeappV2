@@ -71,12 +71,14 @@ Page({
       var state = Data[i].state;
       var address = Data[i].location.address
       var phone = Data[i].user_info.phone
-      // var nick_name = that.Data[i].nickName,
-      // var avatarUrl = that.Data[i].avatarUrl,
+      var type = 'lost';
+      if (Data[i].type == 2)
+        type = 'found';
       if (Data[i].images)
         imageurl = Data[i].images;
       // if (that.Data[i].type == 1)
       this.data.listlost.push({
+        type: type,
         username: userid,
         text: Msg,
         image: imageurl,
@@ -86,13 +88,9 @@ Page({
         publish_id: publish_id,
         title: Data[i].title,
         address: address,
-        state:state,
-        phone:'联系方式：' + phone
+        state: state,
+        phone: '联系方式：' + phone
       });
-
-      // console.log(that.data.listlost.length)
-      //   else
-      //   this.data.listlost.push({ username: userid, text: Msg, image: imageurl, usericon: user_icon, sub_time: Submission_time });
     }
     this.setData({
       listofitem: this.data.listlost
@@ -138,14 +136,13 @@ Page({
     else this.setData({
       listofitem: this.data.listlost,
     })
-    console.log("listofitem's size")
-    console.log(this.data.listofitem.length)
+    // console.log("listofitem's size")
+    console.log(this.data.listofitem)
   },
 
 
   show_publish_infos: function (type_t, user_id, obj) {
     console.log('type_t:' + type_t);
-    // console.log('category:' + category);
     wx.request({
       url: serverNamenew + '/service/dynamic/list',
       data: {

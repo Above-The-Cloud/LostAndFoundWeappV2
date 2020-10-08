@@ -2,7 +2,7 @@
 
 const app = getApp()
 var serverName = "https://lostandfound.yiwangchunyu.wang"
-var serverNamenew = "https://lostandfoundv2.yiwangchunyu.wang"
+var serverName2 = "https://lostandfoundv2.yiwangchunyu.wang"
 var utils = require('../../utils/util.js')
 var flag = true;
 var type_t = 'lost'
@@ -70,14 +70,13 @@ Page({
       var imageList = Data[i].images;
       var address = Data[i].location.address
       var state = Data[i].state
-      // var nick_name = that.Data[i].nickName,
-      // var avatarUrl = that.Data[i].avatarUrl,
+      var desc = Data[i].desc
       if (Data[i].images)
         imageurl = Data[i].images;
-      // if (that.Data[i].type == 1)
       this.data.listfound.push({
         username: userid,
         text: Msg,
+        desc: desc,
         image: imageurl,
         imagelist: imageList,
         usericon: user_icon,
@@ -87,10 +86,6 @@ Page({
         address: address,
         state: state
       });
-
-      // console.log(that.data.listlost.length)
-      //   else
-      //   this.data.listlost.push({ username: userid, text: Msg, image: imageurl, usericon: user_icon, sub_time: Submission_time });
     }
     this.setData({
       listofitem: this.data.listfound
@@ -145,7 +140,7 @@ Page({
     console.log('type_t:' + type_t);
     // console.log('category:' + category);
     wx.request({
-      url: serverNamenew + '/service/dynamic/list',
+      url: serverName2 + '/service/dynamic/list',
       data: {
         user_id: user_id,
         type: type_t,
@@ -165,37 +160,36 @@ Page({
     })
   },
 
-
-
-  //删除函数
-  messageDelete: function (e) {
-    //TODO:调用函数deleteSingleMassageById(publish_id)
+  delete_post: function (res) {
+    console.log(res.currentTarget.dataset)
+    var postid = res.currentTarget.dataset.postid
     var that = this;
-    wx.showActionSheet({
-      itemList: ['确认删除'],
+    wx.showModal({
+      title: '提示',
+      content: '确认删除？',
+      confirmText: '确认',
       success(res) {
-        console.log(res.tapIndex)
-        if (res.tapIndex == 0) {
-          console.log(e);
-          console.log(e.target.dataset.publishId);
-          var pubid = e.target.dataset.publishId;
-          that.deleteSingleMassageById(pubid);
+        if(res.confirm){
+        that.deleteSingleMassageById(postid, wx.getStorageSync('user_id'))
         }
-      },
-      fail(res) {
-        console.log(res.errMsg)
+        else{
+          wx.showToast({
+            title: '您取消了删除',
+            icon: 'none'
+          })
+        }
       }
     })
-
   },
 
-  deleteSingleMassageById: function (publish_id) {
+  deleteSingleMassageById: function (publish_id, user_id) {
     var that = this;
-    console.log('待删除的消息id为' + publish_id)
+    console.log('待删除的消息id为' + publish_id, user_id)
     wx.request({
-      url: serverName + '/service/dynamic/delete',
+      url: serverName2 + '/service/dynamic/delete',
       data: {
-        dynamic_id: publish_id
+        id: publish_id,
+        user_id: user_id
       },
       method: 'POST',
       header: {
@@ -205,6 +199,9 @@ Page({
         console.log('deleteSingleMassageById: success')
         console.log(res.data)
         if (res.data.code == 0) {
+          wx.showToast({
+            title: '删除成功',
+          })
           that.onLoad();
         }
       }
@@ -216,7 +213,7 @@ Page({
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
-      url: serverNamenew + '/service/user/get',
+      url: serverName2 + '/service/user/get',
       data: {
         id: user_id
       },
@@ -243,7 +240,7 @@ Page({
     //传入的user_id如果是当前登录者， 请用user_id: wx.getStorageSync('user_id') 传入
     var that = this
     wx.request({
-      url: serverNamenew + '/service/dynamic/list',
+      url: serverName2 + '/service/dynamic/list',
       data: {
         user_id: user_id, //!记得最后要修改掉
         type: type_t

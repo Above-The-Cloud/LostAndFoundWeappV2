@@ -2,10 +2,7 @@
 <view class="contain" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1601286614537&di=e4c4f94987a026e104a2fdf96cd8329e&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fbackgd%2Fcover%2F00%2F13%2F96%2F5b7fe0cc01f40.jpg%2521%2Ffw%2F780%2Fquality%2F90%2Funsharp%2Ftrue%2Fcompress%2Ftrue);background-repeat:repeat;opacity:0.9">
 
 	<view class="mask"></view>
-	<!-- <image src='../../images/myinfo/setting.png' class='_setting' data-publish-id="{{item.publish_id}}"bindtap="Setting"></image> -->
 	<view class='user_ID'>
-		<!-- <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>  
-      <block wx:else> -->
 		<block>
 			<image animation="{{animationData}}" bindtap="bindViewTap" class="userinfo-avatar" src="{{avatarUrl}}" background-size="cover"></image>
 			<view class='user_infomation'>
@@ -15,28 +12,6 @@
 		</block>
 	</view>
 </view>
-<!-- <view>
-    <view class="kind-list">
-      <block wx:for-items="{{list}}" wx:key="{{item.id}}">
-        <view class="kind-list-item">
-          <view id="{{item.id}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" bindtap="kindToggle">
-            <view class="kind-list-text">{{item.name}}</view>
-            <image class="kind-list-img" src="resources/kind/{{item.id}}.png"></image>
-          </view>
-          <view class="kind-list-item-bd {{item.open ? 'kind-list-item-bd-show' : ''}}">
-            <view class="navigator-box {{item.open ? 'navigator-box-show' : ''}}">
-              <block wx:for-items="{{item.pages}}" wx:for-item="page" wx:key="*item">
-                <navigator url="../userinfo/userinfo?userid={{page.url}}" class="navigator">
-                  <view class="navigator-text">{{page.zh}}</view>
-                  <view class="navigator-arrow"></view>
-                </navigator>
-              </block>
-            </view>
-          </view>
-        </view>
-      </block>
-    </view>
-  </view> -->
 <view class="menu_bg">
 	<view class="news-item-container">
 		<block wx:for="{{listofitem}}" wx:for-index="id">
@@ -47,19 +22,22 @@
 					<view class='username-cls'>
 						<text selectable='true'>{{item.username}}</text>
 					</view>
+					<view class='delete-cls' bindtap="delete_post" data-postid="{{item.publish_id}}">
+						<image src="../../images/myinfo/trash.png" class='trash-img-cls'></image>
+					</view>
 					<!-- <view class='apply-view-cls'>申请</view> -->
 				</view>
 				<view class="news-card-cls">
 					<view class='news-info-cls'>
-						<view class='news-info-desc-cls'>
-							<text class="news-item-title-cls"> <text style="color:gray"> 拾取物件：</text>{{item.title}}</text>
-						</view>
-						<view class='news-info-desc-cls'>
-							<text class="news-item-title-cls"><text style="color:gray"> 拾取地点：</text>{{item.address}}</text>
-						</view>
-						<view class='news-info-desc-cls'>
-							<text class='time-cls'>{{item.sub_time}}</text>
-						</view>
+					<view class='news-info-desc-cls' wx:if="{{item.title}}">
+						<text class="news-item-title-cls"> <text style="color:gray">物件：</text>{{item.title}}</text>
+					</view>
+					<view class='news-info-desc-cls' wx:if="{{item.address}}">
+						<text class="news-item-title-cls"><text style="color:gray">地点：</text>{{item.address}}</text>
+					</view>
+					<scroll-view class='news-info-msg-cls' wx:if="{{item.desc}}" scroll-y scroll-top>
+						<text class="news-item-title-cls"><text style="color:gray">描述：</text>{{item.desc}}</text>
+					</scroll-view>
 						<view class='news-info-state-cls'>
 							<text class='state-cls'>{{item.state}}</text></view>
 					</view>

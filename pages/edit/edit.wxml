@@ -24,7 +24,7 @@
 		</radio-group>
 	</view>
 	<view class="radio-choose-cls">
-		<input class="weui-input" maxlength="20" value="{{post_desc}}" bindinput="bind_desc_input" placeholder="请输入物品描述" />
+		<input class="weui-input" maxlength="8" value="{{title}}" bindinput="bind_title_input" placeholder="请输入物品名称" />
 	</view>
 	<view class="radio-choose-cls" bindtap="tagAction">
 		<!-- <input class="weui-input" maxlength="20" placeholder="添加标签" /> -->
@@ -33,17 +33,22 @@
 		<mp-actionSheet bindactiontap="tagChoose" show="{{showTagSheet}}" actions="{{tagSheetItems}}" title="请选择物品类别">
 		</mp-actionSheet>
 	</view>
-	<view wx:if="{{tagSelected==1}}" class="weui-cell">学工号：<input class="weui-input" maxlength="15" value="{{id_number}}"
-			bindinput="bind_id_number_input" placeholder="{{id_number}}" /></view>
+	<view wx:if="{{tagSelected==1}}" class="weui-cell">学工号：<input class="weui-input" maxlength="15" value="{{id_number}}" bindinput="bind_id_number_input" placeholder="请输入校园卡卡号" /></view>
 	<view class="radio-choose-cls" bindtap="bindLocation">
 		<view>{{displayAddress}}</view>
 	</view>
-	<view class="radio-choose-cls">
+	<view class="page-section">
+		<view class="page-section-title">可输入物品详细描述，或是想添加的备注信息</view>
+		<view class="textarea-wrp">
+			<textarea value="{{desc}}" bindblur="bindTextAreaBlur" auto-height />
+			</view>
+  </view>
+	<!-- <view class="radio-choose-cls">
 		<view>是否加急</view>
 		<view>
 			<switch checked="{{switch1Checked}}" bindchange="switch1Change" />
 		</view>
-	</view>
+	</view> -->
 	<view class="weui-cells">
 		<view class="weui-cell">
 			<view class="weui-cell__bd">
