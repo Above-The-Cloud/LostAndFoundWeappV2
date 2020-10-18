@@ -20,7 +20,7 @@
 	<view class="menu_bg">
 		<view bindtap="lostRecord" class="category_bg">
 			<view class='menu_item' hover-class="menu_item_hover">
-				<view>
+				<view class="icon-text-container">
 					<image class="icon" src="../../images/myinfo/lostPost.png"></image>
 					<text class="category_text">失物记录</text>
 				</view>
@@ -31,7 +31,7 @@
 		</view>
 		<view bindtap="foundRecord" class="category_bg">
 			<view class='menu_item' hover-class="menu_item_hover">
-				<view>
+				<view class="icon-text-container">
 					<image class="icon" src="../../images/myinfo/foundPost.png"></image>
 					<text class="category_text">拾取记录</text>
 				</view>
@@ -42,7 +42,7 @@
 		</view>
 		<view bindtap="myApp" class="category_bg">
 			<view class='menu_item' hover-class="menu_item_hover">
-				<view>
+				<view class="icon-text-container">
 					<image class="icon" src="../../images/myinfo/myApply.png"></image>
 					<text class="category_text">我的申请</text>
 				</view>
@@ -53,7 +53,7 @@
 		</view>
 		<view bindtap="receiveApp" class="category_bg">
 			<view class='menu_item' hover-class="menu_item_hover">
-				<view>
+				<view class="icon-text-container">
 					<image class="icon" src="../../images/myinfo/receiveApply.png"></image>
 					<text class="category_text">收到申请</text>
 				</view>
@@ -64,7 +64,7 @@
 		</view>
 		<view bindtap="sysInform" class="category_bg">
 			<view class='menu_item' hover-class="menu_item_hover">
-				<view>
+				<view class="icon-text-container">
 					<image class="icon" src="../../images/myinfo/message.png"></image>
 					<text class="category_text">联系客服</text>
 				</view>
