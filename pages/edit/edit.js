@@ -10,16 +10,16 @@ Page({
     campusSelected: '中北',
     typeSelected: 2,
     showTagSheet: false,
-    tagSelected: 9,
+    tagSelected: null,
     tagSheetItems: [],
     schoolCardId: null,
     campusItems: [{
-        name: '中北',
+        name: '中北校区',
         value: '中北',
         checked: true
       },
       {
-        name: '闵行',
+        name: '闵行校区',
         value: '闵行',
         checked: false
       },
@@ -35,10 +35,11 @@ Page({
     }],
     longitude: "",
     latitude: "",
-    post_desc: "粉色水杯",
+    title: "tueti",
+    desc: "",
     tag: "",
     id_number: "",
-    displayAddress: "添加定位",
+    displayAddress: "点击添加定位",
     address: '',
     speed: 0,
     accuracy: 0,
@@ -153,42 +154,45 @@ Page({
       }
     })
   },
-
   clearData: function () {
-    // wx.setStorageSync('schoolCardId', null)
     this.setData({
       imageList: [],
-      displayAddress: "添加定位",
+      filep: [],
+      displayAddress: "点击添加定位",
       address: "",
-      post_desc: "",
+      longitude: "",
+      latitude: "",
+      desc: "",
+      title: "",
       schoolCardId: null,
       id_number: null,
-      tagSelected: null
+      tagSelected: null,
     })
   },
-  onLoad: function (options) {
-    var that = this
-    that.clearData()
+  onShow: function (options) {
+    // this.clearData()
     var number = wx.getStorageSync('schoolCardId')
     var tmpPath = wx.getStorageSync('tmpPath')
-    wx.setStorageSync('schoolCardId', null)
-    if (number)
+    console.log(number)
+    if (!(number === null)) {
+      console.log('number 不为 null')
+      this.clearData()
       this.setData({
         tagSelected: 1,
         imageList: tmpPath,
-        filep: tmpPath
+        filep: tmpPath,
+        schoolCardId: number,
+        id_number: number,
       })
-    console.log(number)
-    this.setData({
-      id_number: number,
-      schoolCardId: number
-    })
-    // var number = wx.getStorageSync('schoolCardId')
-    // console.log(number)
-    // this.setData({
-    //   id_number:number,
-    //   schoolCardId:number
-    // })
+      wx.setStorageSync('schoolCardId', null)
+      wx.setStorageSync('tmpPath', null)
+    } else {
+      console.log('else')
+    }
+  },
+  onLoad: function (options) {
+    this.clearData()
+    var that = this
     wx.request({
       url: 'https://lostandfoundv2.yiwangchunyu.wang/service/dynamic/categories',
       method: 'POST',
@@ -198,7 +202,7 @@ Page({
       success: function (res) {
         var tempList = res.data.data;
         var tagList = [];
-        console.log('tempList', tempList)
+        // console.log('tempList', tempList)
         for (var i = 0; i < tempList.length; i++) {
           tagList.push({
             'text': tempList[i].name,
@@ -214,17 +218,14 @@ Page({
   navbarTap: function (e) {
     this.setData({
       currentTab: e.currentTarget.dataset.idx
-
     })
   },
   //单选框触发函数
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
-
   },
   //
   stateswitch: function (e) {
-
     this.setData({
       tvalue: '',
       imageList: [],
@@ -303,16 +304,26 @@ Page({
       time: e.detail.value
     })
   },
-  bind_desc_input: function (e) {
+  bind_title_input: function (e) {
     this.setData({
-      post_desc: e.detail.value
-
+      title: e.detail.value
+    })
+  },
+  bindTextAreaBlur: function (e) {
+    this.setData({
+      desc: e.detail.value
+    })
+  },
+  bind_id_number_input: function (params) {
+    this.setData({
+      id_number: e.detail.value
     })
   },
   toRelease: function (e) {
     var user_id = wx.getStorageSync('user_id')
+    var that = this
     console.log('toRelease')
-    if (this.data.post_desc == "") {
+    if (this.data.title == "") {
       wx.showToast({
         title: '请输入要发布的内容',
         icon: 'none',
@@ -320,27 +331,52 @@ Page({
       })
       return;
     }
-    console.log(this.data.post_desc)
-    console.log(this.data.campusSelected)
-    console.log(this.data.typeSelected)
-    console.log(this.data.tagSelected)
-    console.log(this.data.displayAddress)
-    console.log(this.data.filep)
-    console.log(user_id)
-    this.createPost(user_id, this.data.typeSelected, this.data.tagSelected, this.data.post_desc, '描述', this.data.filep)
-    this.onLoad()
+    wx.showModal({
+      title: '提示',
+      content: '确认要发布吗？',
+      confirmText: '确认',
+      cancelText: '取消',
+      success(res) {
+        if (res.confirm)
+          that.get_sub_access()
+        else {
+          wx.showToast({
+            title: '您取消了发布',
+            icon: 'none'
+          })
+        }
+      }
+    })
   },
-
-  createPost: function (user_id, type_t, category, title, msg, imagesPaths) {
+  get_sub_access: function (params) {
+    var that = this;
+    wx.requestSubscribeMessage({
+      tmplIds: ['7DRh0tTESxEoYRMPKZOE9p2wNc8OqqZEfsn8Nyh1UyY', '6GQzQDbYDAoxeXwSpwRR9FE_dipmMhbbi5j7flbh0tk'],
+      success: res => {
+        console.log('success', res)
+        console.log(that.data)
+        that.createPost(wx.getStorageSync('user_id'), that.data.typeSelected, that.data.tagSelected, that.data.title, that.data.desc, that.data.campusSelected, that.data.filep)
+        that.onLoad()
+      },
+      fail: res => {
+        console.log('fail', res)
+      },
+      complete: res => {
+        // console.log('complete', complete)
+      }
+    })
+  },
+  createPost: function (user_id, type_t, category, title, msg, campus, imagesPaths) {
     var publish_id = null;
-    var thatInstance = this;
-    var upLocation = "{\"longitude\":\"" + thatInstance.data.longitude + "\",\"latitude\":\"" + thatInstance.data.latitude + "\", \"address\":\"" + thatInstance.data.address + "\"}";
+    var that = this;
+    var upLocation = "{\"longitude\":\"" + that.data.longitude + "\",\"latitude\":\"" + that.data.latitude + "\", \"address\":\"" + that.data.address + "\"}";
     console.log(upLocation);
     var uploadFormdata = {
       user_id: user_id,
       type: type_t,
       category: category,
       desc: msg,
+      campus: campus,
       title: title,
       location: upLocation
     }
@@ -375,8 +411,8 @@ Page({
                 temp.push(fdata[0])
                 console.log(temp);
                 if (temp.length == imagesPaths.length)
-                  thatInstance.updatePostImg(dynamic_id, temp)
-                // thatInstance.updatePhoto(dynamic_id, temp);
+                  that.updatePostImg(dynamic_id, temp)
+                // that.updatePhoto(dynamic_id, temp);
               },
               fail: function (err) {
                 console.log(err)
@@ -391,7 +427,7 @@ Page({
           // 跳转到主页
 
           // var page = getCurrentPages().pop();
-          thatInstance.onLoad()
+          that.onLoad()
           wx.switchTab({
             url: '../index/index',
             success: function (e) {
@@ -399,7 +435,7 @@ Page({
               if (page == undefined || page == null) return;
               setTimeout(function () {
                 page.onLoad();
-              }, 2000);
+              }, 1000);
 
             }
           })
@@ -467,8 +503,6 @@ Page({
     console.log('我要发布啦！！！', user_id, type_t, category, title, msg, imagesPaths)
     console.log("imageList..........")
     console.log(imagesPaths)
-    //在此调用uploadAll接口
-    // this.uploadAll(user_id, type_t, category, title, msg, imagesPaths, [])
   },
 
   //imagesPaths图片路径数组
@@ -493,144 +527,5 @@ Page({
       }
     })
   },
-  uploadAll: function (user_id, type_t, category, title, msg, imagesPaths) {
-    var publish_id = null;
-    var thatInstance = this;
-    var upLocation = "{\"longitude\":\"" + thatInstance.data.longitude + "\",\"latitude\":\"" + thatInstance.data.latitude + "\", \"address\":\"" + thatInstance.data.address + "\"}";
-    console.log(upLocation);
-    wx.request({
-      url: serverName + '/service/dynamic/create',
-      data: {
-        user_id: user_id,
-        type: type_t,
-        category: category,
-        content: msg,
-        location: upLocation
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      success: function (res) {
-        console.log(res);
-        if (res.data.code == 0) {
-          var dynamic_id = res.data.data.dynamic_id;
-          console.log('当前发布的动态id为', dynamic_id);
-          var temp = [];
-          for (var path in imagesPaths) {
-            console.log(path)
-            wx.uploadFile({
-              url: serverName + '/service/dynamic/picRcgnz',
-              filePath: imagesPaths[path],
-              name: "images",
-              success: function (res) {
-                console.log('图片识别！')
-                console.log(res);
-                var data = JSON.parse(res.data);
-                wx.showModal({
-                  title: '提示',
-                  content: '识别分类为' + data.data.keyword,
-                  confirmText: '确认',
-                  cancelText: '识别不准',
-                  success(res) {
-                    if (res.confirm) {
-                      console.log('识别准确')
-                      wx.request({
-                        url: serverName + '/service/dynamic/update',
-                        method: 'POSt',
-                        data: {
-                          dynamic_id: dynamic_id,
-                          category: data.data.keyword
-                        },
-                        header: {
-                          'content-type': 'application/x-www-form-urlencoded' // 默认值
-                        },
-                        success: function (e) {
-                          console.log('修改上传图片')
-                          console.log(e)
-                        }
-                      })
-                    } else if (res.cancel) {
-                      console.log('识别不准')
-                      wx.showActionSheet({
-                        itemList: thatInstance.data.itemList, //上传分类
-                        success(res) {
-                          wx.request({
-                            url: serverName + '/service/dynamic/update',
-                            method: 'POST',
-                            data: {
-                              dynamic_id: dynamic_id,
-                              category: thatInstance.data.itemList[res.tapIndex]
-                            },
-                            header: {
-                              'content-type': 'application/x-www-form-urlencoded' // 默认值
-                            },
-                            success: function (e) {
-                              console.log('修改上传图片')
-                              console.log(e)
-                            }
-                          })
-                        },
-                        fail(res) {
-                          console.log(res.errMsg);
-                        }
-                      })
-                    }
-                  }
-                })
-              },
-              fail: function (err) {
-                console.log(err)
-              }
-            })
-            wx.uploadFile({
-              url: serverName + '/service/upload/uploadImg',
-              filePath: imagesPaths[path],
-              name: "images",
-              success: function (res) {
-                console.log('图片上传！')
-                var fdata = JSON.parse(res.data).data;
-                fdata = JSON.parse(fdata)
-                temp.push(fdata[0])
-                console.log(temp);
-                if (temp.length == imagesPaths.length)
-                  thatInstance.updatePhoto(dynamic_id, temp);
-              },
-              fail: function (err) {
-                console.log(err)
-              }
-            })
 
-          }
-          wx.showToast({
-            title: '发布成功',
-            icon: 'none',
-            duration: 3000
-          })
-          //跳转到主页
-          wx.switchTab({
-            url: '../index/index',
-            success: function (e) {
-              var page = getCurrentPages().pop();
-              if (page == undefined || page == null) return;
-              setTimeout(function () {
-                page.onLoad();
-              }, 2000);
-
-            }
-          })
-        }
-        // publish_id=res.data.data.publish_id;
-        // console.log('当前数据库返回的publish_id')
-        // console.log(publish_id)
-
-
-
-
-      }
-    })
-  },
-  onShow: function () {
-
-  },
 })

@@ -21,7 +21,7 @@
 }
 
 .ui-radio.active .text{
-  color:#BE4B4B;
+  color:#006a71;
   line-height:70rpx;
   font-size: 14px;
 }
@@ -47,9 +47,9 @@
 
 .ui-radio.active{
   background-color: #fff;
-  color: #BE4B4B;
+  color: #006a71;
   border-radius: 20px;
-  border: 1px solid #BE4B4B;
+  border: 1px solid #006a71;
   width: 160rpx;
   height: 70rpx;
   text-align: center;
@@ -59,7 +59,7 @@
 
 .release-btn-cls {
   border-radius: 20px;
-  border:2px solid #BE4B4B;
+  border:2px solid #006a71;
   margin-top: 20rpx;
   margin-bottom: 20rpx;
   background-color: #fff;
@@ -67,8 +67,31 @@
   text-align: center;
   margin-left: 150rpx;
   margin-right: 150rpx;
-  color: #BE4B4B;
+  color: #006a71;
   font-weight: bold;
+}
+textarea {
+  width: 600rpx;
+  padding: 25rpx 0;
+  margin-right: 60rpx;
+}
+
+.textarea-wrp {
+  padding: 0 25rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  background-color: #fff;
+  border: 1px solid gainsboro;
+  border-radius: 10rpx;
+}
+
+.page-section{
+  width: 100%;
+  margin-bottom: 60rpx;
+}
+
+.page-section:last-child{
+  margin-bottom: 0;
 }
 
 .radio-choose-cls {
@@ -93,6 +116,7 @@
 }
 
 .weui-cell {
+  font-weight: bold;
   background-color: white;
   border-radius: 20rpx;
 }
@@ -413,10 +437,10 @@
 }
 
 .page-section-title {
-  font-size: 28rpx;
+  font-size: 15px;
   color: #999999;
   margin-bottom: 10rpx;
-  padding-left: 30rpx;
+  padding-left: 60rpx;
   padding-right: 30rpx;
 }
 

@@ -19,6 +19,15 @@
   color: #ffa1a1;
   font-weight: bold;
 }
+.trash-img-cls{
+  width: 40rpx;
+  height: 40rpx;
+}
+.delete-cls{
+  position: relative;
+  text-align: center;
+  margin-top: 50rpx;
+}
 .contain .mask{
   position: absolute;
   left: 0;
@@ -359,10 +368,17 @@
   border: 2px solid gray ;
   border-radius: 10px;
   width: 750rpx;
-  height: 260rpx;
+  height: 300rpx;
   flex-direction: row;
 }
-
+.news-info-msg-cls{
+  font-size:25rpx;
+  border-radius: 20rpx;
+  /* border: 1px solid gray; */
+  margin-top: 10rpx;
+  height: 80rpx;
+  color: #333333
+}
 .news-item-right {
   display: flex;
   flex-direction: row;

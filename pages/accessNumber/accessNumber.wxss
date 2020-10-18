@@ -1,39 +1,34 @@
-/* pages/login/login.wxss */
-page {
-  display: block;
-  min-height: 100%;
-  background-color: #ffffff;
-}
+/* pages/initinfo/initinfo.wxss */
 .picker{
   padding: 19rpx 26rpx;
   background-color: #FFFFFF;
-}
-.radio{
-  font-size: 14px;
-  color: gray;
-}
-.log-in{
-  border-radius: 90rpx;
-  margin-top: 150rpx;
-  width: 100%;
 }
 .cells {
   position: relative;
   margin-top: 1.17647059em;
   background-color: #FFFFFF;
   line-height: 1.41176471;
-  font-size: 17px;
+  font-size: 16px;
 }
 .cells__title {
-  margin-top: .77em;
-  margin-bottom: .3em;
+  font-weight: bold;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 5em;
+  top: 50px;
+  margin-bottom: 2em;
   padding-left: 15px;
   padding-right: 15px;
-  color: #999999;
-  font-size: 14px;
+  /* color: #999999; */
+  font-size: 15px;
 }
 .cells_after-title {
   margin-top: 0;
+  width: 75%;
+  margin: 20rpx;
+  padding: 80rpx;
+  margin: 0 auto;
+  justify-content: center;
 }
 .cell {
   padding: 10px 15px;
@@ -45,7 +40,28 @@ page {
   -webkit-align-items: center;
           align-items: center;
 }
+.btn-container{
+  justify-content: center;
+  margin: 0 auto;
+  flex-direction: column;
+  display: flex;
+}
+.agree-btn-cls{
+  top: 150rpx;
+  width: 70%;
+  padding-bottom: 0;
+  border-radius: 100rpx;
+  justify-content: center;
+  margin: 0 auto;
+}
 .cell_input {
+  justify-content: center;
+  flex-direction: column;
+  font-size: 15px;
+  /* color: ; */
+  font-weight: bold;
+  margin: 0 auto;
+  width: 90%;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -55,7 +71,6 @@ page {
   word-break: break-all;
 }
 .input {
-  font-size: 16px;
   height: 2.58823529em;
   min-height: 2.58823529em;
   line-height: 2.58823529em;
@@ -68,16 +83,23 @@ page {
 .cell__hd{
    padding-left: 0 px;
 }
-
+.footer{
+  bottom: 200rpx;
+  position: fixed;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
 .container {
+  /* position: absolute; */
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  /* min-height: 10px; */
   justify-content: space-between;
-  font-size: 50 rpx;
+  font-size: 15px;
   font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
-
 
 .page {
   line-height: 3.0;
@@ -85,46 +107,25 @@ page {
 }
 .page-section{
   width: 100%;
-  margin-bottom: 10rpx;
+  margin-bottom: 30rpx;
+  font-size: 15px;
 }
 .page-section-title{
-  font-size: 28rpx;
+  font-size: 15px;
   color: #999999;
   margin-bottom: 10rpx;
   padding-left: 30rpx;
   padding-right: 30rpx;
 }
 .btn-area{
-  display: flex;
-  justify-content: center;
+  margin-top: 50rpx;
+  margin-left: 500rpx;
   box-sizing: border-box;
   width: 100%;
   padding: 0 30rpx;
 }
 
-.nameImage, .keyImage{
-  margin-left: 0px;
-  width: 18px;
-  height: 18px
-}
-.ecnuImage{
-  margin-left: 0px;
-  width:50px;
-  height: 50px;
-}
-.logoImage{
-  margin-right: 0px;
-  width:50px;
-  height: 50px;
-}
-.logo-container{
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 100%;
-  align-items:center;
-}
+
 .cells:before {
   content: " ";
   position: absolute;
@@ -134,23 +135,6 @@ page {
   height: 1px;
   border-top: 1rpx solid #D9D9D9;
   color: #D9D9D9;
-}
-.foot{
-  bottom: 200rpx;
-  position: fixed;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  flex-direction: column;
-}
-.info{
-  color: gray;
-  font-family: 黑体;
-  font-size: 13px;
-  /* font-weight:bold; */
-}
-.text-container{
-  text-align: center;
 }
 .cells:after {
   content: " ";
@@ -162,4 +146,31 @@ page {
   border-bottom: 1rpx solid #D9D9D9;
   color: #D9D9D9;
 }
-
+.logo-container{
+  /* margin-left: 90px; */
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  align-items:center;
+}
+.ecnuImage{
+  margin-left: 0px;
+  width:50px;
+  height: 50px;
+}
+.logoImage{
+  margin-right: 0px;
+  width:50px;
+  height: 50px;
+}
+.text-container{
+  text-align: center;
+}
+.info{
+  color: gray;
+  font-family: 黑体;
+  font-size: 13px;
+  /* font-weight:bold; */
+}

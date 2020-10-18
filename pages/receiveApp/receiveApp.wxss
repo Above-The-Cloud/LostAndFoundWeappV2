@@ -366,8 +366,8 @@
   margin-top: 20rpx;
   border: 2px solid gray ;
   border-radius: 10px;
-  width: 350rpx;
-  height: 200rpx;
+  width: 750rpx;
+  height: 250rpx;
   flex-direction: row;
 }
 

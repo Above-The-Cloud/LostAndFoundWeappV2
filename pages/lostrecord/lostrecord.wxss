@@ -274,6 +274,11 @@
   color: rgb(92, 107, 171);
   font-weight: bold;
 }
+.delete-cls{
+  position: relative;
+  text-align: center;
+  margin-top: 50rpx;
+}
 
 .apply-btn-cls {
   position: relative;
@@ -335,10 +340,17 @@
   border: 2px solid gray ;
   border-radius: 10px;
   width: 750rpx;
-  height: 260rpx;
+  height: 300rpx;
   flex-direction: row;
 }
-
+.news-info-msg-cls{
+  font-size:25rpx;
+  border-radius: 20rpx;
+  /* border: 1px solid gray; */
+  margin-top: 10rpx;
+  height: 80rpx;
+  color: #333333
+}
 .news-item-right {
   display: flex;
   flex-direction: row;
@@ -356,6 +368,11 @@
   width: 40px;
   height: 40px;
   border-radius: 40px;
+}
+
+.trash-img-cls{
+  width: 40rpx;
+  height: 40rpx;
 }
 
 .news-img-cls {

@@ -1,5 +1,5 @@
 const app = getApp()
-var serverName = app.globalData.serverName
+var serverName = 'https://lostandfoundv2.yiwangchunyu.wang'
 Page({
   data: {
     searchs: [],
@@ -76,25 +76,26 @@ Page({
     })
   },
   search_database: function (key, obj) {
-    wx.request({
-      url: serverName + '/service/dynamic/show',
-      data: {
-        content__icontains: key
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      success: function (res) {
-        console.log(res);
-        obj.setData({
-          search_data: res.data.data.dynamics
-        })
-        console.log('当前数据库返回的search记录');
-        // console.log(res);
-        obj.Loadmsg();
-      }
-    })
+    console.log(key)
+    // wx.request({
+    //   url: serverName + '/service/dynamic/show',
+    //   data: {
+    //     content__icontains: key
+    //   },
+    //   method: 'POST',
+    //   header: {
+    //     'content-type': 'application/x-www-form-urlencoded' // 默认值
+    //   },
+    //   success: function (res) {
+    //     console.log(res);
+    //     obj.setData({
+    //       search_data: res.data.data.dynamics
+    //     })
+    //     console.log('当前数据库返回的search记录');
+    //     // console.log(res);
+    //     obj.Loadmsg();
+    //   }
+    // })
 
   },
   deleteItem: function (e) {

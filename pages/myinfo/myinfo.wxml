@@ -1,78 +1,80 @@
- <view class="box">
- 	<view class='user-container'>
- 		<view class='user-info'>
- 			<view class='user-icon'>
- 				<image animation="{{animationData}}" class="userinfo-avatar" src="{{avatarUrl}}"></image>
- 			</view>
- 			<view>
- 				<view class='user_infomation'>
- 					<view><text class="userinfo-nickname">{{nickName}}</text></view>
- 					<view><text class="userinfo-contact-type">{{contact_type}}:</text><text class="userinfo-phonenumber">{{contact_value}}</text></view>
- 				</view>
- 			</view>
- 		</view>
- 		<view>
- 			<image src='../../images/myinfo/qrcode.png' class='_setting' data-publish-id="{{item.publish_id}}" bindtap="Setting"></image>
- 		</view>
- 	</view>
- 	<view class="menu_bg">
- 		<view bindtap="lostRecord" class="category_bg">
- 			<view class='menu_item'>
- 				<view>
- 					<image class="icon" src="../../images/myinfo/lostRecord.png"></image>
- 					<text class = "category_text">失物记录</text>
- 				</view>
- 				<view>
- 					<image class="logo" src="../../images/myinfo/next_step.png"></image>
- 				</view>
- 			</view>
- 		</view>
- 		<view bindtap="foundRecord" class="category_bg">
- 			<view class='menu_item'>
- 				<view>
- 					<image class="icon" src="../../images/myinfo/foundRecord.png"></image>
- 					<text class = "category_text">拾取记录</text>
- 				</view>
- 				<view>
- 					<image class="logo" src="../../images/myinfo/next_step.png"></image>
- 				</view>
- 			</view>
- 		</view>
- 		<view bindtap="myApp" class="category_bg">
- 			<view class='menu_item'>
- 				<view>
- 					<image class="icon" src="../../images/myinfo/myApp.png"></image>
- 					<text class = "category_text">我的申请</text>
- 				</view>
- 				<view>
- 					<image class="logo" src="../../images/myinfo/next_step.png"></image>
- 				</view>
- 			</view>
- 		</view>
- 		<view bindtap="receiveApp" class="category_bg">
- 			<view class='menu_item'>
- 				<view>
- 					<image class="icon" src="../../images/myinfo/receiveApp.png"></image>
- 					<text class = "category_text">收到申请</text>
- 				</view>
- 				<view>
- 					<image class="logo" src="../../images/myinfo/next_step.png"></image>
- 				</view>
- 			</view>
- 		</view>
- 		<view bindtap="sysInform" class="category_bg">
- 			<view class='menu_item'>
- 				<view>
- 					<image class="icon" src="../../images/myinfo/sysInform.png"></image>
- 					<text class = "category_text">系统通知</text>
- 				</view>
- 				<view>
- 					<image class="logo" src="../../images/myinfo/next_step.png"></image>
- 				</view>
- 			</view>
- 		</view>
- 		<!-- <view bindtap="Logout" class="backoff">
+<view class="box">
+	<view class='user-container'>
+		<view class='user-info'>
+			<view class='user-icon'>
+				<image animation="{{animationData}}" class="userinfo-avatar" src="{{avatarUrl}}"></image>
+			</view>
+			<view>
+				<view class='user_infomation'>
+					<view><text class="userinfo-nickname">{{nickName}} | {{realName}}</text></view>
+					<view><text class="userinfo-contact-type">{{contact_type}}:</text><text
+							class="userinfo-phonenumber">{{contact_value}}</text></view>
+				</view>
+			</view>
+		</view>
+		<view>
+			<image src='../../images/myinfo/setting.png' class='_setting' data-publish-id="{{item.publish_id}}"
+				bindtap="Setting"></image>
+		</view>
+	</view>
+	<view class="menu_bg">
+		<view bindtap="lostRecord" class="category_bg">
+			<view class='menu_item' hover-class="menu_item_hover">
+				<view>
+					<image class="icon" src="../../images/myinfo/lostPost.png"></image>
+					<text class="category_text">失物记录</text>
+				</view>
+				<view>
+					<image class="logo" src="../../images/myinfo/next_step.png"></image>
+				</view>
+			</view>
+		</view>
+		<view bindtap="foundRecord" class="category_bg">
+			<view class='menu_item' hover-class="menu_item_hover">
+				<view>
+					<image class="icon" src="../../images/myinfo/foundPost.png"></image>
+					<text class="category_text">拾取记录</text>
+				</view>
+				<view>
+					<image class="logo" src="../../images/myinfo/next_step.png"></image>
+				</view>
+			</view>
+		</view>
+		<view bindtap="myApp" class="category_bg">
+			<view class='menu_item' hover-class="menu_item_hover">
+				<view>
+					<image class="icon" src="../../images/myinfo/myApply.png"></image>
+					<text class="category_text">我的申请</text>
+				</view>
+				<view>
+					<image class="logo" src="../../images/myinfo/next_step.png"></image>
+				</view>
+			</view>
+		</view>
+		<view bindtap="receiveApp" class="category_bg">
+			<view class='menu_item' hover-class="menu_item_hover">
+				<view>
+					<image class="icon" src="../../images/myinfo/receiveApply.png"></image>
+					<text class="category_text">收到申请</text>
+				</view>
+				<view>
+					<image class="logo" src="../../images/myinfo/next_step.png"></image>
+				</view>
+			</view>
+		</view>
+		<view bindtap="sysInform" class="category_bg">
+			<view class='menu_item' hover-class="menu_item_hover">
+				<view>
+					<image class="icon" src="../../images/myinfo/message.png"></image>
+					<text class="category_text">联系客服</text>
+				</view>
+				<view>
+					<image class="logo" src="../../images/myinfo/next_step.png"></image>
+				</view>
+			</view>
+		</view>
+		<!-- <view bindtap="Logout" class="backoff">
  			<text class = "backoff_text">退出登录</text>
  		</view> -->
- 	</view>
- </view>
+	</view>
+</view>

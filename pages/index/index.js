@@ -15,7 +15,8 @@ Page({
       '../../images/index/swiper/1.jpg',
       '../../images/index/swiper/2.jpg',
       '../../images/index/swiper/3.jpeg',
-      '../../images/index/swiper/4.jpg'
+      '../../images/index/swiper/4.jpg',
+      // '../../images/index/swiper/5.png'
     ],
     tagList: [],
     listofitem: [],
@@ -25,9 +26,11 @@ Page({
     listlost: [{
       header: ' '
     }, ],
+    page: 0,
     cur_type: '所有',
     activeIndex: 1,
     duration: 2000,
+    begin: '',
     indicatorDots: true,
     autoplay: true,
     interval: 3000,
@@ -43,165 +46,210 @@ Page({
     })
   },
   toApply: function (e) {
-    console.log(e.currentTarget.dataset)
-    var applyId = e.currentTarget.dataset.applyid
-    var user_id = wx.getStorageSync('user_id')
-    var phone = e.currentTarget.dataset.phone
-    console.log(applyId, user_id)
-    wx.showToast({
-      title: '联系方式为' + phone + '请前往个人页面查看申请记录',
-      icon: 'none',
-      duration: 2000
-    })
-    wx.request({
-      url: serverName2 + '/service/dynamic/apply',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded' // 默认值
-      },
-      data: {
-        id: applyId,
-        user_id: user_id
+    var that = this;
+    var content = ''
+    if (this.data.type_t == 1)
+      content = '确认联系失主找回吗'
+    else if (this.data.type_t == 2)
+      content = '确认要申领这个物品吗'
+    wx.showModal({
+      title: '提示',
+      content: content,
+      success: function (params) {
+        if (params.confirm) {
+          console.log(e.currentTarget.dataset)
+          var applyId = e.currentTarget.dataset.applyid
+          var user_id = wx.getStorageSync('user_id')
+          var phone = e.currentTarget.dataset.phone
+          console.log(applyId, user_id)
+          wx.request({
+            url: serverName2 + '/service/dynamic/apply',
+            method: 'POST',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded' // 默认值
+            },
+            data: {
+              id: applyId,
+              user_id: user_id
+            },
+            success: function(params) {
+              console.log(params)
+              let code = params.data.code
+              if(code == -4 || code == -5 ||  code == -3)
+              {
+                wx.showToast({
+                  title: params.data.msg,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+              else{
+                wx.showToast({
+                  title: '申请成功！请联系' + phone + '个人页面可查看申请记录',
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+
+              
+            }
+          })
+          setTimeout(() => {
+            that.onLoad()
+          }, 1500);
+
+        } else {
+          wx.showToast({
+            title: '您取消了申请',
+            icon: 'none'
+          })
+        }
       }
     })
-    this.onLoad()
+
   },
   oneKeyBack: function (e) {
     console.log('一键找回')
     var that = this
-    wx.chooseImage({
-      count: 1,
+    wx.showModal({
+      title: '提示',
+      content: '是否要发布校园卡消息',
       success: function (res) {
-        console.log('Recog......')
-        console.log(res)
-        var tmpfile = res.tempFilePaths;
-        wx.uploadFile({
-          url: serverName2 + '/service/upload/dynamicImg',
-          filePath: tmpfile[0],
-          name: "images",
-          success: function (res) {
-            console.log('校园卡图片上传！')
-            // console.log(res)
-            var fdata = JSON.parse(res.data).data;
-            fdata = JSON.parse(fdata)
-            console.log(fdata[0]);
-            wx.request({
-              url: 'https://lostandfoundv2.yiwangchunyu.wang/service/dynamic/ocrPrintedText',
-              method: 'POST',
-              header: {
-                'content-type': 'application/x-www-form-urlencoded' // 默认值
-              },
-              data: {
-                img_url: fdata[0]
-              },
-              success: function (res) {
-                console.log(res)
-                var results = res.data.data.items
-                console.log(results)
-                var idnumber = that.detectNumber(results)
-                console.log(idnumber)
-                console.log('是学号吧', idnumber)
-                wx.setStorageSync('schoolCardId', idnumber)
-                wx.setStorageSync('tmpPath', tmpfile)
-                wx.switchTab({
-                  url: '../edit/edit',
-                })
-                that.setData({
-                  schoolCardId: idnumber
-                })
-              },
-              fail: function (e) {
-                console.log(e)
-              }
-            })
-          },
-          fail: function (err) {
-            console.log(err)
-          }
-        })
-        that.setData({
-          imageList: tmpfile,
-          filep: tmpfile
-        })
+        if (res.confirm) {
+          wx.chooseImage({
+            count: 1,
+            success: function (res) {
+              console.log('Recog......')
+              console.log(res)
+              wx.showLoading({
+                title: '识别中，请稍等',
+              })
+              var tmpfile = res.tempFilePaths;
+              wx.uploadFile({
+                url: serverName2 + '/service/upload/dynamicImg',
+                filePath: tmpfile[0],
+                name: "images",
+                success: function (res) {
+                  console.log('校园卡图片上传！')
+                  // console.log(res)
+                  var fdata = JSON.parse(res.data).data;
+                  fdata = JSON.parse(fdata)
+                  console.log(fdata[0]);
+                  wx.request({
+                    url: 'https://lostandfoundv2.yiwangchunyu.wang/service/dynamic/ocrPrintedText',
+                    method: 'POST',
+                    header: {
+                      'content-type': 'application/x-www-form-urlencoded' // 默认值
+                    },
+                    data: {
+                      img_url: fdata[0]
+                    },
+                    success: function (res) {
+                      console.log(res)
+                      var results = res.data.data.items
+                      console.log(results)
+                      var idnumber = that.detectNumber(results)
+                      console.log(idnumber)
+                      // console.log('是学号吧', idnumber)
+                      wx.setStorageSync('schoolCardId', idnumber)
+                      wx.setStorageSync('tmpPath', tmpfile)
+                      that.setData({
+                        schoolCardId: idnumber
+                      })
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '识别完成',
+                        duration: 1000
+                      })
+                      setTimeout(() => {
+                        wx.switchTab({
+                          url: '../edit/edit',
+                        })
+                      }, 1000);
+                    },
+                    fail: function (e) {
+                      console.log(e)
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: e.errMsg,
+                        icon: none,
+                        duration: 1500
+                      })
+                    }
+                  })
+                },
+                fail: function (err) {
+                  console.log(err)
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: err.errMsg,
+                    icon: none,
+                    duration: 1500
+                  })
+                }
+              })
+              that.setData({
+                imageList: tmpfile,
+                filep: tmpfile
+              })
+            }
+          })
+        }
       }
     })
+
   },
   detectNumber: function (results) {
     // console.log('detect...')
     for (var i = 0; i < results.length; i++) {
       if (isNaN(results[i].text) == false)
         return results[i].text
-
     }
-
-
   },
-  bind所有: function (e) {
+  searchBykeyword: function (params) {
+    console.log('search')
+    wx.navigateTo({
+      url: '../search/search',
+    })
+  },
+  // bind所有: function (e) {
+  //   this.setData({
+  //     actionSheetHidden: !this.data.actionSheetHidden,
+  //     cur_type: '所有',
+  //     listofitem: []
+  //   })
+  //   this.show_publish_infos(this.data.type_t, this.data.cur_type, this, 'reload')
+  // },
+  bindChooseCategory: function (params) {
     this.setData({
       actionSheetHidden: !this.data.actionSheetHidden,
-      cur_type: '所有',
       listofitem: []
     })
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this)
-  },
-  bind校园卡: function (e) {
-    this.setData({
-      actionSheetHidden: !this.data.actionSheetHidden,
-      cur_type: '校园卡',
-      listofitem: []
-    })
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this)
-  },
-  bind钱包: function (e) {
-    this.setData({
-      actionSheetHidden: !this.data.actionSheetHidden,
-      cur_type: '钱包',
-      listofitem: []
-    })
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this)
-  },
-  bind钥匙: function (e) {
-    this.setData({
-      actionSheetHidden: !this.data.actionSheetHidden,
-      cur_type: '钥匙',
-      listofitem: []
-    })
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this)
-  },
-  bind雨伞: function (e) {
-    this.setData({
-      actionSheetHidden: !this.data.actionSheetHidden,
-      cur_type: '雨伞',
-      listofitem: []
-    })
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this)
-  },
-  bind证件: function (e) {
-    this.setData({
-      actionSheetHidden: !this.data.actionSheetHidden,
-      cur_type: '证件',
-      listofitem: []
-    })
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this)
-  },
-  bind其他: function (e) {
-    this.setData({
-      actionSheetHidden: !this.data.actionSheetHidden,
-      cur_type: '其他',
-      listofitem: []
-    })
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this)
+    console.log(params)  
   },
   actionSheetTap: function (e) {
-    this.setData({
-      actionSheetHidden: !this.data.actionSheetHidden
+    var actionSheetItems = this.data.actionSheetItems;
+    var that = this
+    wx.showActionSheet({
+      itemList: actionSheetItems,
+      success (res) {
+        console.log(res.tapIndex)
+        that.setData({
+          cur_type:that.data.actionSheetItems[res.tapIndex]
+        })
+        // that.data.cur_type = that.data.actionSheetItems[res.tapIndex]
+      },
+      fail (res) {
+        console.log(res.errMsg)
+      }
     })
   },
   actionSheetChange: function (e) {
     // console.log('change', e);
-    this.setData({
-      actionSheetHidden: !this.data.actionSheetHidden
-    })
+    // this.setData({
+    //   actionSheetHidden: !this.data.actionSheetHidden
+    // })
+
   },
   //事件处理函数
   refresh: function (e) {
@@ -233,7 +281,7 @@ Page({
     //     userInfo:userInfo
     //   })
     // })
-    this.show_publish_infos(this.data.type_t, '所有', this)
+    this.show_publish_infos(this.data.type_t, '所有', this, 'reload')
   },
 
   stateswitch: function (e) {
@@ -244,7 +292,8 @@ Page({
         listofitem: this.data.listlost,
         activeIndex: type,
         type_t: 1,
-        cur_type: '所有'
+        cur_type: '所有',
+        page: 0
       })
       flag = false;
 
@@ -253,11 +302,12 @@ Page({
         listofitem: this.data.listfound,
         activeIndex: type,
         type_t: 2,
-        cur_type: '所有'
+        cur_type: '所有',
+        page: 0
       })
       flag = true;
     }
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this)
+    this.show_publish_infos(this.data.type_t, this.data.cur_type, this, 'reload')
   },
 
   bindViewTap: function (e) {
@@ -270,14 +320,17 @@ Page({
     now.setDate(now.getDate() - this.index++)
     return now
   },
-  Loadmsg: function () {
+  Loadmsg: function (mode) {
     var that = this;
-    while (this.data.listfound.length != 1)
-      this.data.listfound.pop();
-    while (this.data.listlost.length != 1)
-      this.data.listlost.pop();
+    if (mode != 'append') {
+      while (this.data.listfound.length != 1)
+        this.data.listfound.pop();
+      while (this.data.listlost.length != 1)
+        this.data.listlost.pop();
+    }
     var i = 0;
     var fetchdata = that.data.publish_data
+    // console.log('fetchdata', fetchdata)
     for (i = 0; i < fetchdata.length; i++) {
       var Msg = fetchdata[i].content;
       var user_id = fetchdata[i].user_id;
@@ -285,14 +338,16 @@ Page({
       var Submission_time = str
       var imageurl = '';
       var postid = fetchdata[i].id
-      var imageList = (fetchdata[i].images);
+      var imageList = fetchdata[i].images;
       var user_icon = fetchdata[i].user_info.avatar;
       var nick_name = fetchdata[i].user_info.nick_name;
       var phone = fetchdata[i].user_info.phone
       var location = fetchdata[i].location;
       var state = fetchdata[i].state
-      var type = '#' + this.data.tagList[parseInt(fetchdata[i].category) - 1];
+      var type = '#' + this.data.tagList[fetchdata[i].category];
       var title = fetchdata[i].title;
+      var desc = fetchdata[i].desc;
+      var campus = fetchdata[i].campus
       var address = location.address;
       if (address)
         address = address;
@@ -302,6 +357,8 @@ Page({
         imageurl = fetchdata[i].images[0];
       if (fetchdata[i].type == 2)
         this.data.listfound.push({
+          desc: desc,
+          campus: campus,
           postid: postid,
           userid: user_id,
           userphone: phone,
@@ -318,6 +375,8 @@ Page({
         })
       else if (fetchdata[i].type == 1)
         this.data.listlost.push({
+          desc: desc,
+          campus: campus,
           postid: postid,
           userid: user_id,
           userphone: phone,
@@ -347,15 +406,15 @@ Page({
   onShow: function () {
     var that = this;
     wx.request({
-      url: 'https://lostandfound.yiwangchunyu.wang/service/dynamic/categories',
+      url: serverName2 + '/service/dynamic/categories',
       method: 'POST',
       header: {
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       success: function (res) {
         var tempList = ['所有'];
-        for (var i = 0; i < res.data.data.length; i++)
-          tempList.push(res.data.data[i]);
+        for (var i = 0; i < 5; i++)
+          tempList.push(res.data.data[i].name);
         that.setData({
           actionSheetItems: tempList
         })
@@ -366,6 +425,14 @@ Page({
     this.onload;
     this.refresh();
   },
+  onReachBottom: function () {
+    this.data.page++;
+    this.show_publish_infos(this.data.type_t, this.data.cur_type, this, 'append')
+    wx.showToast({
+      title: '正在加载...',
+      icon: 'none'
+    })
+  },
   photopreview: function (event) { //图片点击浏览
     var src = event.currentTarget.dataset.src; //获取data-src
     var imgList = event.currentTarget.dataset.list; //获取data-list
@@ -374,14 +441,32 @@ Page({
       urls: imgList // 需要预览的图片http链接列表
     })
   },
+  formatDate: function (endDate) { //将Date类型转换为%Y-%m-%d %H:%M:%S'
+    var y = endDate.getFullYear();
+    var m = endDate.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = endDate.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = endDate.getHours();
+    var minute = endDate.getMinutes();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    var second = endDate.getSeconds();
+    second = second < 10 ? ('0' + second) : second;
+    let res = y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+    // console.log(res)
+    return res;
+  },
   onLoad: function () {
+    var now = new Date();
+    var preyear = now.getFullYear() - 1; //只读取一年内的数据
+    now.setFullYear(preyear)
+    this.data.begin = this.formatDate(now)
     var user_id = wx.getStorageSync('user_id');
     while (this.data.listfound.length != 1)
       this.data.listfound.pop();
     while (this.data.listlost.length != 1)
       this.data.listlost.pop();
     var that = this;
-
     this.index = 1
     if (this.data.activeIndex == 1)
       this.setData({
@@ -401,28 +486,36 @@ Page({
       },
       success: function (res) {
         var tempList = res.data.data;
-        var tagList = [];
+        var tagList = {};
         for (var i = 0; i < tempList.length; i++) {
-          tagList.push(tempList[i].name)
+          tagList[tempList[i].id] = tempList[i].name
         }
         that.setData({
           tagList: tagList
         })
+        // console.log(tagList)
       }
     })
     this.show_publish_infos(this.data.type_t, '所有', this)
+    // wx.redirectTo({
+    //   url: '../lostrecord/lostrecord',
+    // })
   },
 
   //获取发布信息的接口，传入分类数据
-  show_publish_infos: function (type_t, category, obj) {
+  show_publish_infos: function (type_t, category, obj, mode) {
     // console.log('type_t:' + type_t);
     // console.log('category:' + category);
+    let page = this.data.page;
+    let begin = this.data.begin;
     if (category == '所有')
       wx.request({
         url: serverName2 + '/service/dynamic/list',
         data: {
           type: type_t,
-          size: 20
+          size: 10,
+          page: page,
+          begin: begin,
         },
         method: 'POST',
         header: {
@@ -432,7 +525,7 @@ Page({
           obj.setData({
             publish_data: res.data.data.dynamics
           })
-          obj.Loadmsg()
+          obj.Loadmsg(mode)
         }
       })
     else
@@ -440,7 +533,9 @@ Page({
         url: serverName2 + '/service/dynamic/list',
         data: {
           type: type_t,
-          category: category
+          category: category,
+          page: page,
+          begin: begin,
         },
         method: 'POST',
         header: {
@@ -450,7 +545,7 @@ Page({
           obj.setData({
             publish_data: res.data.data.dynamics
           })
-          obj.Loadmsg()
+          obj.Loadmsg(mode)
         }
       })
   },
