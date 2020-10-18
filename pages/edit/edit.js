@@ -355,7 +355,7 @@ Page({
       success: res => {
         console.log('success', res)
         console.log(that.data)
-        that.createPost(wx.getStorageSync('user_id'), that.data.typeSelected, that.data.tagSelected, that.data.title, that.data.desc, that.data.filep)
+        that.createPost(wx.getStorageSync('user_id'), that.data.typeSelected, that.data.tagSelected, that.data.title, that.data.desc, that.data.campusSelected, that.data.filep)
         that.onLoad()
       },
       fail: res => {
@@ -366,16 +366,17 @@ Page({
       }
     })
   },
-  createPost: function (user_id, type_t, category, title, msg, imagesPaths) {
+  createPost: function (user_id, type_t, category, title, msg, campus, imagesPaths) {
     var publish_id = null;
-    var thatInstance = this;
-    var upLocation = "{\"longitude\":\"" + thatInstance.data.longitude + "\",\"latitude\":\"" + thatInstance.data.latitude + "\", \"address\":\"" + thatInstance.data.address + "\"}";
+    var that = this;
+    var upLocation = "{\"longitude\":\"" + that.data.longitude + "\",\"latitude\":\"" + that.data.latitude + "\", \"address\":\"" + that.data.address + "\"}";
     console.log(upLocation);
     var uploadFormdata = {
       user_id: user_id,
       type: type_t,
       category: category,
       desc: msg,
+      campus: campus,
       title: title,
       location: upLocation
     }
@@ -410,8 +411,8 @@ Page({
                 temp.push(fdata[0])
                 console.log(temp);
                 if (temp.length == imagesPaths.length)
-                  thatInstance.updatePostImg(dynamic_id, temp)
-                // thatInstance.updatePhoto(dynamic_id, temp);
+                  that.updatePostImg(dynamic_id, temp)
+                // that.updatePhoto(dynamic_id, temp);
               },
               fail: function (err) {
                 console.log(err)
@@ -426,7 +427,7 @@ Page({
           // 跳转到主页
 
           // var page = getCurrentPages().pop();
-          thatInstance.onLoad()
+          that.onLoad()
           wx.switchTab({
             url: '../index/index',
             success: function (e) {

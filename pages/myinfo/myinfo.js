@@ -142,13 +142,13 @@ Page({
       url: '../receiveApp/receiveApp',
     })
   },
-  // sysInform:function()
-  // {
-  //   console.log("系统通知")
-  //   wx.navigateTo({
-  //     url: '../sysInform/sysInform',
-  //   })
-  // },
+  sysInform:function()
+  {
+    console.log("系统通知")
+    wx.navigateTo({
+      url: '../contactAdmin/contactAdmin',
+    })
+  },
 
   Logout: function () //logout注销函数，待写
   {

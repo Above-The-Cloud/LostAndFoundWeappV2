@@ -154,7 +154,7 @@
 }
 
 .icon {
-  /* border: 1px solid black; */
+  border: 1px solid black;
   position: relative;
   text-align: center;
   line-height: 100rpx;
@@ -162,7 +162,7 @@
   /* padding-left: 15rpx; */
   /* top: 5%; */
   margin-left: 20rpx;
-  padding-top: 20rpx;
+  /* padding-top: 20rpx; */
   width: 40rpx;
   height: 40rpx;
   z-index: 2;

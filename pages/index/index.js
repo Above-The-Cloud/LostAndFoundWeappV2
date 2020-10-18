@@ -62,11 +62,6 @@ Page({
           var user_id = wx.getStorageSync('user_id')
           var phone = e.currentTarget.dataset.phone
           console.log(applyId, user_id)
-          wx.showToast({
-            title: '联系方式为' + phone + '请前往个人页面查看申请记录',
-            icon: 'none',
-            duration: 2000
-          })
           wx.request({
             url: serverName2 + '/service/dynamic/apply',
             method: 'POST',
@@ -76,11 +71,32 @@ Page({
             data: {
               id: applyId,
               user_id: user_id
+            },
+            success: function(params) {
+              console.log(params)
+              let code = params.data.code
+              if(code == -4 || code == -5 ||  code == -3)
+              {
+                wx.showToast({
+                  title: params.data.msg,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+              else{
+                wx.showToast({
+                  title: '申请成功！请联系' + phone + '个人页面可查看申请记录',
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+
+              
             }
           })
           setTimeout(() => {
             that.onLoad()
-          }, 2000);
+          }, 1500);
 
         } else {
           wx.showToast({
@@ -314,6 +330,7 @@ Page({
     }
     var i = 0;
     var fetchdata = that.data.publish_data
+    // console.log('fetchdata', fetchdata)
     for (i = 0; i < fetchdata.length; i++) {
       var Msg = fetchdata[i].content;
       var user_id = fetchdata[i].user_id;
@@ -321,15 +338,16 @@ Page({
       var Submission_time = str
       var imageurl = '';
       var postid = fetchdata[i].id
-      var imageList = (fetchdata[i].images);
+      var imageList = fetchdata[i].images;
       var user_icon = fetchdata[i].user_info.avatar;
       var nick_name = fetchdata[i].user_info.nick_name;
       var phone = fetchdata[i].user_info.phone
       var location = fetchdata[i].location;
       var state = fetchdata[i].state
-      var type = '#' + this.data.tagList[parseInt(fetchdata[i].category) - 1];
+      var type = '#' + this.data.tagList[fetchdata[i].category];
       var title = fetchdata[i].title;
       var desc = fetchdata[i].desc;
+      var campus = fetchdata[i].campus
       var address = location.address;
       if (address)
         address = address;
@@ -340,6 +358,7 @@ Page({
       if (fetchdata[i].type == 2)
         this.data.listfound.push({
           desc: desc,
+          campus: campus,
           postid: postid,
           userid: user_id,
           userphone: phone,
@@ -357,6 +376,7 @@ Page({
       else if (fetchdata[i].type == 1)
         this.data.listlost.push({
           desc: desc,
+          campus: campus,
           postid: postid,
           userid: user_id,
           userphone: phone,
@@ -466,13 +486,14 @@ Page({
       },
       success: function (res) {
         var tempList = res.data.data;
-        var tagList = [];
+        var tagList = {};
         for (var i = 0; i < tempList.length; i++) {
-          tagList.push(tempList[i].name)
+          tagList[tempList[i].id] = tempList[i].name
         }
         that.setData({
           tagList: tagList
         })
+        // console.log(tagList)
       }
     })
     this.show_publish_infos(this.data.type_t, '所有', this)

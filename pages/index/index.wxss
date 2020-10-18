@@ -48,6 +48,7 @@
   align-items: center;
   width: 50%;
   border-bottom: 1rpx solid #ededed;
+  padding-bottom: 10rpx;
 }
 
 .swiper-tab-item {
@@ -58,7 +59,7 @@
   align-items: center;
   font-size: 25rpx;
   color: grey;
-  line-height: 50rpx;
+  line-height: 60rpx;
   left: 40%;
   z-index: 1;
 }
@@ -104,7 +105,7 @@
   /* background-color: #d0d0d0; */
   position: absolute;
   right: 0%;
-  top:10rpx;
+  top:5rpx;
   font-size: 12px;
   /* width: 5%;
   height: 4%; */
@@ -339,7 +340,8 @@
   margin-top: 50rpx;
   font-size: 25rpx;
   margin-right: 0;
-  color: black;
+  color: grey;
+  /* font-weight: bold; */
   text-align: right;
 }
 .hover {

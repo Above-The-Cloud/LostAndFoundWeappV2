@@ -91,7 +91,7 @@
 						<text class='time-cls'>{{item.sub_time}}</text>
 					</view>
 					<view class='news-info-state-cls'>
-						<text class='state-cls'>{{item.state}}</text></view>
+						<text class='state-cls'>{{item.state}}{{item.campus}}</text></view>
 				</view>
 				<view class='new-image-container-cls'>
 					<image bindtap="photopreview" data-list="{{item.imagelist}}" data-src="{{item.imagelist[0]}}" mode="aspectFill" src="{{item.imagelist[0]}}" class='news-img-cls'></image>

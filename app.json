@@ -15,7 +15,8 @@
     "pages/lostrecord/lostrecord",
     "pages/foundrecord/foundrecord",
     "pages/myApp/myApp",
-    "pages/receiveApp/receiveApp"
+    "pages/receiveApp/receiveApp",
+    "pages/contactAdmin/contactAdmin"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -34,9 +35,9 @@
       },
       {
         "pagePath": "pages/edit/edit",
-        "iconPath": "images/tabbar/release.png",
-        "text":"发布",
-        "selectedIconPath": "images/tabbar/release.png"
+        "iconPath": "images/tabbar/addition.png",
+        "text": "发布",
+        "selectedIconPath": "images/tabbar/addition_selected.png"
       },
       {
         "pagePath": "pages/myinfo/myinfo",

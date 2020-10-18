@@ -65,8 +65,8 @@
 		<view bindtap="sysInform" class="category_bg">
 			<view class='menu_item' hover-class="menu_item_hover">
 				<view>
-					<image class="icon" src="../../images/myinfo/notification.png"></image>
-					<text class="category_text">系统通知</text>
+					<image class="icon" src="../../images/myinfo/message.png"></image>
+					<text class="category_text">联系客服</text>
 				</view>
 				<view>
 					<image class="logo" src="../../images/myinfo/next_step.png"></image>
