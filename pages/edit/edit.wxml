@@ -28,7 +28,7 @@
 	</view>
 	<view class="radio-choose-cls" bindtap="tagAction">
 		<!-- <input class="weui-input" maxlength="20" placeholder="添加标签" /> -->
-		<text wx:if="{{tagSelected}}">{{tagSheetItems[tagSelected - 1].text}}</text>
+		<text wx:if="{{tagSelected}}">{{cur_type}}</text>
 		<text wx:else>请选择物品类别</text>
 		<mp-actionSheet bindactiontap="tagChoose" show="{{showTagSheet}}" actions="{{tagSheetItems}}" title="请选择物品类别">
 		</mp-actionSheet>

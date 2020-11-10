@@ -1,5 +1,50 @@
 /**index.wxss**/
 
+.search{  
+  width: 80%;  
+}  
+.search_arr {  
+  border: 1px solid #d0d0d0;  
+  border-radius: 10rpx;  
+  margin-left: 20rpx;  
+}  
+.search_arr input{  
+  margin-left: 60rpx;  
+  height: 60rpx;  
+  border-radius: 5px;  
+}  
+.bc_text {  
+  line-height: 68rpx;  
+  height: 68rpx;  
+  margin-top: 34rpx;  
+}  
+  
+.search-btn {  
+  margin-left: 15rpx;  
+  width: 15%;  
+  line-height: 150%;  
+  text-align: center;  
+  align-items: center;
+  border: 1px solid #d0d0d0;  
+  border-radius: 10rpx;  
+}  
+.page_row{  
+  margin-top:20rpx;
+  margin-bottom: 20rpx;
+  display: flex;  
+  flex-direction: row  
+}  
+.searchcion {  
+  margin: 10rpx 10rpx 10rpx 10rpx;  
+  position: absolute;  
+  left:25rpx;  
+  z-index: 2;  
+  width: 20px;  
+  height: 20px;  
+  text-align: center;  
+}  
+
+
 .apply-view-cls {
   margin-top: 20rpx;
   background-color: #006a71;
@@ -244,18 +289,21 @@
 }
 .news-info-time-cls{
   font-size:25rpx;
-  bottom: 0;
+  position: absolute;
+  bottom: 20rpx;
   margin-top: 10rpx;
   color: #333333
 }
 .news-info-state-cls{
+  text-align:center;
   font-size:25rpx;
   bottom: 0;
-  /* margin-top: 20rpx; */
+  margin-top: 20rpx;
   color: #333333
 }
 .news-info-cls {
   flex-direction: column;
+  position: relative;
   padding: 20rpx;
   display: flex;
   width: 300rpx;
@@ -331,7 +379,8 @@
 }
 .state-cls {
   position: relative;
-  font-size: 30rpx;
+  text-align: center;
+  font-size: 25rpx;
   color: #ffa1a1;
   font-weight: bold;
 }

@@ -18,6 +18,8 @@ Page({
       '../../images/index/swiper/4.jpg',
       // '../../images/index/swiper/5.png'
     ],
+    focus: false,
+    searchValue: '',
     tagList: [],
     listofitem: [],
     listfound: [{
@@ -27,7 +29,9 @@ Page({
       header: ' '
     }, ],
     page: 0,
+    categoryIndex: {'所有': 0},
     cur_type: '所有',
+    cur_type_index: 0,
     activeIndex: 1,
     duration: 2000,
     begin: '',
@@ -40,11 +44,11 @@ Page({
     actionSheetHidden: true,
     actionSheetItems: ['所有']
   },
-  search: function (event, userid) {
-    wx.navigateTo({
-      url: "../search/search"
-    })
-  },
+  // search: function (event, userid) {
+  //   wx.navigateTo({
+  //     url: "../search/search"
+  //   })
+  // },
   toApply: function (e) {
     var that = this;
     var content = ''
@@ -72,18 +76,16 @@ Page({
               id: applyId,
               user_id: user_id
             },
-            success: function(params) {
+            success: function (params) {
               console.log(params)
               let code = params.data.code
-              if(code == -4 || code == -5 ||  code == -3)
-              {
+              if (code == -4 || code == -5 || code == -3) {
                 wx.showToast({
                   title: params.data.msg,
                   icon: 'none',
                   duration: 2000
                 })
-              }
-              else{
+              } else {
                 wx.showToast({
                   title: '申请成功！请联系' + phone + '个人页面可查看申请记录',
                   icon: 'none',
@@ -91,7 +93,7 @@ Page({
                 })
               }
 
-              
+
             }
           })
           setTimeout(() => {
@@ -106,6 +108,23 @@ Page({
         }
       }
     })
+
+  },
+  bindSearchinput: function (e) {
+    // console.log(e.detail)
+    this.data.searchValue = e.detail.value;
+  },
+  bindSearchTap: function () {
+    console.log(this.data.searchValue)
+    let searchValue = this.data.searchValue;
+    if (searchValue == '') {
+      wx.showToast({
+        title: '搜索内容不得为空',
+        icon: 'none'
+      })
+    } else {
+      this.searchPost(this.data.type_t, searchValue, this)
+    }
 
   },
   oneKeyBack: function (e) {
@@ -212,34 +231,28 @@ Page({
       url: '../search/search',
     })
   },
-  // bind所有: function (e) {
-  //   this.setData({
-  //     actionSheetHidden: !this.data.actionSheetHidden,
-  //     cur_type: '所有',
-  //     listofitem: []
-  //   })
-  //   this.show_publish_infos(this.data.type_t, this.data.cur_type, this, 'reload')
-  // },
   bindChooseCategory: function (params) {
     this.setData({
       actionSheetHidden: !this.data.actionSheetHidden,
       listofitem: []
     })
-    console.log(params)  
+    console.log(params)
   },
   actionSheetTap: function (e) {
     var actionSheetItems = this.data.actionSheetItems;
     var that = this
+    var categoryIndex = that.data.categoryIndex
     wx.showActionSheet({
       itemList: actionSheetItems,
-      success (res) {
+      success(res) {
         console.log(res.tapIndex)
         that.setData({
-          cur_type:that.data.actionSheetItems[res.tapIndex]
+          cur_type: that.data.actionSheetItems[res.tapIndex],
+          cur_type_index: categoryIndex[that.data.actionSheetItems[res.tapIndex]]
         })
-        // that.data.cur_type = that.data.actionSheetItems[res.tapIndex]
+        that.show_publish_infos(that.data.type_t, that.data.cur_type_index, that, 'reload')
       },
-      fail (res) {
+      fail(res) {
         console.log(res.errMsg)
       }
     })
@@ -281,7 +294,7 @@ Page({
     //     userInfo:userInfo
     //   })
     // })
-    this.show_publish_infos(this.data.type_t, '所有', this, 'reload')
+    this.show_publish_infos(this.data.type_t, 0, this, 'reload')
   },
 
   stateswitch: function (e) {
@@ -293,6 +306,7 @@ Page({
         activeIndex: type,
         type_t: 1,
         cur_type: '所有',
+        cur_type_index: 0,
         page: 0
       })
       flag = false;
@@ -303,11 +317,12 @@ Page({
         activeIndex: type,
         type_t: 2,
         cur_type: '所有',
+        cur_type_index: 0,
         page: 0
       })
       flag = true;
     }
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this, 'reload')
+    this.show_publish_infos(this.data.type_t, this.data.cur_type_index, this, 'reload')
   },
 
   bindViewTap: function (e) {
@@ -341,6 +356,7 @@ Page({
       var imageList = fetchdata[i].images;
       var user_icon = fetchdata[i].user_info.avatar;
       var nick_name = fetchdata[i].user_info.nick_name;
+      var name = fetchdata[i].user_info.name;
       var phone = fetchdata[i].user_info.phone
       var location = fetchdata[i].location;
       var state = fetchdata[i].state
@@ -362,7 +378,8 @@ Page({
           postid: postid,
           userid: user_id,
           userphone: phone,
-          username: nick_name,
+          username: name,
+          nick_name: nick_name,
           state: state,
           text: Msg,
           title: title,
@@ -380,7 +397,8 @@ Page({
           postid: postid,
           userid: user_id,
           userphone: phone,
-          username: nick_name,
+          username: name,
+          nick_name: nick_name,
           state: state,
           text: Msg,
           title: title,
@@ -412,9 +430,13 @@ Page({
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       success: function (res) {
+        console.log('类别们', res.data.data)
         var tempList = ['所有'];
         for (var i = 0; i < 5; i++)
-          tempList.push(res.data.data[i].name);
+          {
+            tempList.push(res.data.data[i].name);
+            that.data.categoryIndex[res.data.data[i].name] = res.data.data[i].id;
+          }
         that.setData({
           actionSheetItems: tempList
         })
@@ -427,7 +449,7 @@ Page({
   },
   onReachBottom: function () {
     this.data.page++;
-    this.show_publish_infos(this.data.type_t, this.data.cur_type, this, 'append')
+    this.show_publish_infos(this.data.type_t, this.data.cur_type_index, this, 'append')
     wx.showToast({
       title: '正在加载...',
       icon: 'none'
@@ -471,11 +493,13 @@ Page({
     if (this.data.activeIndex == 1)
       this.setData({
         listofitem: this.data.listfound,
-        cur_type: '所有'
+        cur_type: '所有',
+        cur_type_index: 0
       })
     else this.setData({
       listofitem: this.data.listlost,
-      cur_type: '所有'
+      cur_type: '所有',
+      cur_type_index: 0
     })
     //获取类别array
     wx.request({
@@ -496,19 +520,40 @@ Page({
         // console.log(tagList)
       }
     })
-    this.show_publish_infos(this.data.type_t, '所有', this)
+    this.show_publish_infos(this.data.type_t, 0, this)
     // wx.redirectTo({
     //   url: '../lostrecord/lostrecord',
     // })
   },
+  searchPost: function (type_t, query, obj) {
+    //搜索结果，传入分类和关键字
+    wx.request({
+      url: serverName2 + '/service/dynamic/search',
+      data: {
+        // type: type_t,
+        q: query,
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success: function (res) {
+        console.log(res)
+        obj.setData({
+          publish_data: res.data.data.dynamics
+        })
+        obj.Loadmsg('reload')
+      },
 
+    })
+  },
   //获取发布信息的接口，传入分类数据
   show_publish_infos: function (type_t, category, obj, mode) {
     // console.log('type_t:' + type_t);
     // console.log('category:' + category);
     let page = this.data.page;
     let begin = this.data.begin;
-    if (category == '所有')
+    if (category == 0)
       wx.request({
         url: serverName2 + '/service/dynamic/list',
         data: {
@@ -529,7 +574,9 @@ Page({
         }
       })
     else
-      wx.request({
+      {
+        console.log('类别信息传入')
+        wx.request({
         url: serverName2 + '/service/dynamic/list',
         data: {
           type: type_t,
@@ -542,11 +589,12 @@ Page({
           'content-type': 'application/x-www-form-urlencoded' // 默认值
         },
         success: function (res) {
+          console.log(res.data.data.dynamics)
           obj.setData({
             publish_data: res.data.data.dynamics
           })
           obj.Loadmsg(mode)
         }
-      })
+      })}
   },
 })

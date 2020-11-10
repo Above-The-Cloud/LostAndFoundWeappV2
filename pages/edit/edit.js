@@ -13,6 +13,7 @@ Page({
     tagSelected: null,
     tagSheetItems: [],
     schoolCardId: null,
+    categoryname: {},
     campusItems: [{
         name: '中北校区',
         value: '中北',
@@ -204,6 +205,7 @@ Page({
         var tagList = [];
         // console.log('tempList', tempList)
         for (var i = 0; i < tempList.length; i++) {
+          that.data.categoryname[tempList[i].id] = tempList[i].name;
           tagList.push({
             'text': tempList[i].name,
             'value': tempList[i].id
@@ -471,9 +473,11 @@ Page({
     console.log('tagSheetChange')
   },
   tagChoose: function (e) {
-    console.log(e.detail.value)
+    console.log(e.detail)
+    var that = this;
     this.setData({
-      tagSelected: e.detail.value
+      tagSelected: e.detail.value,
+      cur_type: that.data.categoryname[e.detail.value],
     })
   },
   tagAction: function (e) {

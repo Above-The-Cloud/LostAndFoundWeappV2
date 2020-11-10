@@ -26,6 +26,15 @@
 		</block>
 	</swiper>
 </view>
+<view class='page_row'>
+	<view class="search">
+		<view class="df search_arr">
+			<icon class="searchcion" size='20' type='search'></icon>
+			<input bindinput="bindSearchinput" class="" placeholder="请输入关键字" value="{{searchValue}}" />
+		</view>
+	</view>
+	<view class='search-btn' bindtap="bindSearchTap">搜索</view>
+</view>
 <!-- <view class='category-list-cls'>
 	<view class='category-list-item-cls'>
 		<view class='category-spaceholder-cls'>
@@ -71,9 +80,13 @@
 			<view class='userinfo-cls'>
 				<image src="{{item.usericon}}" class='icon-image-cls'></image>
 				<view class='username-cls'>
-					<text selectable='true'>{{item.username}}</text>
+					<text>{{item.username}}</text>
 				</view>
 				<view bindtap='toApply' data-phone="{{item.userphone}}" data-applyId="{{item.postid}}" class='apply-view-cls'>申请
+				</view>
+				<view class='news-info-state-cls'>
+					<view class='state-cls'>{{item.state}}</view>
+					<view class='state-cls'>{{item.campus}}校区</view>
 				</view>
 			</view>
 			<view class="news-card-cls">
@@ -90,8 +103,9 @@
 					<view class='news-info-time-cls'>
 						<text class='time-cls'>{{item.sub_time}}</text>
 					</view>
-					<view class='news-info-state-cls'>
-						<text class='state-cls'>{{item.state}}{{item.campus}}</text></view>
+					<!-- <view class='news-info-state-cls'>
+						<text class='state-cls'>{{item.state}}{{item.campus}}</text>
+					</view> -->
 				</view>
 				<view class='new-image-container-cls'>
 					<image bindtap="photopreview" data-list="{{item.imagelist}}" data-src="{{item.imagelist[0]}}" mode="aspectFill" src="{{item.imagelist[0]}}" class='news-img-cls'></image>
