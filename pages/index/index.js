@@ -36,6 +36,7 @@ Page({
     cur_type_index: 0,
     activeIndex: 1,
     duration: 2000,
+    search_state: false,
     begin: '',
     indicatorDots: true,
     autoplay: true,
@@ -125,7 +126,8 @@ Page({
         icon: 'none'
       })
     } else {
-      this.searchPost(this.data.type_t, searchValue, this)
+      this.data.search_state = true;
+      this.searchPost(this.data.type_t, searchValue, this, 'reload')
     }
 
   },
@@ -250,7 +252,9 @@ Page({
         console.log(res.tapIndex)
         that.setData({
           cur_type: that.data.actionSheetItems[res.tapIndex],
-          cur_type_index: categoryIndex[that.data.actionSheetItems[res.tapIndex]]
+          cur_type_index: categoryIndex[that.data.actionSheetItems[res.tapIndex]],
+          search_state: false,
+          page: 0,
         })
         that.show_publish_infos(that.data.type_t, that.data.cur_type_index, that, 'reload')
       },
@@ -281,12 +285,16 @@ Page({
       this.setData({
         listofitem: this.data.listfound,
         cur_type: '所有',
+        searchValue: '',
+        search_state: false,
         page: 0,
       })
     else
       this.setData({
         listofitem: this.data.listlost,
         cur_type: '所有',
+        searchValue: '',
+        search_state: false,
         page: 0,
       })
 
@@ -310,7 +318,9 @@ Page({
         type_t: 1,
         cur_type: '所有',
         cur_type_index: 0,
-        page: 0
+        page: 0,
+        search_state: false,
+        searchValue: ''
       })
       flag = false;
 
@@ -321,7 +331,9 @@ Page({
         type_t: 2,
         cur_type: '所有',
         cur_type_index: 0,
-        page: 0
+        page: 0,
+        search_state: false,
+        searchValue: ''
       })
       flag = true;
     }
@@ -448,12 +460,19 @@ Page({
     })
   },
   onPullDownRefresh: function () {
-    this.onload;
+    // this.onload;
     this.refresh();
   },
   onReachBottom: function () {
     this.data.page++;
-    this.show_publish_infos(this.data.type_t, this.data.cur_type_index, this, 'append')
+    if (this.data.search_state == false)
+    // 不是搜索状态
+    {
+      this.show_publish_infos(this.data.type_t, this.data.cur_type_index, this, 'append')
+    } else {
+      // 搜索状态下的append
+      this.searchPost(this.data.type_t, this.data.searchValue, this, 'append')
+    }
     wx.showToast({
       title: '正在加载...',
       icon: 'none'
@@ -498,12 +517,18 @@ Page({
       this.setData({
         listofitem: this.data.listfound,
         cur_type: '所有',
-        cur_type_index: 0
+        cur_type_index: 0,
+        search_state: false,
+        page: 0,
+        searchValue: ''
       })
     else this.setData({
       listofitem: this.data.listlost,
       cur_type: '所有',
-      cur_type_index: 0
+      cur_type_index: 0,
+      search_state: false,
+      page: 0,
+      searchValue: ''
     })
     //获取类别array
     wx.request({
@@ -529,13 +554,14 @@ Page({
     //   url: '../lostrecord/lostrecord',
     // })
   },
-  searchPost: function (type_t, query, obj) {
+  searchPost: function (type_t, query, obj, mode) {
     //搜索结果，传入分类和关键字
     wx.request({
       url: serverName2 + '/service/dynamic/search',
       data: {
-        // type: type_t,
+        type: type_t,
         q: query,
+        page: this.data.page
       },
       method: 'POST',
       header: {
@@ -546,7 +572,7 @@ Page({
         obj.setData({
           publish_data: res.data.data.dynamics
         })
-        obj.Loadmsg('reload')
+        obj.Loadmsg(mode)
       },
 
     })
