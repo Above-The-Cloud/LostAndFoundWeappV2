@@ -29,7 +29,9 @@ Page({
       header: ' '
     }, ],
     page: 0,
-    categoryIndex: {'所有': 0},
+    categoryIndex: {
+      '所有': 0
+    },
     cur_type: '所有',
     cur_type_index: 0,
     activeIndex: 1,
@@ -278,13 +280,14 @@ Page({
     if (this.data.activeIndex == 1)
       this.setData({
         listofitem: this.data.listfound,
-        cur_type: '所有'
-
+        cur_type: '所有',
+        page: 0,
       })
     else
       this.setData({
         listofitem: this.data.listlost,
-        cur_type: '所有'
+        cur_type: '所有',
+        page: 0,
       })
 
     //调用应用实例的方法获取全局数据
@@ -363,12 +366,14 @@ Page({
       var type = '#' + this.data.tagList[fetchdata[i].category];
       var title = fetchdata[i].title;
       var desc = fetchdata[i].desc;
-      var campus = fetchdata[i].campus
+      var campus = fetchdata[i].campus;
       var address = location.address;
       if (address)
         address = address;
       else
         address = "";
+      if (campus)
+        campus = campus + '校区'
       if (fetchdata[i].images)
         imageurl = fetchdata[i].images[0];
       if (fetchdata[i].type == 2)
@@ -432,11 +437,10 @@ Page({
       success: function (res) {
         console.log('类别们', res.data.data)
         var tempList = ['所有'];
-        for (var i = 0; i < 5; i++)
-          {
-            tempList.push(res.data.data[i].name);
-            that.data.categoryIndex[res.data.data[i].name] = res.data.data[i].id;
-          }
+        for (var i = 0; i < 5; i++) {
+          tempList.push(res.data.data[i].name);
+          that.data.categoryIndex[res.data.data[i].name] = res.data.data[i].id;
+        }
         that.setData({
           actionSheetItems: tempList
         })
@@ -480,7 +484,7 @@ Page({
   },
   onLoad: function () {
     var now = new Date();
-    var preyear = now.getFullYear() - 1; //只读取一年内的数据
+    var preyear = now.getFullYear() - 2; //只读取两年内的数据
     now.setFullYear(preyear)
     this.data.begin = this.formatDate(now)
     var user_id = wx.getStorageSync('user_id');
@@ -573,10 +577,9 @@ Page({
           obj.Loadmsg(mode)
         }
       })
-    else
-      {
-        console.log('类别信息传入')
-        wx.request({
+    else {
+      console.log('类别信息传入')
+      wx.request({
         url: serverName2 + '/service/dynamic/list',
         data: {
           type: type_t,
@@ -595,6 +598,7 @@ Page({
           })
           obj.Loadmsg(mode)
         }
-      })}
+      })
+    }
   },
 })
