@@ -61,7 +61,8 @@ Page({
     this.data.listlost = []
     console.log(this.data.listlost.length)
     for (i = 0; i < Data.length; i++) {
-      var userid = Data[i].user_info.nick_name;
+      var nick_name = Data[i].user_info.nick_name;
+      var realname = Data[i].user_info.name;
       var Msg = Data[i].desc;
       var Submission_time = Data[i].mtime;
       var imageurl = '';
@@ -79,7 +80,7 @@ Page({
       // if (that.Data[i].type == 1)
       this.data.listlost.push({
         type: type,
-        username: userid,
+        username: realname,
         text: Msg,
         image: imageurl,
         imagelist: imageList,
@@ -95,7 +96,7 @@ Page({
     this.setData({
       listofitem: this.data.listlost
     })
-    console.log("this data‘s size")
+    console.log("this data's size")
     console.log(this.data.listlost.length)
   },
 

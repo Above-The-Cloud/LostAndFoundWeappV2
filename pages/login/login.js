@@ -103,7 +103,7 @@ Page({
             },
             fail: function (params) {
               console.log(params)
-              
+
             }
           })
         }
@@ -210,7 +210,7 @@ Page({
     })
     var openid = wx.getStorageSync('openid');
     if (openid) {
-      // console.log('ifopenid',openid);
+      // console.log('ifopenid', openid);
       wx.request({
         url: serverName2 + '/service/user/loginByOpenid',
         method: 'POST',
@@ -225,22 +225,22 @@ Page({
           let phone = res.data.data.phone;
           let userid = res.data.data.id;
           wx.setStorageSync('user_id', res.data.data.id)
-          if(phone != ""){
-          wx.showToast({
-            title: '正在跳转, 请稍等',
-            icon: 'none'
-          })
-          setTimeout(() => {
-            wx.switchTab({
-              url: '../index/index',
+          if (phone != "") {
+            wx.showToast({
+              title: '正在跳转, 请稍等',
+              icon: 'none'
             })
-          }, 500);}
-          else{
+            setTimeout(() => {
+              wx.switchTab({
+                url: '../index/index',
+              })
+            }, 500);
+          } else {
             setTimeout(() => {
               wx.redirectTo({
                 url: '../accessNumber/accessNumber?id=' + userid,
               })
-            }, 1000);        
+            }, 1000);
           }
 
         }
@@ -267,14 +267,17 @@ Page({
       success: function (res) {
         console.log("statelessLogin");
         console.log(res);
-        var userid = res.data.data.id;
         if (res.data.code != 0) {
+          // 用户名或密码错误
+          // console.log('error: clearall')
+          wx.clearStorageSync() //清除所有cache 以防下一次直接登陆
           wx.showToast({
             title: res.data.msg,
             icon: 'none',
             duration: 2000
           })
         } else {
+          var userid = res.data.data.id;
           wx.setStorageSync('user_id', res.data.data.id)
           wx.showToast({
             title: '登录成功',
@@ -285,7 +288,7 @@ Page({
                 wx.redirectTo({
                   url: '../accessNumber/accessNumber?id=' + userid,
                 })
-              }, 1000);            
+              }, 1000);
 
               // wx.switchTab({
               //   url: '../index/index'

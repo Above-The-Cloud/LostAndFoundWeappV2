@@ -56,9 +56,9 @@ Page({
     var that = this;
     var content = ''
     if (this.data.type_t == 1)
-      content = '确认联系失主找回吗'
+      content = '确认联系失主找回吗\n 一天仅可申请一次哦'
     else if (this.data.type_t == 2)
-      content = '确认要申领这个物品吗'
+      content = '确认要申领这个物品吗\n 一天仅可申请一次哦'
     wx.showModal({
       title: '提示',
       content: content,
@@ -447,7 +447,7 @@ Page({
         'content-type': 'application/x-www-form-urlencoded' // 默认值
       },
       success: function (res) {
-        console.log('类别们', res.data.data)
+        // console.log('类别们', res.data.data)
         var tempList = ['所有'];
         for (var i = 0; i < 5; i++) {
           tempList.push(res.data.data[i].name);
